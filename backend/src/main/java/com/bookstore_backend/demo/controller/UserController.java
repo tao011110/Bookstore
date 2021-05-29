@@ -29,7 +29,7 @@ public class UserController {
         }
         System.out.println("用户登录成功！");
         isSuccess = true;
-        int user_id = user.getUserId();
+        int user_id = user.getUser_id();
 
         return user_id;
     }

@@ -1,17 +1,36 @@
 package com.bookstore_backend.demo.entity;
 
-public class User {
-    private int userId;
-    private String username;
-    private String password;
-    private int user_type;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-    public int getUserId() {
-        return userId;
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
+@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "user_id")
+public class User {
+    @Id
+    @GeneratedValue(generator = "increment")
+    @Column(name = "user_id")
+    private Integer user_id;
+
+    @Column(name = "user_type")
+    private Integer user_type;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {
@@ -30,7 +49,7 @@ public class User {
         this.password = password;
     }
 
-    public int getUserType() {
+    public Integer getUserType() {
         return user_type;
     }
 

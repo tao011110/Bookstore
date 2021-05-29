@@ -1,14 +1,38 @@
 package com.bookstore_backend.demo.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "books")
 public class Book {
-    private String name;
-    private String author;
-    private String type;
-    private int inventory;
-    private String price;
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "author")
+    private String author;
+
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "inventory")
+    private int inventory;
+
+    @Column(name = "price")
+    private int price;
+
+    @Column(name = "img")
     private String img;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "isshow")
+    private int status;
 
     public void setName(String name){
         this.name = name;
@@ -34,10 +58,10 @@ public class Book {
     public int getInventory(){
         return inventory;
     }
-    public void setPrice(String price){
+    public void setPrice(int price){
         this.price = price;
     }
-    public String getPrice(){
+    public int getPrice(){
         return price;
     }
     public void setID(int id){
@@ -57,5 +81,11 @@ public class Book {
     }
     public String getDescription(){
         return description;
+    }
+    public int getStatus(){
+        return status;
+    }
+    public void setStatus(int status){
+        this.status = status;
     }
 }

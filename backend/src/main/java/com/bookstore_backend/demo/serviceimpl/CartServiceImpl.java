@@ -2,6 +2,7 @@ package com.bookstore_backend.demo.serviceimpl;
 
 import com.bookstore_backend.demo.dao.CartDao;
 import com.bookstore_backend.demo.entity.CartItem;
+import com.bookstore_backend.demo.entity.CartItemDelete;
 import com.bookstore_backend.demo.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartItem> listItems(int user_id){
-        String s = "select * from mybookstore.cart_" + (user_id);
-        System.out.println("sql: " + s);
-        return cartDao.listItems(s);
+        return cartDao.listItems(user_id);
     }
 
     @Override

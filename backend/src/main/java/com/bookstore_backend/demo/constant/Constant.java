@@ -7,7 +7,7 @@ package com.bookstore_backend.demo.constant;
  * @Date 2019/11/7 20:49
  */
 public class Constant {
-    public static final String USER_ID = "userId";
+    public static final String USER_ID = "user_id";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String USER_TYPE = "userType";

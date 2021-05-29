@@ -4,38 +4,23 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "cart_item")
+@Table(name = "cart_2001")
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "item_id")
-public class CartItem {
-    @Id
-    @GeneratedValue(generator = "increment")
-    @Column(name = "item_id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "order_id")
+public class CartItemDelete {
     private int item_id;
-
-    @Column(name = "book_id")
-    private int book_id;
-
-    @Column(name = "cart_id")
-    private int cart_id;
-
-    @Transient
     private String name;
-
-    @Transient
+    private int num;
     private int price;
-
-    @Transient
     private int status;
-
-    @Transient
     private String img;
-
-    @Transient
     private String description;
+    private Long id;
 
     public int getItem_id(){
         return item_id;
@@ -55,6 +40,12 @@ public class CartItem {
     public void setPrice(int price){
         this.price = price;
     }
+    public int getNum(){
+        return num;
+    }
+    public void setNum(int num){
+        this.num = num;
+    }
     public int getStatus(){
         return status;
     }
@@ -73,16 +64,13 @@ public class CartItem {
     public void setDescription(String description){
         this.description = description;
     }
-    public int getBook_id(){
-        return book_id;
+
+    public void setId(Long id) {
+        this.id = id;
     }
-    public void setBook_id(int book_id){
-        this.book_id = book_id;
-    }
-    public int getCart_id(){
-        return cart_id;
-    }
-    public void setCart_id(int cart_id){
-        this.cart_id = cart_id;
+
+    @Id
+    public Long getId() {
+        return id;
     }
 }

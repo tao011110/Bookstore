@@ -1,10 +1,10 @@
 package com.bookstore_backend.demo.controller;
 
 import com.bookstore_backend.demo.entity.CartItem;
+import com.bookstore_backend.demo.entity.CartItemDelete;
 import com.bookstore_backend.demo.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import net.sf.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
