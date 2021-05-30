@@ -33,7 +33,6 @@ export class ShoppingList extends React.Component{
         //e.preventDefault();
         let user_id = 2001;
         let json = new Object();
-        json.order_id = 1;
         json.user_id = user_id;
         json.totalmoney = global.totalmoney;
         json.books = global.checked;
@@ -139,7 +138,7 @@ export class ShoppingList extends React.Component{
                                 for(j = 0; j < global.checked.length; j++) {
                                     for (i = 0; i < global.book.length; i++) {
                                         if (global.book[i].name == global.checked[j].name) {
-                                            this.delArray.push(global.book[i].item_id);
+                                            this.delArray.push(global.book[i].book_id);
                                             global.book.splice(i, 1);
                                             global.checked.splice(j, 1);
                                             j--;

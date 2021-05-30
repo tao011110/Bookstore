@@ -14,12 +14,7 @@ export class BookDetail extends React.Component{
         let user_id = 2001
         let json = new Object();
         json.id = this.props.info.id;
-        json.price = this.props.info.price;
-        json.name = this.props.info.name;
-        json.num= num;
         json.user_id = user_id;
-        json.img = this.props.info.img;
-        json.description = this.props.info.description;
         console.log(json.price);
         const callback = (data) => {
             console.log("callback " + data);
@@ -37,7 +32,6 @@ export class BookDetail extends React.Component{
         //e.preventDefault();
         let user_id = 2001;
         let json = new Object();
-        json.order_id = 1;
         json.user_id = user_id;
         json.totalmoney = this.props.info.price;
         json.book_id = this.props.info.id;
