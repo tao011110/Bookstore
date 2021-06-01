@@ -7,6 +7,7 @@ import com.bookstore_backend.demo.entity.Book;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -21,5 +22,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> listBooks() {
         return bookDao.listBooks();
+    }
+
+    @Override
+    public int updateBook(Map<String, String> param){
+        return bookDao.updateBook(param);
     }
 }

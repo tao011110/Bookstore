@@ -27,4 +27,9 @@ public class BookController {
     public Book getBook(@RequestParam("id") Integer id){
         return bookService.findBookById(id);
     }
+
+    @RequestMapping("/updateBook")
+    public int updateBook(@RequestBody Map<String, String> param){
+        return bookService.updateBook(param);
+    }
 }

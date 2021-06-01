@@ -4,10 +4,13 @@ import {Link } from 'react-router-dom';
 import './config';
 import "../css/manage.css"
 import PropTypes from "prop-types";
+import {getBooks} from "../services/bookService";
+import * as cartService from "../services/cartService";
+import * as manageService from "../services/manageService"
 
-const headers = ["name", "author", "type", "inventory", "price", "id", "description", "show"];
+const headers = ["id", "author", "type", "inventory", "price", "name", "img", "description", "status"];
 
-const data1 = global.allBooks;
+const list = []
 
 class Excel extends React.Component {
     constructor(props) {
@@ -20,6 +23,28 @@ class Excel extends React.Component {
             search: false,
             preSearchData: null,
         };
+    }
+
+    componentDidMount() {
+        const callback = (data) => {
+            console.log("woc666");
+            for(let i in data){
+                let l = [];
+                l.push(data[i].id);
+                l.push(data[i].author);
+                l.push(data[i].type);
+                l.push(data[i].inventory);
+                l.push(data[i].price);
+                l.push(data[i].name);
+                l.push(data[i].img);
+                l.push(data[i].description);
+                l.push(data[i].status);
+                list.push(l);
+            }
+            this.setState({data:list});
+            console.log(list);
+        };
+        getBooks({"search":null}, callback);
     }
 
     sort = (e) => {
@@ -116,7 +141,104 @@ class Excel extends React.Component {
         );
     };
 
-renderTable = () => {
+    handleUpdateAuthor =(arr)=>{
+        let json = new Object();
+        json.id = arr[0];
+        json.author = arr[1];
+        json.change = "author";
+
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateBook(json, callback);
+    }
+
+    handleUpdateType =(arr)=>{
+        let json = new Object();
+        json.id = arr[0];
+        json.type = arr[2];
+        json.change = "type";
+
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateBook(json, callback);
+    }
+
+    handleUpdateInventory =(arr)=>{
+        let json = new Object();
+        json.id = arr[0];
+        json.inventory = arr[3];
+        json.change = "inventory";
+        console.log("inv");
+
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateBook(json, callback);
+    }
+
+    handleUpdatePrice =(arr)=>{
+        let json = new Object();
+        json.id = arr[0];
+        json.price = arr[4];
+        json.change = "price";
+
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateBook(json, callback);
+    }
+
+    handleUpdateName =(arr)=>{
+        let json = new Object();
+        json.id = arr[0];
+        json.name = arr[5];
+        json.change = "name";
+
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateBook(json, callback);
+    }
+
+    handleUpdateImg =(arr)=>{
+        let json = new Object();
+        json.id = arr[0];
+        json.img = arr[6];
+        json.change = "img";
+
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateBook(json, callback);
+    }
+
+    handleUpdateDescription =(arr)=>{
+        let json = new Object();
+        json.id = arr[0];
+        json.description = arr[7];
+        json.change = "description";
+
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateBook(json, callback);
+    }
+
+    handleUpdateStatus =(arr)=>{
+        let json = new Object();
+        json.id = arr[0];
+        json.status = arr[8];
+        json.change = "status";
+
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateBook(json, callback);
+    }
+
+    renderTable = () => {
         return (
             <table>
                 <thead onClick={this.sort}>
@@ -144,35 +266,47 @@ renderTable = () => {
                                                 event=>{
                                                     {
                                                         console.log(event.target.value);
-                                                        global.allBooks[edit.row][edit.cell] = event.target.value;
-                                                        console.log("Now it is,  ",global.allBooks[edit.row][edit.cell]);
-                                                        console.log(global.allBooks[edit.row][edit.cell]);
-                                                        var index = edit.row;
+                                                        list[edit.row][edit.cell] = event.target.value;
+                                                        console.log("Now it is,  ",list[edit.row][edit.cell]);
+                                                        console.log(list[edit.row][edit.cell]);
+                                                        let index = edit.row;
                                                         if(edit.cell == 0){
-                                                            global.showBooks[index].name = event.target.value;
+                                                            list[index].id = event.target.value;
+                                                            this.handleUpdateAuthor(list[index]);
                                                         }
                                                         if(edit.cell == 1){
-                                                            global.showBooks[index].author = event.target.value;
+                                                            list[index].author = event.target.value;
+                                                            this.handleUpdateAuthor(list[index]);
                                                         }
                                                         if(edit.cell == 2){
-                                                            global.showBooks[index].type = event.target.value;
+                                                            list[index].type = event.target.value;
+                                                            this.handleUpdateType(list[index]);
                                                         }
                                                         if(edit.cell == 3){
-                                                            global.showBooks[index].inventory = event.target.value;
+                                                            list[index].inventory = event.target.value;
+                                                            this.handleUpdateInventory(list[index]);
                                                         }
                                                         if(edit.cell == 4){
-                                                            global.showBooks[index].price = event.target.value;
+                                                            list[index].price = event.target.value;
+                                                            this.handleUpdatePrice(list[index]);
                                                         }
                                                         if(edit.cell == 5){
-                                                            global.showBooks[index].id = event.target.value;
+                                                            list[index].name = event.target.value;
+                                                            this.handleUpdateName(list[index]);
                                                         }
                                                         if(edit.cell == 6){
-                                                            global.showBooks[index].description = event.target.value;
+                                                            list[index].img = event.target.value;
+                                                            this.handleUpdateImg(list[index]);
                                                         }
                                                         if(edit.cell == 7){
-                                                            global.showBooks[index].isShow = event.target.value;
+                                                            list[index].description = event.target.value;
+                                                            this.handleUpdateDescription(list[index]);
                                                         }
-                                                        console.log(global.showBooks[index]);
+                                                        if(edit.cell == 8){
+                                                            list[index].isShow = event.target.value;
+                                                            this.handleUpdateStatus(list[index]);
+                                                        }
+                                                        console.log(list[index]);
                                                     }
                                                 }
                                             }/>
@@ -207,7 +341,7 @@ export class ManageList extends React.Component{
         return(
             React.createElement(Excel, {
                 headers: headers,
-                initialData: data1
+                initialData: []
             })
         );
     }
