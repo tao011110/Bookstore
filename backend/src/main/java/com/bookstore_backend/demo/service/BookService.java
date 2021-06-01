@@ -9,4 +9,5 @@ public interface BookService {
     List<Book> listBooks();
     List<Book> showAllBooks();
     int updateBook(Map<String, String> param);
+    boolean manageAddBook(Map<Object, Object> param);
 }

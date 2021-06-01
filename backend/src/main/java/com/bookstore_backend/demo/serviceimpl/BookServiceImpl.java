@@ -33,4 +33,9 @@ public class BookServiceImpl implements BookService {
     public int updateBook(Map<String, String> param){
         return bookDao.updateBook(param);
     }
+
+    @Override
+    public boolean manageAddBook(Map<Object, Object> param){
+        return bookDao.manageAddBook(param);
+    }
 }

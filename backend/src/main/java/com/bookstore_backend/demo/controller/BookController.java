@@ -41,4 +41,14 @@ public class BookController {
     public int updateBook(@RequestBody Map<String, String> param){
         return bookService.updateBook(param);
     }
+
+    @RequestMapping("/manageAddBook")
+    public boolean manageAddBook(@RequestBody Map<Object, Object> param){
+        boolean flag =  bookService.manageAddBook(param);
+        if(flag == true){
+            return true;
+        }
+        System.out.println("book_id不可重复！");
+        return false;
+    }
 }

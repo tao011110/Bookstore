@@ -73,7 +73,14 @@ export class HeaderInfo extends React.Component {
                                         <Menu.Item key="3">
                                             <Link to={'/ManageView'}>
                                                 <div>
-                                                    管理员界面
+                                                    管理书籍界面
+                                                </div>
+                                            </Link>
+                                        </Menu.Item>
+                                        <Menu.Item key="4">
+                                            <Link to={'/UserManageView'}>
+                                                <div>
+                                                    管理用户界面
                                                 </div>
                                             </Link>
                                         </Menu.Item>

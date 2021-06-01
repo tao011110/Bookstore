@@ -1,6 +1,8 @@
 package com.bookstore_backend.demo.daoimpl;
 
 import com.bookstore_backend.demo.dao.BookDao;
+import com.bookstore_backend.demo.entity.Cart;
+import com.bookstore_backend.demo.entity.CartItem;
 import com.bookstore_backend.demo.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.bookstore_backend.demo.entity.Book;
@@ -97,5 +99,50 @@ public class BookDaoImpl implements BookDao {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean manageAddBook(Map<Object, Object> param){
+        try {
+            String sid =  String.valueOf(param.get("id"));
+            int book_id = Integer.valueOf(sid);
+            String author = String.valueOf(param.get("author"));
+            String type = String.valueOf(param.get("type"));
+            String sinventory = String.valueOf(param.get("inventory"));
+            int inventory = Integer.valueOf(sinventory);
+            String sprice = String.valueOf(param.get("price"));
+            int price = Integer.valueOf(sprice);
+            String name = String.valueOf(param.get("name"));
+            String img = String.valueOf(param.get("img"));
+            String description = String.valueOf(param.get("description"));
+            String sstatus = String.valueOf(param.get("status"));
+            int status = Integer.valueOf(sstatus);
+
+            Book book = bookRepository.getOne(book_id);
+            if(book == null){
+                System.out.println("null");
+                book = new Book();
+                book.setID(book_id);
+                book.setAuthor(author);
+                book.setType(type);
+                book.setInventory(inventory);
+                book.setPrice(price);
+                book.setName(name);;
+                book.setImg(img);
+                book.setDescription(description);
+                book.setStatus(status);
+
+                bookRepository.save(book);
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch(Exception e){
+            System.out.println("添加失败！");
+
+            return false;
+        }
     }
 }

@@ -5,7 +5,6 @@ import './config';
 import "../css/manage.css"
 import PropTypes from "prop-types";
 import {showAllBooks} from "../services/bookService";
-import * as cartService from "../services/cartService";
 import * as manageService from "../services/manageService"
 
 const headers = ["id", "author", "type", "inventory", "price", "name", "img", "description", "status"];
@@ -28,6 +27,7 @@ class Excel extends React.Component {
     componentDidMount() {
         const callback = (data) => {
             console.log("woc666");
+            list.splice(0,list.length);
             for(let i in data){
                 let l = [];
                 l.push(data[i].id);
