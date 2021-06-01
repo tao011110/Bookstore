@@ -11,8 +11,11 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
     @Query("from Book where id = :id")
     Book findBook(Integer id);
 
-    @Query("select b from Book b")
+    @Query("select b from Book b where b.status = 1")
     List<Book> getBooks();
+
+    @Query("select b from Book b")
+    List<Book> showAllBooks();
 
     @Modifying
     @Transactional
@@ -53,4 +56,9 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
     @Transactional
     @Query(value = "update Book set status = :status where id = :id")
     int updateBookStatus(int id, int status);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update Book set id = :id where author = :author and name = :name")
+    int updateBookID(int id, String author, String name);
 }

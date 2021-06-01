@@ -5,6 +5,11 @@ export const getBooks = (data, callback) => {
     postRequest(url, data, callback);
 };
 
+export const showAllBooks = (data, callback) => {
+    const url = 'http://localhost:8080/showAllBooks';
+    postRequest(url, data, callback);
+};
+
 export const getBook = (id, callback) => {
     const data = {id: id};
     const url = 'http://localhost:8080/getBook';

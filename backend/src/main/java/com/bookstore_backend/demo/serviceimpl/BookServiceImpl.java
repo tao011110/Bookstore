@@ -25,6 +25,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> showAllBooks() {
+        return bookDao.showAllBooks();
+    }
+
+    @Override
     public int updateBook(Map<String, String> param){
         return bookDao.updateBook(param);
     }

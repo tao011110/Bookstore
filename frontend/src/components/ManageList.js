@@ -4,7 +4,7 @@ import {Link } from 'react-router-dom';
 import './config';
 import "../css/manage.css"
 import PropTypes from "prop-types";
-import {getBooks} from "../services/bookService";
+import {showAllBooks} from "../services/bookService";
 import * as cartService from "../services/cartService";
 import * as manageService from "../services/manageService"
 
@@ -44,7 +44,7 @@ class Excel extends React.Component {
             this.setState({data:list});
             console.log(list);
         };
-        getBooks({"search":null}, callback);
+        showAllBooks({"search":null}, callback);
     }
 
     sort = (e) => {
@@ -140,6 +140,10 @@ class Excel extends React.Component {
             </tr>
         );
     };
+
+    handleUpdateID=(arr)=>{
+
+    }
 
     handleUpdateAuthor =(arr)=>{
         let json = new Object();
@@ -266,13 +270,27 @@ class Excel extends React.Component {
                                                 event=>{
                                                     {
                                                         console.log(event.target.value);
+                                                        let index = edit.row;
+                                                        let tmpID = list[index][0];
                                                         list[edit.row][edit.cell] = event.target.value;
                                                         console.log("Now it is,  ",list[edit.row][edit.cell]);
                                                         console.log(list[edit.row][edit.cell]);
-                                                        let index = edit.row;
                                                         if(edit.cell == 0){
+                                                            console.log("list[index][0]  " +list[index][0]);
                                                             list[index].id = event.target.value;
-                                                            this.handleUpdateAuthor(list[index]);
+                                                            let arr = list[index];
+                                                            let json = new Object();
+                                                            json.id = arr[0];
+                                                            json.author = arr[1];
+                                                            json.name= arr[5];
+                                                            json.change = "id";
+                                                            const callback = (data) => {
+                                                                console.log("call  " + data);
+                                                                if(data == -1){
+                                                                    window.alert("id不可重复，请立即还原为" + tmpID + "!")
+                                                                }
+                                                            }
+                                                            manageService.updateBook(json, callback);
                                                         }
                                                         if(edit.cell == 1){
                                                             list[index].author = event.target.value;

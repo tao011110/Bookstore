@@ -7,5 +7,6 @@ import java.util.Map;
 public interface BookService {
     Book findBookById(Integer id);
     List<Book> listBooks();
+    List<Book> showAllBooks();
     int updateBook(Map<String, String> param);
 }

@@ -23,6 +23,15 @@ public class BookController {
         return list;
     }
 
+    @RequestMapping("/showAllBooks")
+    public List<Book> showAllBooks(@RequestBody Map<String, String> param){
+        List<Book> list = bookService.showAllBooks();
+        for(Book book : list){
+            System.out.println(book.getId() + ": " + book.getName());
+        }
+        return list;
+    }
+
     @RequestMapping("/getBook")
     public Book getBook(@RequestParam("id") Integer id){
         return bookService.findBookById(id);
