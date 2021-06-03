@@ -1,4 +1,4 @@
-import {postRequest} from "../utils/ajax";
+import {postRequest, postRequest_v2} from "../utils/ajax";
 
 export const addOrder = (data, callback) => {
     const url = 'http://localhost:8080/addOrder';
@@ -13,4 +13,16 @@ export const addOrderOne = (data, callback) => {
 export const showAllOrders = (data, callback) => {
     const url = 'http://localhost:8080/showAllOrders';
     postRequest(url, data, callback);
+};
+
+export const findOneOrder = (id, callback) => {
+    const data = {id: id};
+    const url = 'http://localhost:8080/findOneOrder';
+    postRequest_v2(url, data, callback);
+};
+
+export const findOrderItems = (id, callback) => {
+    const data = {id: id};
+    const url = 'http://localhost:8080/findOrderItems';
+    postRequest_v2(url, data, callback);
 };

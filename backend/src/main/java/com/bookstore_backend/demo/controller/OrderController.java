@@ -2,12 +2,10 @@ package com.bookstore_backend.demo.controller;
 
 import com.bookstore_backend.demo.entity.Book;
 import com.bookstore_backend.demo.entity.Order;
+import com.bookstore_backend.demo.entity.OrderItem;
 import com.bookstore_backend.demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -45,5 +43,15 @@ public class OrderController {
             System.out.println(order.getOrder_id() + ": " + order.getTime());
         }
         return list;
+    }
+
+    @RequestMapping("/findOneOrder")
+    public Order findOrder(@RequestParam("id") Integer id){
+        return orderService.findOrder(id);
+    }
+
+    @RequestMapping("/findOrderItems")
+    public List<OrderItem> findOrderItems(@RequestParam("id") Integer id){
+        return orderService.findOrderItems(id);
     }
 }

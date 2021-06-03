@@ -335,6 +335,8 @@ class Excel extends React.Component {
                     {this.renderSearch()}
                     {this.state.data.map(function (row, rowidx) {
                         return (
+                            console.log("row"),
+                                console.log(row),
                             <tr key={rowidx}>{
                                 row.map(function (cell, idx) {
                                     let content = cell;

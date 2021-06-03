@@ -3,8 +3,9 @@ import {HeaderInfo} from "../components/HeaderInfo";
 import {Copyright} from "../components/Copyright";
 import ManageList from "../components/ManageList";
 import "../css/manage.css"
+import OrderList from "../components/OrderList";
 
-class ManageView extends React.Component {
+class UserOrderView extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -30,4 +31,4 @@ class ManageView extends React.Component {
     }
 }
 
-export default ManageView;
+export default UserOrderView;

@@ -9,4 +9,5 @@ public interface UserDao {
     User check(String username, String password);
     List<User> listUsers();
     int updateUserType(Map<String, String> param);
+    int checkUserType(Map<String, String> param);
 }

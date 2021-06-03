@@ -1,33 +1,38 @@
 import React from 'react';
 import '../css/detail.css'
 import '../css/search.css'
-import {BookDetail} from "../components/BookDetail";
+import {OrderDetail} from "../components/OrderDetail";
 import {HeaderInfo} from "../components/HeaderInfo";
 import {Copyright} from "../components/Copyright";
 import SearchBox from "../components/SearchBar";
-import {getBook} from "../services/bookService";
+import {findOrderItems} from "../services/orderService";
 
-class BookView extends React.Component{
+class OrderView extends React.Component{
     constructor(props) {
         super(props);
 
-        this.state = {books:null};
+        this.state = {order_items:null};
     }
 
-    componentDidMount(){
+    componentWillMount(){
+        console.log("wad");
         let user = localStorage.getItem("user");
-        console.log("user  " + user);
         this.setState({user:user});
         const query = this.props.location.search;
         const arr = query.split('&');
-        const bookId = arr[0].substr(4);
-        getBook(bookId, (data) => {console.log("dwadwa  " +data.id);
-            this.setState({ info: data})})
+        const order_id = arr[0].substr(4);
+        console.log("order_id  " + order_id);
+        this.setState({ id: order_id});
+        // findOrderItems(order_id, (data) => {
+        //     this.setState({ info: data});
+        //     console.log("find  " + order_id);
+        //     console.log(data);
+        // })
     }
 
     render(){
         console.log("this.state.info");
-        console.log(this.state.info);
+        console.log(this.state.id);
         return(
             <div>
                 <div>
@@ -38,7 +43,7 @@ class BookView extends React.Component{
                         <SearchBox/>
                     </div>
                     <div className="home-content">
-                        <BookDetail info={ this.state.info } />
+                        <OrderDetail info={ this.state.id } />
                     </div>
                 </div>
                 <div>
@@ -49,4 +54,4 @@ class BookView extends React.Component{
     }
 }
 
-export default BookView;
+export default OrderView;

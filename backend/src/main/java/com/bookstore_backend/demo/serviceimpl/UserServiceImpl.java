@@ -30,4 +30,10 @@ public class UserServiceImpl implements UserService {
 
         return userDao.updateUserType(param);
     }
+
+    @Override
+    public int checkUserType(Map<String, String> param){
+
+        return userDao.checkUserType(param);
+    }
 }

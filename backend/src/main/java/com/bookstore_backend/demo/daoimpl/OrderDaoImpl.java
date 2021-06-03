@@ -1,6 +1,7 @@
 package com.bookstore_backend.demo.daoimpl;
 
 import com.bookstore_backend.demo.dao.OrderDao;
+import com.bookstore_backend.demo.entity.Book;
 import com.bookstore_backend.demo.entity.Order;
 import com.bookstore_backend.demo.entity.OrderItem;
 import com.bookstore_backend.demo.repository.OrderItemRepository;
@@ -100,7 +101,6 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public boolean addOrderOne(Map<Object, Object> param){
-
         try {
             String suser_id=  String.valueOf(param.get("user_id"));
             int user_id = Integer.valueOf(suser_id);
@@ -148,5 +148,27 @@ public class OrderDaoImpl implements OrderDao {
         List<Order> listResult = orderRepository.showAllOrders();
 
         return listResult;
+    }
+
+
+    @Override
+    public Order findOrder(Integer id){
+        Order orderResult = orderRepository.findOrder(id);
+
+        return orderResult;
+    }
+
+
+
+    @Override
+    public List<OrderItem> findOrderItems(Integer id){
+        System.out.println("id"+id);
+        List<OrderItem> orderItemsResult= orderItemRepository.findOrderItems(id);
+        System.out.println(orderItemsResult);
+        System.out.println("orderItemsResult.get(0)");
+        System.out.println(orderItemsResult.get(0));
+        System.out.println(orderItemsResult.get(0).getPrice());
+
+        return orderItemsResult;
     }
 }

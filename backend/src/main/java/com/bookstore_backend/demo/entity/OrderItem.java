@@ -31,27 +31,27 @@ public class OrderItem {
     @Column(name = "time")
     private String time;
 
-    private int getOrder_item_id(){
+    public int getOrder_item_id(){
         return order_item_id;
     }
 
-    private int getOrder_id(){
+    public int getOrder_id(){
         return order_id;
     }
 
-    private int getPrice(){
+    public int getPrice(){
         return price;
     }
 
-    private int getNum(){
+    public int getNum(){
         return num;
     }
 
-    private int getBook_id(){
+    public int getBook_id(){
         return book_id;
     }
 
-    private String getTime(){
+    public String getTime(){
         return time;
     }
 

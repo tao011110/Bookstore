@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input} from 'antd';
+import {Card, Input} from 'antd';
 import {Link } from 'react-router-dom';
 import {List, Row, Col, Checkbox, Button, input} from 'antd';
 import './config';
@@ -24,7 +24,10 @@ class Excel extends React.Component {
             edit: null, // [row index, cell index],
             search: false,
             preSearchData: null,
+            user: 0,
         };
+        let user = localStorage.getItem("user");
+        this.setState({user:user});
     }
 
     componentDidMount() {
@@ -154,9 +157,12 @@ class Excel extends React.Component {
                                     return <td key={idx} data-row={rowidx}>{content}</td>;
                                 }, this)}
                                 <td>
-                                    <Button type="primary" size={"large"}>
-                                        查看详情
-                                    </Button>
+                                    <Link to={{pathname:'/OrderView', search: "?id=" + list[rowidx][0]}}
+                                          target = "_blank">
+                                        <Button type="primary" size={"large"}>
+                                            查看详情
+                                        </Button>
+                                    </Link>
                                 </td>
                             </tr>
                         );

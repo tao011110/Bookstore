@@ -14,5 +14,4 @@ export const getBook = (id, callback) => {
     const data = {id: id};
     const url = 'http://localhost:8080/getBook';
     postRequest_v2(url, data, callback);
-
 };

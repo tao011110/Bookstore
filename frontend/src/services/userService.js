@@ -25,3 +25,8 @@ export const checkSession = (callback) => {
     postRequest(url, {}, callback);
     console.log("finish check");
 };
+
+export const checkUserType = (data, callback) => {
+    const url = 'http://localhost:8080/checkUserType';
+    postRequest(url, data, callback);
+};

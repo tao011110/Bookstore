@@ -64,4 +64,10 @@ public class UserController {
     public int updateUserType(@RequestBody Map<String, String> param){
         return userService.updateUserType(param);
     }
+
+    @RequestMapping("/checkUserStatus")
+    public int checkUserType(@RequestBody Map<String, String> param){
+        return userService.checkUserType(param);
+    }
+
 }

@@ -49,4 +49,14 @@ public class UserDaoImpl implements UserDao {
 
         return userRepository.updateUserType(user_id, user_type);
     }
+
+    @Override
+    public int checkUserType(Map<String, String> param) {
+        System.out.println("modify user type");
+        String sid = String.valueOf(param.get("user_id"));
+        int user_id = Integer.valueOf(sid);
+        System.out.println("user_id  "+ user_id);
+
+        return userRepository.checkUserType(user_id);
+    }
 }

@@ -20,4 +20,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Transactional
     @Query(value = "update User set user_type = :user_type where user_id = :user_id")
     int updateUserType(int user_id, int user_type);
+
+    @Query(value = "select user_type from User where user_id = :user_id")
+    int checkUserType(int user_id);
 }

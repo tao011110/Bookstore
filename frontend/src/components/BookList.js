@@ -5,19 +5,6 @@ import {Book} from './Book'
 import "../css/index.css"
 import {getBooks} from "../services/bookService";
 
-const bookInfo=[];
-
-function show(){
-    var i = 0;
-    bookInfo.splice(0, bookInfo.length);
-    for(i = 0; i < global.showBooks.length; i++){
-        if(global.showBooks[i].isShow == true || global.showBooks[i].isShow == 'true')
-            bookInfo.push({ card:<Book info={global.showBooks[i]}/>, information: global.showBooks[i]});
-        //else console.log(global.showBooks[i].name,"  ", global.showBooks[i].isShow, typeof(global.showBooks[i].isShow));
-    }
-    //console.log(bookInfo);
-}
-
 export class BookList extends React.Component{
     constructor(props) {
         super(props);
@@ -44,7 +31,8 @@ export class BookList extends React.Component{
     // }
     render() {
         return (
-            //show(),
+            console.log("this.state.books"),
+            console.log(this.state.books),
             <List
                 grid={{gutter:10, column: 4}}
                 dataSource={this.state.books}

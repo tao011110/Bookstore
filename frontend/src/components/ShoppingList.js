@@ -19,7 +19,7 @@ export class ShoppingList extends React.Component{
 
     handleClick = e =>{
         //e.preventDefault();
-        let user_id = 2001;
+        let user_id = this.state.user;
         let json = new Object();
         json.id = this.delArray;
         json.user_id = user_id;
@@ -31,7 +31,8 @@ export class ShoppingList extends React.Component{
 
     handleClick2 = e =>{
         //e.preventDefault();
-        let user_id = 2001;
+        let user_id = this.state.user;
+        console.log("suadaw  " +user_id);
         let json = new Object();
         json.user_id = user_id;
         json.totalmoney = global.totalmoney;
@@ -50,8 +51,13 @@ export class ShoppingList extends React.Component{
         console.log("已清空", global.buy);
         this.state = {
             total: global.totalmoney,
-            items:[]
+            items:[],
+            user: 0,
         }
+        let user = localStorage.getItem("user");
+        console.log("user  " + user + typeof user);
+        this.state.user = parseInt(user);
+        console.log("user  " + this.state.user);
     }
 
     componentDidMount() {
@@ -62,7 +68,11 @@ export class ShoppingList extends React.Component{
         this.timerID = setInterval(
             () => {
                 if(this.isChanged == true) {
-                    getItems({search: null}, callback);
+                    let user_id = this.state.user;
+                    let json = new Object();
+                    json.user_id = user_id;
+                    console.log("suadaw  " +this.state.user);
+                    getItems(json, callback);
                     this.setState({dataSource: this.state.items});
                     this.isChanged = false;
                     global.buy =[];

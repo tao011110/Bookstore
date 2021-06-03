@@ -16,7 +16,9 @@ public class CartController {
 
     @RequestMapping("/listItems")
     public List<CartItem> listItems(@RequestBody Map<Object, Object> param){
-        int user_id = 2001;
+        String sid = String.valueOf(param.get("user_id"));
+        System.out.println("user_id  " + sid);
+        int user_id = Integer.valueOf(sid);
         System.out.println("list all!");
         List<CartItem> list = cartService.listItems(user_id);
         for(CartItem item : list){

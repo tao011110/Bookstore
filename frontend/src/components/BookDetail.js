@@ -6,12 +6,19 @@ import './config';
 import * as cartService from "../services/cartService";
 import {history} from "../utils/history";
 import * as orderService from "../services/orderService";
+import {getBook} from "../services/bookService";
 
 export class BookDetail extends React.Component{
+    componentDidMount(){
+        let user = localStorage.getItem("user");
+        console.log("user  " + user);
+        this.setState({user:user});
+    }
+
     handleSubmit = e => {
         e.preventDefault();
         let num = 1;
-        let user_id = 2001
+        let user_id = this.state.user;
         let json = new Object();
         json.id = this.props.info.id;
         json.user_id = user_id;
@@ -30,7 +37,7 @@ export class BookDetail extends React.Component{
 
     handleClick2 = e =>{
         //e.preventDefault();
-        let user_id = 2001;
+        let user_id = this.state.user;
         let json = new Object();
         json.user_id = user_id;
         json.totalmoney = this.props.info.price;
@@ -50,6 +57,9 @@ export class BookDetail extends React.Component{
         if(info == null){
             return null;
         }
+        console.log("ccc " + info);
+        console.log("ccc " + info.id);
+
         info.number = 0;
         const addition={
             card:<CartBuy info={info}/>,
