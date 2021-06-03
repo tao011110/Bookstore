@@ -11,6 +11,7 @@ public interface OrderDao {
     boolean addOrder(Map<Object, Object> param);
     boolean addOrderOne(Map<Object, Object> param);
     List<Order> showAllOrders();
+    List<Order> showOneOrder(Map<Object, Object> param);
     Order findOrder(Integer id);
     List<OrderItem> findOrderItems(@RequestParam("id") Integer id);
 }

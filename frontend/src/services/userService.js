@@ -5,14 +5,22 @@ import {history} from "../utils/history";
 export const login = (data) => {
     const url = 'http://localhost:8080/login';
     const callback = (data1) => {
-        console.log("wd  "+ data1);
-        if(data1 == -1){
-            window.alert("您的账号已经被禁用");
-        }
-        if(data1 > 0)
+        console.log("wuhuhh ");
+        console.log(data1);
+        let user_id = parseInt(data1.user_id);
+        let user_type = parseInt(data1.user_type);
+        if(user_id > 0)
         {
-            localStorage.setItem("user",JSON.stringify(data1));
+            localStorage.setItem("user",JSON.stringify(user_id));
+            localStorage.setItem("user_type",JSON.stringify(user_type));
             history.push("/HomeView");
+        }
+        if(user_type === -1){
+            window.alert("您的账号已经被禁用！");
+        }
+        if(user_id === -1)
+        {
+            window.alert("账号密码错误，登陆失败！");
         }
     };
     postRequest(url, data, callback);

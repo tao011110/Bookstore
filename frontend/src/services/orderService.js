@@ -15,6 +15,11 @@ export const showAllOrders = (data, callback) => {
     postRequest(url, data, callback);
 };
 
+export const showOneOrder = (data, callback) => {
+    const url = 'http://localhost:8080/showOneOrder';
+    postRequest(url, data, callback);
+};
+
 export const findOneOrder = (id, callback) => {
     const data = {id: id};
     const url = 'http://localhost:8080/findOneOrder';

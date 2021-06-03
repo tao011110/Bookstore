@@ -19,25 +19,30 @@ public class UserController {
     private boolean isSuccess = false;
 
     @RequestMapping(value="/login")
-    public int check(@RequestBody Map<String,String> param){
+    public Map<String,String> check(@RequestBody Map<String,String> param){
         String username = param.get("username");
         String password = param.get("password");
         System.out.println("Controller " + "username " + username + " , password " + password);
         User user = userService.check(username, password);
+        JSONObject json = new JSONObject();
         if(user == null){
             System.out.println("用户登录失败！");
+            json.put("user_id", "-1");
+            json.put("user_type", "-2");
 
-            return 0;
+            return null;
         }
-        if(user.getUserType() == -1){
-            System.out.println("该用户已被禁用！");
-            return -1;
+        else {
+            System.out.println("用户登录成功！");
+            isSuccess = true;
+            int user_id = user.getUser_id();
+            int user_type = user.getUserType();
+            json.put("user_id", String.valueOf(user_id));
+            json.put("user_type", String.valueOf(user_type));
+            System.out.println("json  " + json);
         }
-        System.out.println("用户登录成功！");
-        isSuccess = true;
-        int user_id = user.getUser_id();
 
-        return user_id;
+        return json;
     }
 
     @RequestMapping("/checkSession")

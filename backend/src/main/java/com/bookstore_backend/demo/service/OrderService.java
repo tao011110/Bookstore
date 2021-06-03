@@ -11,6 +11,7 @@ public interface OrderService {
     boolean addOrder(Map<Object, Object> param);
     boolean addOrderOne(Map<Object, Object> param);
     List<Order> showAllOrders();
+    List<Order> showOneOrder(Map<Object, Object> param);
     Order findOrder(Integer id);
     List<OrderItem> findOrderItems(Integer id);
 }

@@ -34,6 +34,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> showOneOrder(Map<Object, Object> param) {
+        return orderDao.showOneOrder(param);
+    }
+
+    @Override
     public Order findOrder(Integer id){
         return orderDao.findOrder(id);
     }

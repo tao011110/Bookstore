@@ -150,6 +150,18 @@ public class OrderDaoImpl implements OrderDao {
         return listResult;
     }
 
+    @Override
+    public List<Order> showOneOrder(Map<Object, Object> param) {
+        String suser_id=  String.valueOf(param.get("user_id"));
+        int user_id = Integer.valueOf(suser_id);
+        List<Order> listResult = orderRepository.showOneOrder(user_id);
+        for(Order i : listResult){
+            System.out.println(i.getTotalmoney());
+        }
+
+        return listResult;
+    }
+
 
     @Override
     public Order findOrder(Integer id){

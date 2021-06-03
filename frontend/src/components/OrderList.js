@@ -7,12 +7,15 @@ import "../css/manage.css"
 import PropTypes, {array} from "prop-types";
 import {showAllBooks} from "../services/bookService";
 import * as manageService from "../services/manageService"
-import {showAllOrders} from "../services/orderService";
+import {showAllOrders, showOneOrder} from "../services/orderService";
 const { Search } = Input;
 
 const headers = ["order_id", "user_id", "totalmoney", "time", "check"];
 
 let list = []
+
+let user = 0;
+let user_type = 0;
 
 class Excel extends React.Component {
     constructor(props) {
@@ -26,7 +29,8 @@ class Excel extends React.Component {
             preSearchData: null,
             user: 0,
         };
-        let user = localStorage.getItem("user");
+        user = localStorage.getItem("user");
+        user_type = localStorage.getItem("user_type");
         this.setState({user:user});
     }
 
@@ -45,7 +49,15 @@ class Excel extends React.Component {
             this.setState({data:list});
             console.log(list);
         };
-        showAllOrders({"search":null}, callback);
+        if(user_type === 0) {
+            showAllOrders({"search": null}, callback);
+        }
+        else{
+            console.log("just a user!");
+            let json = new Object();
+            json.user_id = user;
+            showOneOrder(json, callback);
+        }
     }
 
     sort = (e) => {
