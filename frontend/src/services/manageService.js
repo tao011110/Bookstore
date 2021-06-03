@@ -19,3 +19,8 @@ export const manageAddBook = (data, callback) => {
     const url = 'http://localhost:8080/manageAddBook';
     postRequest(url, data, callback);
 };
+
+export const manageDeleteBook = (data, callback) => {
+    const url = 'http://localhost:8080/manageDeleteBook';
+    postRequest(url, data, callback);
+};

@@ -11,6 +11,24 @@
     text-align: center;
 }
 
+.addBook{
+    margin-left: 460px;
+    float: left;
+}
+
+.addBookSubmit{
+    margin-left: 60px;
+    float: left;
+}
+
+.deleteBook{
+    margin-bottom: 20px;
+}
+
+.clearFloat{
+    clear:both;
+}
+
 .manageBack input {
     font: 16px Arial;
     width: 125px;

@@ -38,4 +38,13 @@ public class BookServiceImpl implements BookService {
     public boolean manageAddBook(Map<Object, Object> param){
         return bookDao.manageAddBook(param);
     }
+
+    @Override
+    public boolean manageDeleteBook(Map<Object, Object> param){
+        boolean flag = bookDao.manageDeleteBook(param);
+        if(flag == true){
+            return true;
+        }
+        return false;
+    }
 }

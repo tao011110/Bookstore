@@ -142,4 +142,11 @@ public class OrderDaoImpl implements OrderDao {
             return false;
         }
     }
+
+    @Override
+    public List<Order> showAllOrders() {
+        List<Order> listResult = orderRepository.showAllOrders();
+
+        return listResult;
+    }
 }

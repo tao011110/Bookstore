@@ -1,6 +1,7 @@
 package com.bookstore_backend.demo.serviceimpl;
 
 import com.bookstore_backend.demo.dao.OrderDao;
+import com.bookstore_backend.demo.entity.Order;
 import com.bookstore_backend.demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,10 @@ public class OrderServiceImpl implements OrderService {
     public boolean addOrderOne(Map<Object, Object> param){
 
         return orderDao.addOrderOne(param);
+    }
+
+    @Override
+    public List<Order> showAllOrders() {
+        return orderDao.showAllOrders();
     }
 }

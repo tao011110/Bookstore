@@ -104,8 +104,10 @@ public class BookDaoImpl implements BookDao {
     @Override
     public boolean manageAddBook(Map<Object, Object> param){
         try {
+            System.out.println(param);
             String sid =  String.valueOf(param.get("id"));
             int book_id = Integer.valueOf(sid);
+            System.out.println(book_id);
             String author = String.valueOf(param.get("author"));
             String type = String.valueOf(param.get("type"));
             String sinventory = String.valueOf(param.get("inventory"));
@@ -118,26 +120,47 @@ public class BookDaoImpl implements BookDao {
             String sstatus = String.valueOf(param.get("status"));
             int status = Integer.valueOf(sstatus);
 
-            Book book = bookRepository.getOne(book_id);
+            Book book = bookRepository.findBook(book_id);
             if(book == null){
+                System.out.println(book_id);
                 System.out.println("null");
-                book = new Book();
-                book.setID(book_id);
-                book.setAuthor(author);
-                book.setType(type);
-                book.setInventory(inventory);
-                book.setPrice(price);
-                book.setName(name);;
-                book.setImg(img);
-                book.setDescription(description);
-                book.setStatus(status);
+                Book newBook = new Book();
+                newBook.setAuthor(author);
+                newBook.setDescription(description);
+                newBook.setImg(img);
+                newBook.setInventory(inventory);
+                newBook.setName(name);
+                newBook.setPrice(price);
+                newBook.setStatus(status);
+                newBook.setType(type);
+                newBook.setID(book_id);
+                System.out.println(book_id);
 
-                bookRepository.save(book);
+                bookRepository.save(newBook);
+                bookRepository.updateBookID(book_id, author, name);
                 return true;
             }
             else{
                 return false;
             }
+        }
+        catch(Exception e){
+            System.out.println("添加失败！");
+
+            return false;
+        }
+    }
+
+    @Override
+    public boolean manageDeleteBook(Map<Object, Object> param){
+        try {
+            System.out.println(param);
+            String sid =  String.valueOf(param.get("id"));
+            int book_id = Integer.valueOf(sid);
+            System.out.println(book_id);
+
+            bookRepository.manageBookDelete(book_id);
+            return true;
         }
         catch(Exception e){
             System.out.println("添加失败！");

@@ -1,19 +1,28 @@
 import React from 'react';
 import {Input} from 'antd';
 import {Link } from 'react-router-dom';
+import {List, Row, Col, Checkbox, Button, input} from 'antd';
 import './config';
 import "../css/manage.css"
-import PropTypes from "prop-types";
+import PropTypes, {array} from "prop-types";
 import {showAllBooks} from "../services/bookService";
 import * as manageService from "../services/manageService"
+const { Search } = Input;
 
 const headers = ["id", "author", "type", "inventory", "price", "name", "img", "description", "status"];
 
-const list = []
+let list = []
+
+const addition = new Array(9)
+
+let isAdding = false;
 
 class Excel extends React.Component {
     constructor(props) {
         super(props);
+        this.add = this.add.bind(this);
+        this.addSubmit = this.addSubmit.bind(this);
+        this.deleteSubmit = this.deleteSubmit.bind(this);
         this.state = {
             data: this.props.initialData,
             sortby: null,
@@ -47,102 +56,73 @@ class Excel extends React.Component {
         showAllBooks({"search":null}, callback);
     }
 
-    sort = (e) => {
-        let column = e.target.cellIndex;
-        let data = this.state.data.slice();
-        let descending = this.state.sortby === column && !this.state.descending;
-        data.sort(function (a, b) {
-            return descending
-                ? (a[column] < b[column] ? 1 : -1)
-                : (a[column] > b[column] ? 1 : -1);
-        });
-        this.setState({
-            data: data,
-            sortby: column,
-            descending: descending,
-        });
-    };
-
-    save = (e) => {
-        e.preventDefault();
-        let input = e.target.firstChild;
-        let data = this.state.data.slice();
-        data[this.state.edit.row][this.state.edit.cell] = input.value;
-        this.setState({
-            edit: null,
-            data: data,
-        });
-    };
-
-    toggleSearch = () => {
-        if (this.state.search) {
-            this.setState({
-                data: this.preSearchData,
-                search: false,
-            });
-            this.preSearchData = null;
-        } else {
-            this.preSearchData = this.state.data;
-            this.setState({
-                search: true,
-            });
+    add =() =>{
+        isAdding = true;
+        addition[0] = (list[list.length - 1][0] + 1);
+        for(let i = 1; i < 9; i++){
+            addition[i] = "";
         }
-    };
-
-    search = (e) => {
-        let needle = e.target.value.toLowerCase();
-        if (!needle) {
-            this.setState({data: this.preSearchData});
-            return;
-        }
-        let idx = e.target.dataset.idx;
-        let searchdata = this.preSearchData.filter(function (row) {
-            return row[idx].toString().toLowerCase().indexOf(needle) > -1;
-        });
-        this.setState({data: searchdata});
-    };
-
-    showEditor = (e) => {
+        console.log("add book");
+        let tmp = addition;
+        list.push(addition);
         this.setState({
-            edit: {
-                row: parseInt(e.target.dataset.row, 10),
-                cell: e.target.cellIndex,
+            data: list,
+        });
+        console.log(this.state.data);
+    }
+
+    addSubmit=()=>{
+        console.log(list);
+        isAdding = false;
+        let json = new Object();
+        json.id = addition[0];
+        json.author = addition[1];
+        json.type = addition[2];
+        json.inventory = addition[3];
+        json.price = addition[4];
+        json.name = addition[5];
+        json.img = addition[6];
+        json.description = addition[7];
+        json.status = addition[8];
+        console.log("you put");
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        let arr = new Array(9);
+        for(let i = 0; i < 9; i++){
+            arr[i] = addition[i];
+        }
+        console.log(arr);
+        list[list.length - 1] = arr;
+        this.setState({
+            data: list,
+        });
+        console.log(this.state.data);
+        manageService.manageAddBook(json, callback);
+        addition.splice(0, addition.length);
+    }
+
+    deleteSubmit=(e)=>{
+        const book_id = e
+        console.log(book_id);
+
+        let json = new Object();
+        json.id = book_id;
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.manageDeleteBook(json, callback);
+        for(let i = 0; i < list.length; i++){
+            console.log("list[i].id " + list[i][0]);
+            if(list[i][0] === parseInt(book_id)){
+                list.splice(i, 1);
+                break;
             }
-        });
-    };
-
-    render = () => {
-        return (
-            <div className="manageMain">
-                {this.renderToolbar()}
-                {this.renderTable()}
-            </div>
-        );
-    };
-
-    renderToolbar = () => {
-        return (
-            <div className="toolbar">
-                <button onClick={this.toggleSearch}>Search</button>
-            </div>
-        );
-    };
-
-    renderSearch = () =>  {
-        if (!this.state.search) {
-            return null;
         }
-        return (
-            <tr onChange={this.search}>
-                {this.props.headers.map(function (ignore, idx) {
-                    return <td key={idx}><input type="text" data-idx={idx} placeholder="请输入"/></td>;
-                })}
-            </tr>
-        );
-    };
-
-    handleUpdateID=(arr)=>{
-
+        console.log("list  " + list);
+        this.setState({
+            data: list,
+        });
     }
 
     handleUpdateAuthor =(arr)=>{
@@ -242,103 +222,251 @@ class Excel extends React.Component {
         manageService.updateBook(json, callback);
     }
 
+
+    sort = (e) => {
+        let column = e.target.cellIndex;
+        let data = this.state.data.slice();
+        let descending = this.state.sortby === column && !this.state.descending;
+        data.sort(function (a, b) {
+            return descending
+                ? (a[column] < b[column] ? 1 : -1)
+                : (a[column] > b[column] ? 1 : -1);
+        });
+        this.setState({
+            data: data,
+            sortby: column,
+            descending: descending,
+        });
+    };
+
+    save = (e) => {
+        e.preventDefault();
+        let input = e.target.firstChild;
+        let data = this.state.data.slice();
+        data[this.state.edit.row][this.state.edit.cell] = input.value;
+        this.setState({
+            edit: null,
+            data: data,
+        });
+    };
+
+    toggleSearch = () => {
+        if (this.state.search) {
+            this.setState({
+                data: this.preSearchData,
+                search: false,
+            });
+            this.preSearchData = null;
+        } else {
+            this.preSearchData = this.state.data;
+            this.setState({
+                search: true,
+            });
+        }
+    };
+
+    search = (e) => {
+        let needle = e.target.value.toLowerCase();
+        if (!needle) {
+            this.setState({data: this.preSearchData});
+            return;
+        }
+        let idx = e.target.dataset.idx;
+        let searchdata = this.preSearchData.filter(function (row) {
+            return row[idx].toString().toLowerCase().indexOf(needle) > -1;
+        });
+        this.setState({data: searchdata});
+    };
+
+    showEditor = (e) => {
+        this.setState({
+            edit: {
+                row: parseInt(e.target.dataset.row, 10),
+                cell: e.target.cellIndex,
+            }
+        });
+    };
+
+    render = () => {
+        return (
+            <div className="manageMain">
+                {this.renderToolbar()}
+                {this.renderTable()}
+            </div>
+        );
+    };
+
+    renderToolbar = () => {
+        return (
+            <div className="toolbar">
+                <button onClick={this.toggleSearch}>Search</button>
+            </div>
+        );
+    };
+
+    renderSearch = () =>  {
+        if (!this.state.search) {
+            return null;
+        }
+        return (
+            <tr onChange={this.search}>
+                {this.props.headers.map(function (ignore, idx) {
+                    return <td key={idx}><input type="text" data-idx={idx} placeholder="请输入"/></td>;
+                })}
+            </tr>
+        );
+    };
+
     renderTable = () => {
         return (
-            <table>
-                <thead onClick={this.sort}>
-                <tr>{
-                    this.props.headers.map(function (title, idx) {
-                        if (this.state.sortby === idx) {
-                            title += this.state.descending ? ' \u2191' : ' \u2193';
-                        }
-                        return <th key={idx}>{title}</th>;
-                    }, this)
-                }</tr>
-                </thead>
-                <tbody onDoubleClick={this.showEditor} >
-                {this.renderSearch()}
-                {this.state.data.map(function (row, rowidx) {
-                    return (
-                        <tr key={rowidx}>{
-                            row.map(function (cell, idx) {
-                                let content = cell;
-                                let edit = this.state.edit;
-                                if (edit && edit.row === rowidx && edit.cell === idx) {
-                                    content = (
-                                        <form onSubmit={this.save}>
-                                            <Input type="text" defaultValue={cell} onPressEnter={
-                                                event=>{
-                                                    {
-                                                        console.log(event.target.value);
-                                                        let index = edit.row;
-                                                        let tmpID = list[index][0];
-                                                        list[edit.row][edit.cell] = event.target.value;
-                                                        console.log("Now it is,  ",list[edit.row][edit.cell]);
-                                                        console.log(list[edit.row][edit.cell]);
-                                                        if(edit.cell == 0){
-                                                            console.log("list[index][0]  " +list[index][0]);
-                                                            list[index].id = event.target.value;
-                                                            let arr = list[index];
-                                                            let json = new Object();
-                                                            json.id = arr[0];
-                                                            json.author = arr[1];
-                                                            json.name= arr[5];
-                                                            json.change = "id";
-                                                            const callback = (data) => {
-                                                                console.log("call  " + data);
-                                                                if(data == -1){
-                                                                    window.alert("id不可重复，请立即还原为" + tmpID + "!")
+            <div>
+                <table  border={"1"}>
+                    <thead onClick={this.sort}>
+                    <tr>{
+                        this.props.headers.map(function (title, idx) {
+                            if (this.state.sortby === idx) {
+                                title += this.state.descending ? ' \u2191' : ' \u2193';
+                            }
+                            return <th key={idx}>{title}</th>;
+                        }, this)
+                    }</tr>
+                    </thead>
+                    <tbody>
+                    {this.renderSearch()}
+                    {this.state.data.map(function (row, rowidx) {
+                        return (
+                            <tr key={rowidx}>{
+                                row.map(function (cell, idx) {
+                                    let content = cell;
+                                    let edit = this.state.edit;
+                                    if (edit && edit.row === rowidx && edit.cell === idx) {
+                                        content = (
+                                            <form onSubmit={this.save}>
+                                                <Input type="text" defaultValue={cell} onPressEnter={
+                                                    event=>{
+                                                        {
+                                                            console.log("modify row  " + edit.row);
+                                                            console.log(event.target.value);
+                                                            let index = edit.row;
+                                                            let tmpID = list[index][0];
+                                                            list[edit.row][edit.cell] = event.target.value;
+                                                            console.log("Now it is,  ",list[edit.row][edit.cell]);
+                                                            console.log(list[edit.row][edit.cell]);
+
+                                                            if(edit.cell === 0){
+                                                                list[index].id = event.target.value;
+                                                                if(isAdding !== true || edit.row + 1!== list.length){
+                                                                    let arr = list[index];
+                                                                    let json = new Object();
+                                                                    json.id = arr[0];
+                                                                    json.author = arr[1];
+                                                                    json.name= arr[5];
+                                                                    json.change = "id";
+                                                                    const callback = (data) => {
+                                                                        console.log("call  " + data);
+                                                                        if(data === -1){
+                                                                            window.alert("id不可重复，请立即还原为" + tmpID + "!")
+                                                                        }
+                                                                    }
+                                                                    manageService.updateBook(json, callback);
                                                                 }
                                                             }
-                                                            manageService.updateBook(json, callback);
+                                                            if(edit.cell === 1){
+                                                                console.log("list[index][0]  " +list[index][1]);
+                                                                list[index][1] = event.target.value;
+                                                                if(isAdding !== true || edit.row + 1!== list.length){
+                                                                    this.handleUpdateAuthor(list[index]);
+                                                                }
+                                                            }
+                                                            if(edit.cell === 2){
+                                                                list[index][2] = event.target.value;
+                                                                if(isAdding !== true || edit.row + 1!== list.length){
+                                                                    this.handleUpdateType(list[index]);
+                                                                }
+                                                            }
+                                                            if(edit.cell === 3){
+                                                                list[index][3] = event.target.value;
+                                                                if(isAdding !== true || edit.row + 1!== list.length){
+                                                                    this.handleUpdateInventory(list[index]);
+                                                                }
+                                                            }
+                                                            if(edit.cell === 4){
+                                                                list[index][4] = event.target.value;
+                                                                if(isAdding !== true || edit.row + 1!== list.length){
+                                                                    this.handleUpdatePrice(list[index]);
+                                                                }
+                                                            }
+                                                            if(edit.cell === 5){
+                                                                list[index][5] = event.target.value;
+                                                                if(isAdding !== true || edit.row + 1!== list.length){
+                                                                    this.handleUpdateName(list[index]);
+                                                                }
+                                                            }
+                                                            if(edit.cell === 6){
+                                                                list[index][6] = event.target.value;
+                                                                if(isAdding !== true || edit.row + 1!== list.length){
+                                                                    this.handleUpdateImg(list[index]);
+                                                                }
+                                                            }
+                                                            if(edit.cell === 7){
+                                                                list[index][7] = event.target.value;
+                                                                if(isAdding !== true || edit.row + 1!== list.length){
+                                                                    this.handleUpdateDescription(list[index]);
+                                                                }
+                                                            }
+                                                            if(edit.cell === 8){
+                                                                list[index][8] = event.target.value;
+                                                                if(isAdding !== true || edit.row + 1!== list.length){
+                                                                    this.handleUpdateStatus(list[index]);
+                                                                }
+                                                            }
+                                                            console.log(list[index]);
                                                         }
-                                                        if(edit.cell == 1){
-                                                            list[index].author = event.target.value;
-                                                            this.handleUpdateAuthor(list[index]);
-                                                        }
-                                                        if(edit.cell == 2){
-                                                            list[index].type = event.target.value;
-                                                            this.handleUpdateType(list[index]);
-                                                        }
-                                                        if(edit.cell == 3){
-                                                            list[index].inventory = event.target.value;
-                                                            this.handleUpdateInventory(list[index]);
-                                                        }
-                                                        if(edit.cell == 4){
-                                                            list[index].price = event.target.value;
-                                                            this.handleUpdatePrice(list[index]);
-                                                        }
-                                                        if(edit.cell == 5){
-                                                            list[index].name = event.target.value;
-                                                            this.handleUpdateName(list[index]);
-                                                        }
-                                                        if(edit.cell == 6){
-                                                            list[index].img = event.target.value;
-                                                            this.handleUpdateImg(list[index]);
-                                                        }
-                                                        if(edit.cell == 7){
-                                                            list[index].description = event.target.value;
-                                                            this.handleUpdateDescription(list[index]);
-                                                        }
-                                                        if(edit.cell == 8){
-                                                            list[index].isShow = event.target.value;
-                                                            this.handleUpdateStatus(list[index]);
-                                                        }
-                                                        console.log(list[index]);
                                                     }
-                                                }
-                                            }/>
-                                        </form>
-                                    );
-                                    console.log(edit);
-                                }
-                                return <td key={idx} data-row={rowidx}>{content}</td>;
-                            }, this)}
-                        </tr>
-                    );
-                }, this)}
-                </tbody>
-            </table>
+                                                }/>
+                                            </form>
+                                        );
+                                        console.log(edit);
+                                    }
+                                    if(idx != 0) {
+                                        return <td key={idx} data-row={rowidx}
+                                                   onDoubleClick={this.showEditor}>{content}</td>;
+                                    }
+                                    else{
+                                        return <td key={idx} data-row={rowidx}>{content}</td>;
+                                    }
+                                }, this)}
+                            </tr>
+                        );
+                    }, this)}
+                    </tbody>
+                </table>
+
+                <div>
+                    <div className="addBook">
+                        <Button type="primary" onClick={onClick=>
+                        {
+                            this.add();
+                        }}>增加书籍</Button>
+                    </div>
+                    <div className="addBookSubmit">
+                        <Button type="primary" onClick={onClick=>
+                        {
+                            this.addSubmit();
+                        }}>确认添加</Button>
+                    </div>
+                    <div className="deleteBook">
+                        <Search
+                            placeholder="输入删除书籍的ID"
+                            allowClear
+                            enterButton="删除"
+                            size="large"
+                            onSearch={(e)=>this.deleteSubmit(e)}
+                        />
+                    </div>
+                </div>
+                <div className="clearFloat"></div>
+            </div>
         );
     }
 };

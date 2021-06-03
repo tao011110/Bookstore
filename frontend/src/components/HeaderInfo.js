@@ -84,6 +84,13 @@ export class HeaderInfo extends React.Component {
                                                 </div>
                                             </Link>
                                         </Menu.Item>
+                                        <Menu.Item key="5">
+                                            <Link to={'/ManageOrderView'}>
+                                                <div>
+                                                    管理员订单界面
+                                                </div>
+                                            </Link>
+                                        </Menu.Item>
 
                                     </SubMenu>
                                 </Menu>

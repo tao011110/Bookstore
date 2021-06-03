@@ -9,7 +9,8 @@ import BookView from "./view/BookView";
 import ShoppingCartView from "./view/ShoppingCartView";
 import SubmitView from "./view/SubmitView";
 import ManageView from "./view/ManageView";
-import UserManageView from "./view/UserManageView";
+import ManageUserView from "./view/ManageUserView";
+import ManageOrderView from "./view/ManageOrderView";
 
 
 class BasicRoute extends React.Component{
@@ -33,7 +34,8 @@ class BasicRoute extends React.Component{
                     <Route exact path='/ShoppingCartView' component={ShoppingCartView}/>
                     <Route exact path='/SubmitView' component={SubmitView}/>
                     <Route exact path='/ManageView' component={ManageView}/>
-                    <Route exact path='/UserManageView' component={UserManageView}/>
+                    <Route exact path='/ManageUserView' component={ManageUserView}/>
+                    <Route exact path='/ManageOrderView' component={ManageOrderView}/>
                 </Switch>
             </Router>
         )

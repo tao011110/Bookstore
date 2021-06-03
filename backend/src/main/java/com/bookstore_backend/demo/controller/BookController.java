@@ -51,4 +51,14 @@ public class BookController {
         System.out.println("book_id不可重复！");
         return false;
     }
+
+    @RequestMapping("/manageDeleteBook")
+    public boolean manageDeleteBook(@RequestBody Map<Object, Object> param){
+        boolean flag =  bookService.manageDeleteBook(param);
+        if(flag == true){
+            return true;
+        }
+        System.out.println("已删除！");
+        return false;
+    }
 }

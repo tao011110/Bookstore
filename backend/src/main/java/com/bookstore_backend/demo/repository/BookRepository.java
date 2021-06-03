@@ -61,4 +61,9 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
     @Transactional
     @Query(value = "update Book set id = :id where author = :author and name = :name")
     int updateBookID(int id, String author, String name);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from Book where id = :id")
+    void manageBookDelete(int id);
 }

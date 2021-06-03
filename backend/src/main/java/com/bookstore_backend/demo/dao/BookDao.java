@@ -10,4 +10,5 @@ public interface BookDao {
     List<Book> showAllBooks();
     int updateBook(Map<String, String> param);
     boolean manageAddBook(Map<Object, Object> param);
+    boolean manageDeleteBook(Map<Object, Object> param);
 }

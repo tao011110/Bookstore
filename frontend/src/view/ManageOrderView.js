@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import {HeaderInfo} from "../components/HeaderInfo";
 import {Copyright} from "../components/Copyright";
-import UserManageList from "../components/UserManageList";
+import OrderList from "../components/OrderList";
 import "../css/manage.css"
 
-class UserManageView extends React.Component {
+class ManageView extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -20,7 +20,7 @@ class UserManageView extends React.Component {
                     <HeaderInfo/>
                 </div>
                 <div>
-                    <UserManageList/>
+                    <OrderList/>
                 </div>
                 <div>
                     <Copyright/>
@@ -30,4 +30,4 @@ class UserManageView extends React.Component {
     }
 }
 
-export default UserManageView;
+export default ManageView;

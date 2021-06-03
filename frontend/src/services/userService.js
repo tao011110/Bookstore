@@ -21,7 +21,7 @@ export const login = (data) => {
 export const checkSession = (callback) => {
     const url = 'http://localhost:8080/checkSession';
 
-    console.log("begin chec");
+    console.log("begin check");
     postRequest(url, {}, callback);
-    console.log("finish chec");
+    console.log("finish check");
 };
