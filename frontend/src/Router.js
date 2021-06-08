@@ -13,6 +13,7 @@ import ManageUserView from "./view/ManageUserView";
 import ManageOrderView from "./view/ManageOrderView";
 import OrderView from "./view/OrderView";
 import UserOrderView from "./view/UserOrderView";
+import UserStatisticsView from "./view/UserStatisticsView";
 
 class BasicRoute extends React.Component{
 
@@ -39,6 +40,7 @@ class BasicRoute extends React.Component{
                     <Route exact path='/ManageOrderView' component={ManageOrderView}/>
                     <Route exact path='/OrderView' component={OrderView}/>
                     <Route exact path='/UserOrderView' component={UserOrderView}/>
+                    <Route exact path='/UserStatisticsView' component={UserStatisticsView}/>
                 </Switch>
             </Router>
         )

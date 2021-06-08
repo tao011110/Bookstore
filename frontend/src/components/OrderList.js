@@ -1,7 +1,7 @@
 import React from 'react';
-import {Card, Input} from 'antd';
+import {Card, Input, Button, DatePicker} from 'antd';
 import {Link } from 'react-router-dom';
-import {List, Row, Col, Checkbox, Button, input} from 'antd';
+import {List, Row, Col, Checkbox} from 'antd';
 import './config';
 import "../css/manage.css"
 import PropTypes, {array} from "prop-types";
@@ -110,7 +110,27 @@ class Excel extends React.Component {
         }
         let idx = e.target.dataset.idx;
         let searchdata = this.preSearchData.filter(function (row) {
+            console.log(row[3]);
             return row[idx].toString().toLowerCase().indexOf(needle) > -1;
+        });
+        this.setState({data: searchdata});
+    };
+
+    doRange = () => {
+        this.preSearchData = this.state.data;
+    };
+
+    rangeDate = (min, max) => {
+        let searchdata = this.preSearchData.filter(function (row) {
+            let str = row[3].toString().substring(0, 10);
+            console.log(str);
+            console.log(min);
+            if(str >= min && str <= max){
+                return true;
+            }
+            else{
+                return false;
+            }
         });
         this.setState({data: searchdata});
     };
@@ -148,6 +168,7 @@ class Excel extends React.Component {
     renderTable = () => {
         return (
             <div>
+
                 <table  border={"1"}>
                     <thead onClick={this.sort}>
                     <tr>{
@@ -181,6 +202,22 @@ class Excel extends React.Component {
                     }, this)}
                     </tbody>
                 </table>
+                <div>
+                    <Input.Group compact>
+                        <DatePicker.RangePicker style={{ width: '40%' }}
+                                                onChange={(e)=>{
+                                                    let min = e[0].format("YYYY-MM-DD").toString();
+                                                    let max = e[1].format("YYYY-MM-DD").toString();
+                                                    console.log(min);
+                                                    console.log(max);
+                                                    this.preSearchData = this.state.data;
+                                                    this.rangeDate(min, max);
+                                                }}
+                        />
+
+                    </Input.Group>
+                    <br/>
+                </div>
             </div>
         );
     }

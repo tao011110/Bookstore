@@ -31,6 +31,9 @@ public class OrderItem {
     @Column(name = "time")
     private String time;
 
+    @Transient
+    private String name;
+
     public int getOrder_item_id(){
         return order_item_id;
     }
@@ -55,6 +58,10 @@ public class OrderItem {
         return time;
     }
 
+    public String getName(){
+        return name;
+    }
+
     public void setOrder_item_id(int order_item_id){
         this.order_item_id = order_item_id;
     }
@@ -77,5 +84,9 @@ public class OrderItem {
 
     public void setTime(String time){
         this.time = time;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 }

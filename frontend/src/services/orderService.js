@@ -31,3 +31,13 @@ export const findOrderItems = (id, callback) => {
     const url = 'http://localhost:8080/findOrderItems';
     postRequest_v2(url, data, callback);
 };
+
+export const findOrderItemsByTime = (data, callback) => {
+    const url = 'http://localhost:8080/findOrderItemsByTime';
+    postRequest(url, data, callback);
+};
+
+export const userFindOrderItemsByTime = (data, callback) => {
+    const url = 'http://localhost:8080/userFindOrderItemsByTime';
+    postRequest(url, data, callback);
+};

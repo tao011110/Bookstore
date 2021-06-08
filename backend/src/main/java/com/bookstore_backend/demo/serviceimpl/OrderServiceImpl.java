@@ -7,6 +7,7 @@ import com.bookstore_backend.demo.entity.OrderItem;
 import com.bookstore_backend.demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
@@ -46,5 +47,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderItem> findOrderItems(Integer id){
         return orderDao.findOrderItems(id);
+    }
+
+    @Override
+    public List<OrderItem> findOrderItemsByTime(@RequestBody Map<Object, Object> param){
+        return orderDao.findOrderItemsByTime(param);
+    }
+
+    @Override
+    public List<OrderItem> userFindOrderItemsByTime(@RequestBody Map<Object, Object> param){
+        return orderDao.userFindOrderItemsByTime(param);
     }
 }

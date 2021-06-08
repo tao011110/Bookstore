@@ -15,7 +15,7 @@ public class BookController {
     private BookService bookService;
 
     @RequestMapping("/listBooks")
-    public List<Book> listBooks(@RequestBody Map<String, String> param){
+    public List<Book> listBooks(){
         List<Book> list = bookService.listBooks();
         for(Book book : list){
             System.out.println(book.getId() + ": " + book.getName());
@@ -24,7 +24,7 @@ public class BookController {
     }
 
     @RequestMapping("/showAllBooks")
-    public List<Book> showAllBooks(@RequestBody Map<String, String> param){
+    public List<Book> showAllBooks(){
         List<Book> list = bookService.showAllBooks();
         for(Book book : list){
             System.out.println(book.getId() + ": " + book.getName());

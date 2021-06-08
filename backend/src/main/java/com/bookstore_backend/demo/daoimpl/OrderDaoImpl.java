@@ -1,18 +1,18 @@
 package com.bookstore_backend.demo.daoimpl;
 
+import com.bookstore_backend.demo.dao.BookDao;
 import com.bookstore_backend.demo.dao.OrderDao;
 import com.bookstore_backend.demo.entity.Book;
 import com.bookstore_backend.demo.entity.Order;
 import com.bookstore_backend.demo.entity.OrderItem;
 import com.bookstore_backend.demo.repository.OrderItemRepository;
 import com.bookstore_backend.demo.repository.OrderRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
@@ -21,6 +21,9 @@ public class OrderDaoImpl implements OrderDao {
 
     @Autowired
     OrderItemRepository orderItemRepository;
+
+    @Autowired
+    BookDao bookDao;
 
     @Override
     public boolean addOrder(Map<Object, Object> param){
@@ -182,5 +185,42 @@ public class OrderDaoImpl implements OrderDao {
         System.out.println(orderItemsResult.get(0).getPrice());
 
         return orderItemsResult;
+    }
+
+    @Override
+    public List<OrderItem> findOrderItemsByTime(@RequestBody Map<Object, Object> param){
+        String minDate =  String.valueOf(param.get("minDate"));
+        String maxDate =  String.valueOf(param.get("maxDate"));
+        System.out.println(maxDate + "  " + minDate);
+        List<OrderItem> result = orderItemRepository.findOrderItemsByTime(minDate, maxDate);
+        for(OrderItem l : result){
+            System.out.println(l.getBook_id());
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<OrderItem> userFindOrderItemsByTime(@RequestBody Map<Object, Object> param){
+        String minDate =  String.valueOf(param.get("minDate"));
+        String maxDate =  String.valueOf(param.get("maxDate"));
+        String suser_id=  String.valueOf(param.get("user_id"));
+        int user_id = Integer.valueOf(suser_id);
+        System.out.println(maxDate + "  " + minDate +"  " + user_id);
+        List<List<Integer>> numOrder = orderItemRepository.userFindOrderItemsByTime(minDate, maxDate, user_id);
+        List<OrderItem> result = new LinkedList<>();
+
+        for(List<Integer> l : numOrder){
+            System.out.println(l);
+            OrderItem o = new OrderItem();
+            String name = bookDao.findBook(l.get(0)).getName();
+            o.setName(name);
+            o.setPrice(l.get(1));
+            o.setNum(l.get(2));
+            System.out.println(o.getName() +" "+o.getPrice() +" " +o.getNum());
+            result.add(o);
+        }
+
+        return result;
     }
 }

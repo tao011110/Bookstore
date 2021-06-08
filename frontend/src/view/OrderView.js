@@ -23,11 +23,6 @@ class OrderView extends React.Component{
         const order_id = arr[0].substr(4);
         console.log("order_id  " + order_id);
         this.setState({ id: order_id});
-        // findOrderItems(order_id, (data) => {
-        //     this.setState({ info: data});
-        //     console.log("find  " + order_id);
-        //     console.log(data);
-        // })
     }
 
     render(){

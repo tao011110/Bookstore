@@ -17,7 +17,7 @@ export default class PrivateRoute extends React.Component{
             global.isAu = true;
             this.setState({isAuthed: global.isAu});
         } else {
-            console.log("WOCCCCCCCCdata    " +data);
+            console.log("ccdata    " +data);
             //localStorage.removeItem('user');
             this.setState({isAuthed: global.isAu});
         }
@@ -25,7 +25,6 @@ export default class PrivateRoute extends React.Component{
 
 
     componentDidMount() {
-        console.log("11111");
         userService.checkSession(this.checkAuth);
     }
 
