@@ -10,4 +10,5 @@ public interface UserDao {
     List<User> listUsers();
     int updateUserType(Map<String, String> param);
     int checkUserType(Map<String, String> param);
+    List<User> getTopUser(Map<String, String> param);
 }

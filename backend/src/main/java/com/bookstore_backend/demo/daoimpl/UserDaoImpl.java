@@ -2,11 +2,14 @@ package com.bookstore_backend.demo.daoimpl;
 
 import com.bookstore_backend.demo.dao.UserDao;
 import com.bookstore_backend.demo.entity.Book;
+import com.bookstore_backend.demo.entity.OrderItem;
 import com.bookstore_backend.demo.entity.User;
+import com.bookstore_backend.demo.repository.OrderRepository;
 import com.bookstore_backend.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +17,8 @@ import java.util.Map;
 public class UserDaoImpl implements UserDao {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
     @Override
     public User check(String username, String password){
@@ -58,5 +63,27 @@ public class UserDaoImpl implements UserDao {
         System.out.println("user_id  "+ user_id);
 
         return userRepository.checkUserType(user_id);
+    }
+
+    @Override
+    public List<User> getTopUser(Map<String, String> param){
+        String minDate =  String.valueOf(param.get("minDate"));
+        String maxDate =  String.valueOf(param.get("maxDate"));
+        System.out.println(minDate + "  " + maxDate);
+        List<List<Integer>> l = orderRepository.getOrdersByTime(minDate, maxDate);
+
+        List<User> result = new LinkedList<>();
+        for(List<Integer> i : l){
+            System.out.println(i);
+            User u = new User();
+            int user_id = i.get(0);
+            u.setUser_id(user_id);
+            u.setTotalMoney(i.get(1));
+            u.setUsername(userRepository.getUserByUserId(user_id).getUsername());
+            result.add(u);
+            System.out.println(u.getUser_id() +" "+ u.getTotalMoney() + " " + u.getUsername());
+        }
+
+        return result;
     }
 }

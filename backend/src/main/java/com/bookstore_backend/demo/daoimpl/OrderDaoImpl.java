@@ -189,12 +189,22 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<OrderItem> findOrderItemsByTime(@RequestBody Map<Object, Object> param){
+        System.out.println("administrator");
         String minDate =  String.valueOf(param.get("minDate"));
         String maxDate =  String.valueOf(param.get("maxDate"));
         System.out.println(maxDate + "  " + minDate);
-        List<OrderItem> result = orderItemRepository.findOrderItemsByTime(minDate, maxDate);
-        for(OrderItem l : result){
-            System.out.println(l.getBook_id());
+        List<List<Integer>> numOrder = orderItemRepository.findOrderItemsByTime(minDate, maxDate);
+        List<OrderItem> result = new LinkedList<>();
+
+        for(List<Integer> l : numOrder){
+            System.out.println(l);
+            OrderItem o = new OrderItem();
+            String name = bookDao.findBook(l.get(0)).getName();
+            o.setName(name);
+            o.setPrice(l.get(1));
+            o.setNum(l.get(2));
+            System.out.println(o.getName() +" "+o.getPrice() +" " +o.getNum());
+            result.add(o);
         }
 
         return result;

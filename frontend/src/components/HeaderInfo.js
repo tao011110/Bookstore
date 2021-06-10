@@ -99,6 +99,13 @@ export class HeaderInfo extends React.Component {
                                             </Link>
                                         </Menu.Item>
                                         <Menu.Item key="7">
+                                            <Link to={'/BookStatisticsView'}>
+                                                <div>
+                                                    书籍统计界面
+                                                </div>
+                                            </Link>
+                                        </Menu.Item>
+                                        <Menu.Item key="7">
                                             <Link to={'/UserStatisticsView'}>
                                                 <div>
                                                     用户统计界面

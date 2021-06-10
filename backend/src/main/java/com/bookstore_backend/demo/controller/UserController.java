@@ -75,4 +75,8 @@ public class UserController {
         return userService.checkUserType(param);
     }
 
+    @RequestMapping("/getTopUser")
+    public List<User> getTopUser(@RequestBody Map<String, String> param){
+        return userService.getTopUser(param);
+    }
 }

@@ -24,3 +24,8 @@ export const manageDeleteBook = (data, callback) => {
     const url = 'http://localhost:8080/manageDeleteBook';
     postRequest(url, data, callback);
 };
+
+export const getTopUser = (data, callback) => {
+    const url = 'http://localhost:8080/getTopUser';
+    postRequest(url, data, callback);
+};

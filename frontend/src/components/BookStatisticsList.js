@@ -11,12 +11,11 @@ import * as manageService from "../services/manageService"
 import {findOrderItemsByTime, showAllOrders, showOneOrder, userFindOrderItemsByTime} from "../services/orderService";
 const { Search } = Input;
 
-const headers = ["用户ID", "用户", "消费金额"];
+const headers = ["书籍", "数量", "单价"];
 
 let list = []
 
 let user = 0;
-
 let user_type = 0;
 
 class Excel extends React.Component {
@@ -30,7 +29,8 @@ class Excel extends React.Component {
             search: false,
             preSearchData: null,
             user: 0,
-            totalMoney: 0,
+            totalBook: 0,
+            totalMoney: 0
         };
         user = localStorage.getItem("user");
         user_type = localStorage.getItem("user_type");
@@ -102,29 +102,60 @@ class Excel extends React.Component {
     };
 
     rangeDate = (min, max) => {
+        // let searchdata = this.preSearchData.filter(function (row) {
+        //     let str = row[3].toString().substring(0, 10);
+        //     if(str >= min && str <= max){
+        //         return true;
+        //     }
+        //     else{
+        //         return false;
+        //     }
+        // });
+        // this.setState({data: searchdata});
+        // const callback = (data) =>{
+        //     console.log(data);
+        // };
+        // let json = new Object();
+        // json.minDate = min;
+        // json.maxDate = max;
+        // json.user_id = user;
+        // userFindOrderItemsByTime(json, callback);
         console.log("user_type " + user_type + typeof user_type);
         const callback = (data) => {
-            let sum = 0;
+            let num = 0;
+            let money = 0;
             console.log("woc666");
             list.splice(0,list.length);
             for(let i in data){
                 let l = [];
-                l.push(data[i].user_id);
-                l.push(data[i].username);
-                l.push(data[i].totalMoney);
-                sum += parseInt(data[i].totalMoney);
+                num += data[i].num;
+                money += data[i].num * data[i].price;
+                l.push(data[i].name);
+                l.push(data[i].num);
+                l.push(data[i].price);
                 list.push(l);
             }
             this.setState({
                 data:list,
-                totalMoney:sum,
+                totalBook: num,
+                totalMoney: money,
             });
             console.log(list);
         };
-        let json = new Object();
-        json.minDate = min;
-        json.maxDate = max;
-        manageService.getTopUser(json, callback);
+        if(parseInt(user_type) === 0) {
+            let json = new Object();
+            json.minDate = min;
+            json.maxDate = max;
+            findOrderItemsByTime(json, callback);
+        }
+        else{
+            console.log("just a user!");
+            let json = new Object();
+            json.minDate = min;
+            json.maxDate = max;
+            json.user_id = user;
+            userFindOrderItemsByTime(json, callback);
+        }
     };
 
     render = () => {
@@ -187,6 +218,9 @@ class Excel extends React.Component {
                     </tbody>
                 </table>
                 <Row>
+                    <Col span = {10}>
+                        <span>购买总数：<span>{this.state.totalBook}个</span></span>
+                    </Col>
                     <Col>
                         <span>总金额：<span>￥{this.state.totalMoney}</span></span>
                     </Col>
@@ -223,7 +257,7 @@ Excel.propTypes = {
     ),
 };
 
-export class UserStatisticsList extends React.Component{
+export class BookStatisticsList extends React.Component{
     render(){
         return(
             React.createElement(Excel, {
@@ -235,4 +269,4 @@ export class UserStatisticsList extends React.Component{
 }
 
 
-export default UserStatisticsList;
+export default BookStatisticsList;

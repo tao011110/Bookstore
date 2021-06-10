@@ -25,6 +25,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Transient
+    private Integer totalMoney;
+
     public Integer getUser_id() {
         return user_id;
     }
@@ -55,5 +58,13 @@ public class User {
 
     public void setUserType(Integer user_type) {
         this.user_type = user_type;
+    }
+
+    public Integer getTotalMoney(){
+        return totalMoney;
+    }
+
+    public void setTotalMoney(Integer totalMoney){
+        this.totalMoney = totalMoney;
     }
 }

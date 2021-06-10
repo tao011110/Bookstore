@@ -55,14 +55,14 @@ public class OrderController {
         return orderService.findOrderItems(id);
     }
 
-    @RequestMapping("/findOrderItemsByTime")
-    public List<OrderItem> findOrderItemsByTime(@RequestBody Map<Object, Object> param){
-        return orderService.findOrderItemsByTime(param);
-    }
-
     @RequestMapping("/showOneOrder")
     public List<Order> showOneOrder(@RequestBody Map<Object, Object> param){
         return orderService.showOneOrder(param);
+    }
+
+    @RequestMapping("/findOrderItemsByTime")
+    public List<OrderItem> findOrderItemsByTime(@RequestBody Map<Object, Object> param){
+        return orderService.findOrderItemsByTime(param);
     }
 
     @RequestMapping("/userFindOrderItemsByTime")

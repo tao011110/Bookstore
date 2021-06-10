@@ -1,6 +1,8 @@
 package com.bookstore_backend.demo.repository;
 
 import com.bookstore_backend.demo.entity.User;
+import com.bookstore_backend.demo.entity.Order;
+import com.bookstore_backend.demo.entity.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +17,9 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Query("select u from User u")
     List<User> listUsers();
+
+    @Query("from User where user_id = :user_id")
+    User getUserByUserId(int user_id);
 
     @Modifying
     @Transactional

@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
 
         return userDao.checkUserType(param);
     }
+
+    @Override
+    public List<User> getTopUser(Map<String, String> param){
+        return userDao.getTopUser(param);
+    }
 }
