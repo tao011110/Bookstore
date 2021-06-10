@@ -26,6 +26,16 @@ export const login = (data) => {
     postRequest(url, data, callback);
 };
 
+export const register = (data, callback) => {
+    const url = 'http://localhost:8080/register';
+    postRequest(url, data, callback);
+};
+
+export const findNameDup = (data, callback) => {
+    const url = 'http://localhost:8080/findNameDup';
+    postRequest(url, data, callback);
+};
+
 export const checkSession = (callback) => {
     const url = 'http://localhost:8080/checkSession';
 

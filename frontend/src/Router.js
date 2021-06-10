@@ -15,6 +15,7 @@ import OrderView from "./view/OrderView";
 import UserOrderView from "./view/UserOrderView";
 import BookStatisticsView from "./view/BookStatisticsView";
 import UserStatisticsView from "./view/UserStatisticsView";
+import RegisterView from "./view/RegisterView";
 
 class BasicRoute extends React.Component{
 
@@ -43,6 +44,8 @@ class BasicRoute extends React.Component{
                     <Route exact path='/UserOrderView' component={UserOrderView}/>
                     <Route exact path='/BookStatisticsView' component={BookStatisticsView}/>
                     <Route exact path='/UserStatisticsView' component={UserStatisticsView}/>
+                    <Route exact path='/UserStatisticsView' component={UserStatisticsView}/>
+                    <Route exact path='/RegisterView' component={RegisterView}/>
                 </Switch>
             </Router>
         )

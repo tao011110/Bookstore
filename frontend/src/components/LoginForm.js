@@ -53,11 +53,9 @@ class LoginForm extends React.Component {
                 </Form.Item>
             </div>
                 <Form.Item className="check">
-                    {/*<Link to={'/HomeView'}>*/}
                         <Button type="primary" htmlType="submit" className="login-form-button">
                             Sign In!
                         </Button>
-                    {/*</Link>*/}
                     {getFieldDecorator('remember', {
                         valuePropName: 'checked',
                         initialValue: true,
@@ -65,7 +63,7 @@ class LoginForm extends React.Component {
                     <a className="login-form-forgot" href="">
                         Forgot password
                     </a>
-                    <div>Or<a href=""> register now!</a></div>
+                    <div>Or<Link to={'/RegisterView'}> register now!</Link></div>
 
                 </Form.Item>
             </Form>

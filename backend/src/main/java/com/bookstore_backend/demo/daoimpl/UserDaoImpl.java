@@ -1,13 +1,13 @@
 package com.bookstore_backend.demo.daoimpl;
 
 import com.bookstore_backend.demo.dao.UserDao;
-import com.bookstore_backend.demo.entity.Book;
-import com.bookstore_backend.demo.entity.OrderItem;
 import com.bookstore_backend.demo.entity.User;
 import com.bookstore_backend.demo.repository.OrderRepository;
 import com.bookstore_backend.demo.repository.UserRepository;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -32,6 +32,29 @@ public class UserDaoImpl implements UserDao {
             System.out.println("登陆失败!");
 
             return null;
+        }
+    }
+
+    @Override
+    public int register(@RequestBody Map<String,String> param){
+        try {
+            String username = param.get("username");
+            String password = param.get("password");
+            String password2 = param.get("password2");
+            String email = param.get("email");
+            System.out.println("username " + username + " , password " + password);
+            System.out.println("password2 " + password2 + " , email " + email);
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setUserType(1);
+            user.setEmail(email);
+            userRepository.save(user);
+            int user_id = userRepository.getUserIdbyUsername(username);
+            return user_id;
+        }
+        catch (Exception e){
+            return -1;
         }
     }
 
@@ -84,6 +107,34 @@ public class UserDaoImpl implements UserDao {
             System.out.println(u.getUser_id() +" "+ u.getTotalMoney() + " " + u.getUsername());
         }
 
+        List<User> allUsers = userRepository.listUsers();
+        int length = result.size();
+        for(User user : allUsers){
+            int user_id = user.getUser_id();
+            boolean flag = false;
+            int i = 0;
+            for(i = 0; i < length; i++){
+                if(result.get(i).getUser_id() == user_id){
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag == false){
+                user.setTotalMoney(0);
+                result.add(result.get(i));
+            }
+        }
+
         return result;
+    }
+
+    @Override
+    public boolean findNameDup(Map<String,String> param){
+        String username =  String.valueOf(param.get("username"));
+        User result = userRepository.findNameDup(username);
+        if(result == null){
+            return false;
+        }
+        return true;
     }
 }

@@ -8,7 +8,6 @@ let postRequest_v2 = (url, data, callback) => {
     let opts = {
         method: "POST",
         body: formData,
-        //credentials: "include"
     };
 
     fetch(url,opts)
@@ -32,7 +31,6 @@ let postRequest=(url,json,callback)=>
         headers:{
             'Content-Type': 'application/json'
         },
-        //credentials: "include"
     };
 
     fetch(url,opts)

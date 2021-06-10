@@ -18,6 +18,6 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
     Order findOrder(Integer order_id);
 
     @Query(value = "select user_id, SUM(totalmoney) as sumtotal from Order where time > :minDate " +
-            "and time <= :maxDate group by user_id order by sumtotal DESC ")
+            "and time < :maxDate group by user_id order by sumtotal DESC ")
     List<List<Integer>> getOrdersByTime(String minDate, String maxDate);
 }

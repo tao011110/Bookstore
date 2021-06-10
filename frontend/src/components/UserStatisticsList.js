@@ -38,7 +38,8 @@ class Excel extends React.Component {
     }
 
     componentDidMount() {
-        this.rangeDate("0", moment().format().substring(0, 10));
+        //this.rangeDate("0", moment().format().substring(0, 10));
+        this.rangeDate("0", "9999");
     }
 
     sort = (e) => {

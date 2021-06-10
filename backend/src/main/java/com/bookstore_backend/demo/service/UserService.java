@@ -12,4 +12,6 @@ public interface UserService {
     int updateUserType(Map<String, String> param);
     int checkUserType(Map<String, String> param);
     List<User> getTopUser(Map<String, String> param);
+    int register(Map<String,String> param);
+    boolean findNameDup(Map<String,String> param);
 }

@@ -9,4 +9,5 @@ public interface CartDao {
     List<CartItem> listItems(int user_id);
     boolean addItem(Map<Object, Object> param);
     boolean deleteItem(Map<Object, Object> param);
+    boolean createCart(Map<Object, Object> param);
 }

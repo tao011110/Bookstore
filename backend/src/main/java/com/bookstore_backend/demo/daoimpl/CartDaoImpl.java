@@ -133,4 +133,16 @@ public class CartDaoImpl implements CartDao {
             return false;
         }
     }
+
+    @Override
+    public boolean createCart(Map<Object, Object> param){
+        String uid = String.valueOf(param.get("user_id"));
+        System.out.println(uid);
+        int user_id = Integer.valueOf(uid);
+        Cart cart = new Cart();
+        cart.setUser_id(user_id);
+        cartRepository.save(cart);
+
+        return true;
+    }
 }

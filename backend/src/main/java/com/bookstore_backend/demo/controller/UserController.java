@@ -45,6 +45,11 @@ public class UserController {
         return json;
     }
 
+    @RequestMapping(value="/register")
+    public int register(@RequestBody Map<String,String> param){
+        return userService.register(param);
+    }
+
     @RequestMapping("/checkSession")
     public boolean checkSession(){
         if(isSuccess == true) {
@@ -78,5 +83,10 @@ public class UserController {
     @RequestMapping("/getTopUser")
     public List<User> getTopUser(@RequestBody Map<String, String> param){
         return userService.getTopUser(param);
+    }
+
+    @RequestMapping("/findNameDup")
+    public boolean findNameDup(@RequestBody Map<String,String> param){
+        return userService.findNameDup(param);
     }
 }

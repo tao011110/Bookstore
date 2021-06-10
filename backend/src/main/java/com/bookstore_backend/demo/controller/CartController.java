@@ -48,4 +48,9 @@ public class CartController {
         System.out.println("本次删除失败");
         return false;
     }
+
+    @RequestMapping("/createCart")
+    public boolean createCart(@RequestBody Map<Object, Object> param){
+        return cartService.createCart(param);
+    }
 }

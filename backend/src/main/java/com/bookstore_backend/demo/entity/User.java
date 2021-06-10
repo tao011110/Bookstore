@@ -25,6 +25,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
     @Transient
     private Integer totalMoney;
 
@@ -66,5 +69,13 @@ public class User {
 
     public void setTotalMoney(Integer totalMoney){
         this.totalMoney = totalMoney;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
     }
 }

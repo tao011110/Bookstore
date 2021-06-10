@@ -5,6 +5,7 @@ import com.bookstore_backend.demo.entity.User;
 import com.bookstore_backend.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,11 @@ public class UserServiceImpl implements UserService {
     public User check(String username, String password){
         System.out.println("Service " + "username " + username + " , password " + password);
         return userDao.check(username, password);
+    }
+
+    @Override
+    public int register(@RequestBody Map<String,String> param){
+        return userDao.register(param);
     }
 
     @Override
@@ -40,5 +46,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getTopUser(Map<String, String> param){
         return userDao.getTopUser(param);
+    }
+
+    @Override
+    public boolean findNameDup(Map<String,String> param){
+        return userDao.findNameDup(param);
     }
 }

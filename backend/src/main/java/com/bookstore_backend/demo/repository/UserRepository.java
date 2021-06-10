@@ -28,4 +28,10 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Query(value = "select user_type from User where user_id = :user_id")
     int checkUserType(int user_id);
+
+    @Query(value = "from User where username = :username")
+    User findNameDup(String username);
+
+    @Query(value = "select user_id from User where username = :username")
+    int getUserIdbyUsername(String username);
 }

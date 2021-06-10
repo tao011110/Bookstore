@@ -1175,7 +1175,12 @@ SELECT|sys.sys_config
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="347" parent="294" name="PRIMARY">
+    <column id="347" parent="294" name="email">
+      <Position>5</Position>
+      <DataType>varchar(128)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="348" parent="294" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>

@@ -36,4 +36,9 @@ public class CartServiceImpl implements CartService {
         }
         return false;
     }
+
+    @Override
+    public boolean createCart(Map<Object, Object> param){
+        return cartDao.createCart(param);
+    }
 }

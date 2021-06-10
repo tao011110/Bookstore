@@ -14,3 +14,11 @@ export const deleteItem = (data, callback) => {
     const url = 'http://localhost:8080/deleteItem';
     postRequest(url, data, callback);
 };
+
+export const createCart = (data) => {
+    const callback = (data1)=>{
+        console.log(data1);
+    }
+    const url = 'http://localhost:8080/createCart';
+    postRequest(url, data, callback);
+};
