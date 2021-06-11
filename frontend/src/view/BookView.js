@@ -21,6 +21,8 @@ class BookView extends React.Component{
         const query = this.props.location.search;
         const arr = query.split('&');
         const bookId = arr[0].substr(4);
+        console.log("???" , bookId);
+        console.log(arr);
         getBook(bookId, (data) => {console.log("dwadwa  " +data.id);
             this.setState({ info: data})})
     }

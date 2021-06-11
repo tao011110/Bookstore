@@ -77,6 +77,12 @@ public class BookDaoImpl implements BookDao {
                 result = bookRepository.updateBookName(id, name);
             }
 
+            if (change.equals("ISBN")) {
+                String SISBN = String.valueOf(param.get("ISBN"));
+                int ISBN = Integer.parseInt(SISBN);
+                result = bookRepository.updateBookISBN(id, ISBN);
+            }
+
             if (change.equals("img")) {
                 String img = String.valueOf(param.get("img"));
                 result = bookRepository.updateBookImg(id, img);

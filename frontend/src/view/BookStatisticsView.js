@@ -15,7 +15,6 @@ class BookStatisticsView extends React.Component{
     }
 
     componentWillMount(){
-        console.log("wad");
         let user = localStorage.getItem("user");
         this.setState({user:user});
         const query = this.props.location.search;

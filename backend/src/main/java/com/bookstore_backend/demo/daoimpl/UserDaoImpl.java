@@ -119,9 +119,9 @@ public class UserDaoImpl implements UserDao {
                     break;
                 }
             }
-            if(flag == false){
+            if(flag == false && user.getUserType() != 0){
                 user.setTotalMoney(0);
-                result.add(result.get(i));
+                result.add(user);
             }
         }
 

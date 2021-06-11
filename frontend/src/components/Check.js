@@ -6,7 +6,6 @@ import "./config"
 const { Meta } = Card;
 
 export class Check extends React.Component {
-    cartService;
     constructor(props){
         super(props);
         this.state={
@@ -37,7 +36,7 @@ export class Check extends React.Component {
                                 else
                                     info.num = 0;
                                 console.log(info.num);
-                                if(this.state.isChecked == true && this.state.count > 0){
+                                if(this.state.isChecked === true && this.state.count > 0){
                                     if(pastCount < info.num) {
                                         global.totalmoney += info.price;
                                     }
@@ -55,7 +54,7 @@ export class Check extends React.Component {
                                 });
                                 info.num = this.state.count + 1;
                                 console.log("info.number  ", info.num);
-                                if(this.state.isChecked == true){
+                                if(this.state.isChecked === true){
                                     if(pastCount < info.num) {
                                         global.totalmoney += info.price;
                                     }
@@ -69,12 +68,14 @@ export class Check extends React.Component {
                         </div>
                     </Col>
                     <Col span={8}>
-                        <Checkbox onChange={
+                        <Checkbox defaultChecked ={false} onChange={
                             summ=>{
+                                console.log("awadawd");
+                                console.log(this.checked);
                                 let i;
-                                if(this.state.isChecked == true){
+                                if(this.state.isChecked === true){
                                     this.setState({isChecked: false});
-                                    if(global.checked.length != 0) {
+                                    if(global.checked.length !== 0) {
                                         console.log("global.checked   " + global.checked.length);
                                         console.log(global.checked);
                                         global.totalmoney -= (info.price * global.checked[0].num);
@@ -87,7 +88,7 @@ export class Check extends React.Component {
                                     }
                                 }
 
-                                if(this.state.isChecked == false){
+                                if(this.state.isChecked === false){
                                     this.setState({isChecked: true});
                                     global.totalmoney += (info.price * info.num);
                                     console.log("price: " + info.price + "  num: " + info.num);

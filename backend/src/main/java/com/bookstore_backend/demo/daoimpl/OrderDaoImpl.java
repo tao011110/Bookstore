@@ -44,8 +44,13 @@ public class OrderDaoImpl implements OrderDao {
                 String str2[] = s.split(", ");
                 for (String ss : str2) {
                     if (ss.charAt(0) == 'n' && ss.charAt(1) == 'u') {
+                        System.out.println(ss);
                         int num = 0;
                         for (int i = 4; i < ss.length(); i++) {
+                            if(ss.charAt(i) == '}'){
+                                break;
+                            }
+                            System.out.println("ss.charAt(i) " + ss.charAt(i));
                             num = num * 10 + ss.charAt(i) - '0';
                         }
                         nums.add(num);
@@ -149,6 +154,19 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> showAllOrders() {
         List<Order> listResult = orderRepository.showAllOrders();
+        for(Order i : listResult){
+            int order_id = i.getOrder_id();
+            List<OrderItem> items = orderItemRepository.findOrderItems(order_id);
+            List<String> names = new ArrayList<>();
+            for(OrderItem o : items){
+                String bookName = bookDao.findBook(o.getBook_id()).getName();
+                System.out.println(bookName);
+                names.add(bookName+ ", ");
+            }
+            i.setBooks(names);
+            System.out.println(names);
+            System.out.println(i.getTotalmoney());
+        }
 
         return listResult;
     }
@@ -159,6 +177,15 @@ public class OrderDaoImpl implements OrderDao {
         int user_id = Integer.valueOf(suser_id);
         List<Order> listResult = orderRepository.showOneOrder(user_id);
         for(Order i : listResult){
+            int order_id = i.getOrder_id();
+            List<OrderItem> items = orderItemRepository.findOrderItems(order_id);
+            List<String> names = new ArrayList<>();
+            for(OrderItem o : items){
+                String bookName = bookDao.findBook(o.getBook_id()).getName();
+                System.out.println(bookName);
+                names.add(bookName);
+            }
+            i.setBooks(names);
             System.out.println(i.getTotalmoney());
         }
 

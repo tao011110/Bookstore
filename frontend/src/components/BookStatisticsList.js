@@ -57,17 +57,6 @@ class Excel extends React.Component {
         });
     };
 
-    save = (e) => {
-        e.preventDefault();
-        let input = e.target.firstChild;
-        let data = this.state.data.slice();
-        data[this.state.edit.row][this.state.edit.cell] = input.value;
-        this.setState({
-            edit: null,
-            data: data,
-        });
-    };
-
     toggleSearch = () => {
         if (this.state.search) {
             this.setState({

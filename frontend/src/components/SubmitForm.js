@@ -3,6 +3,8 @@ import { Form, Input, Button, Checkbox, Table, Col, Row, Radio } from 'antd';
 import 'antd/dist/antd.css';
 import '../css/login.css'
 import {Link} from "react-router-dom";
+import * as orderService from "../services/orderService";
+import * as cartService from "../services/cartService";
 const { TextArea } = Input;
 
 let dataSource = [];
@@ -77,6 +79,17 @@ const radioStyle = {
 };
 
 class SubmitForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: 0,
+        }
+        let user = localStorage.getItem("user");
+        console.log("user  " + user + typeof user);
+        this.state.user = parseInt(user);
+        console.log("user  " + this.state.user);
+    }
+
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -85,6 +98,34 @@ class SubmitForm extends React.Component {
             }
         });
     };
+
+    handleClick2 = e =>{
+        //e.preventDefault();
+        let user_id = this.state.user;
+        console.log("suadaw  " +user_id);
+        let json = new Object();
+        json.user_id = user_id;
+        json.totalmoney = global.totalmoney;
+        json.books = global.checked;
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        orderService.addOrder(json, callback);
+        let json2 = new Object();
+        let delArray = [];
+        for(let i = 0; i < global.checked.length; i++){
+            let book_id = global.buy[i].book_id;
+            console.log("global.buy[i]  " + book_id);
+            console.log(global.buy);
+            delArray.push(book_id);
+        }
+        json2.id = delArray;
+        json2.user_id = user_id;
+        const callback2 = (data) => {
+            console.log("call  " + data);
+        }
+        cartService.deleteItem(json2, callback2);
+    }
 
     // handleClick = e =>{
     //     console.log("submit!");
@@ -213,6 +254,7 @@ class SubmitForm extends React.Component {
                                         <Button onClick={handleClick=>{
                                             console.log("submit!");
                                             window.alert("您已成功提交订单！");
+                                            this.handleClick2();
                                         }
                                         }>提交订单</Button>
                                     </Col>

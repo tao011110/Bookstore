@@ -4,15 +4,38 @@ import { Row, Col, Menu, Input } from 'antd';
 import '../css/header.css'
 import './config'
 import shoppingIcon from '../assets/shopping_icon.png';
-import img1 from '../assets/img1.jpg'
-import img2 from '../assets/img2.jpg'
-import img3 from '../assets/img3.jpg'
-
 const { SubMenu } = Menu;
 const { Search } = Input;
 const onSearch = value => console.log(value);
 
 export class HeaderInfo extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user_menu: true,
+            manager_menu: true
+        };
+    }
+    componentDidMount(){
+        let user = localStorage.getItem("user");
+        this.setState({user:user});
+        let user_type = localStorage.getItem("user_type");
+        this.setState({user_type:user_type});
+        console.log("usertype " + user_type)
+        if(user_type === "1"){
+            this.setState({
+                user_menu:false,
+                manager_menu:true
+            });
+        }
+        else{
+            this.setState({
+                user_menu:true,
+                manager_menu:false
+            });
+        }
+    }
+
     render(){
         return(
             <div>
@@ -44,7 +67,7 @@ export class HeaderInfo extends React.Component {
                             <div className="menu_hd_guide">
                                 <Menu>
                                     <SubMenu key="headerMenu" title="网站导航">
-                                        <Menu.Item key="1">
+                                        <Menu.Item key="1" hidden={this.state.user_menu}>
                                             <Link to={'/ShoppingCartView'}>
                                                 <div className="cart">
                                                     <Row>
@@ -70,28 +93,28 @@ export class HeaderInfo extends React.Component {
                                                 </div>
                                             </Link>
                                         </Menu.Item>
-                                        <Menu.Item key="3">
+                                        <Menu.Item key="3" hidden={this.state.manager_menu}>
                                             <Link to={'/ManageView'}>
                                                 <div>
                                                     管理书籍界面
                                                 </div>
                                             </Link>
                                         </Menu.Item>
-                                        <Menu.Item key="4">
+                                        <Menu.Item key="4" hidden={this.state.manager_menu}>
                                             <Link to={'/ManageUserView'}>
                                                 <div>
                                                     管理用户界面
                                                 </div>
                                             </Link>
                                         </Menu.Item>
-                                        <Menu.Item key="5">
+                                        <Menu.Item key="5" hidden={this.state.manager_menu}>
                                             <Link to={'/ManageOrderView'}>
                                                 <div>
                                                     管理员订单界面
                                                 </div>
                                             </Link>
                                         </Menu.Item>
-                                        <Menu.Item key="6">
+                                        <Menu.Item key="6" hidden={this.state.user_menu}>
                                             <Link to={'/UserOrderView'}>
                                                 <div>
                                                     用户订单界面
@@ -101,14 +124,14 @@ export class HeaderInfo extends React.Component {
                                         <Menu.Item key="7">
                                             <Link to={'/BookStatisticsView'}>
                                                 <div>
-                                                    书籍统计界面
+                                                    统计书籍界面
                                                 </div>
                                             </Link>
                                         </Menu.Item>
-                                        <Menu.Item key="7">
+                                        <Menu.Item key="8" hidden={this.state.manager_menu}>
                                             <Link to={'/UserStatisticsView'}>
                                                 <div>
-                                                    用户统计界面
+                                                    统计用户界面
                                                 </div>
                                             </Link>
                                         </Menu.Item>
@@ -120,7 +143,7 @@ export class HeaderInfo extends React.Component {
                     </Row>
 
                 </div>
-                <div className="banner_red_top"></div>
+                <div className="banner_red_top"/>
             </div>
         );
     }

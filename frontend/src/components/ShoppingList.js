@@ -3,6 +3,7 @@ import {List, Row, Col, Checkbox, Button} from 'antd';
 import {Link } from 'react-router-dom';
 import Check from "./Check";
 import CartBuy from "./CartBuy";
+import ShoppingListCard from "./ShoppingListCard";
 import "../css/shoppingCart.css"
 import './config';
 import {getItems} from "../services/cartService";
@@ -27,20 +28,6 @@ export class ShoppingList extends React.Component{
             console.log("call  " + data);
         }
         cartService.deleteItem(json, callback);
-    }
-
-    handleClick2 = e =>{
-        //e.preventDefault();
-        let user_id = this.state.user;
-        console.log("suadaw  " +user_id);
-        let json = new Object();
-        json.user_id = user_id;
-        json.totalmoney = global.totalmoney;
-        json.books = global.checked;
-        const callback = (data) => {
-            console.log("call  " + data);
-        }
-        orderService.addOrder(json, callback);
     }
 
     constructor(props) {
@@ -122,16 +109,17 @@ export class ShoppingList extends React.Component{
                             console.log("dadw  :  " + item.description),
                             global.book.push(item),
                                 <List.Item>
-                                    <Row>
-                                        <Col span={16}>
-                                            <CartBuy info={item}/>
-                                        </Col>
-                                        <Col span={8}>
-                                            <div className="cartCheck">
-                                                <Check callback={this.callback} info={item}/>
-                                            </div>
-                                        </Col>
-                                    </Row>
+                                    <ShoppingListCard callback={this.callback} info={item}/>
+                                    {/*<Row>*/}
+                                    {/*    <Col span={16}>*/}
+                                    {/*        <CartBuy info={item}/>*/}
+                                    {/*    </Col>*/}
+                                    {/*    <Col span={8}>*/}
+                                    {/*        <div className="cartCheck">*/}
+                                    {/*            <Check callback={this.callback} info={item}/>*/}
+                                    {/*        </div>*/}
+                                    {/*    </Col>*/}
+                                    {/*</Row>*/}
                                 </List.Item>
                         )}
                     />
@@ -147,7 +135,7 @@ export class ShoppingList extends React.Component{
                                 let i, j;
                                 for(j = 0; j < global.checked.length; j++) {
                                     for (i = 0; i < global.book.length; i++) {
-                                        if (global.book[i].name == global.checked[j].name) {
+                                        if (global.book[i].name === global.checked[j].name) {
                                             this.delArray.push(global.book[i].book_id);
                                             global.book.splice(i, 1);
                                             global.checked.splice(j, 1);
@@ -166,13 +154,12 @@ export class ShoppingList extends React.Component{
                                 <Button onClick={onClick=>
                                 {
                                     global.buy = global.checked;
-                                    this.handleClick2();
+                                    this.isChanged = true;
                                 }}>结算</Button>
                             </Link>
                         </div>
                     </div>
                 </div>
-
             </div>
         );
     }

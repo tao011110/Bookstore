@@ -9,7 +9,7 @@ export const login = (data) => {
         console.log(data1);
         let user_id = parseInt(data1.user_id);
         let user_type = parseInt(data1.user_type);
-        if(user_id > 0)
+        if(user_id > 0 && user_type !== -1)
         {
             localStorage.setItem("user",JSON.stringify(user_id));
             localStorage.setItem("user_type",JSON.stringify(user_type));

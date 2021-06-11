@@ -23,7 +23,7 @@ export class CartBuy extends React.Component{
         const {info} = this.props;
         return (
             console.log("got id    "+info.item_id),
-                <Link to={{pathname:'/BookView', search: "?id=" + info.item_id}}
+                <Link to={{pathname:'/BookView', search: "?id=" + info.book_id}}
                       target = "_blank">
                     <Card
                         hoverable

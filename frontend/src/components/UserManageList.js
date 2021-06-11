@@ -1,10 +1,8 @@
 import React from 'react';
 import {Input} from 'antd';
-import {Link } from 'react-router-dom';
 import './config';
 import "../css/manage.css"
 import PropTypes from "prop-types";
-import {showAllBooks} from "../services/bookService";
 import * as manageService from "../services/manageService"
 import {showAllUsers} from "../services/manageService";
 
@@ -110,7 +108,7 @@ class Excel extends React.Component {
 
     render = () => {
         return (
-            <div>
+            <div className="manageMain">
                 {this.renderToolbar()}
                 {this.renderTable()}
             </div>

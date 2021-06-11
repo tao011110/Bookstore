@@ -9,7 +9,7 @@ import {showAllBooks} from "../services/bookService";
 import * as manageService from "../services/manageService"
 const { Search } = Input;
 
-const headers = ["id", "author", "type", "inventory", "price", "name", "img", "description", "status"];
+const headers = ["id", "author", "type", "inventory", "price", "name", "ISBN", "img", "description", "status"];
 
 let list = []
 
@@ -45,6 +45,7 @@ class Excel extends React.Component {
                 l.push(data[i].inventory);
                 l.push(data[i].price);
                 l.push(data[i].name);
+                l.push(data[i].isbn);
                 l.push(data[i].img);
                 l.push(data[i].description);
                 l.push(data[i].status);
@@ -81,9 +82,10 @@ class Excel extends React.Component {
         json.inventory = addition[3];
         json.price = addition[4];
         json.name = addition[5];
-        json.img = addition[6];
-        json.description = addition[7];
-        json.status = addition[8];
+        json.ISBN = addition[6];
+        json.img = addition[7];
+        json.description = addition[8];
+        json.status = addition[9];
         console.log("you put");
         const callback = (data) => {
             console.log("call  " + data);
@@ -186,10 +188,22 @@ class Excel extends React.Component {
         manageService.updateBook(json, callback);
     }
 
+    handleUpdateISBN =(arr)=>{
+        let json = new Object();
+        json.id = arr[0];
+        json.ISBN = arr[6];
+        json.change = "ISBN";
+
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateBook(json, callback);
+    }
+
     handleUpdateImg =(arr)=>{
         let json = new Object();
         json.id = arr[0];
-        json.img = arr[6];
+        json.img = arr[7];
         json.change = "img";
 
         const callback = (data) => {
@@ -201,7 +215,7 @@ class Excel extends React.Component {
     handleUpdateDescription =(arr)=>{
         let json = new Object();
         json.id = arr[0];
-        json.description = arr[7];
+        json.description = arr[8];
         json.change = "description";
 
         const callback = (data) => {
@@ -213,7 +227,7 @@ class Excel extends React.Component {
     handleUpdateStatus =(arr)=>{
         let json = new Object();
         json.id = arr[0];
-        json.status = arr[8];
+        json.status = arr[9];
         json.change = "status";
 
         const callback = (data) => {
@@ -407,17 +421,23 @@ class Excel extends React.Component {
                                                             if(edit.cell === 6){
                                                                 list[index][6] = event.target.value;
                                                                 if(isAdding !== true || edit.row + 1!== list.length){
-                                                                    this.handleUpdateImg(list[index]);
+                                                                    this.handleUpdateISBN(list[index]);
                                                                 }
                                                             }
                                                             if(edit.cell === 7){
                                                                 list[index][7] = event.target.value;
                                                                 if(isAdding !== true || edit.row + 1!== list.length){
-                                                                    this.handleUpdateDescription(list[index]);
+                                                                    this.handleUpdateImg(list[index]);
                                                                 }
                                                             }
                                                             if(edit.cell === 8){
                                                                 list[index][8] = event.target.value;
+                                                                if(isAdding !== true || edit.row + 1!== list.length){
+                                                                    this.handleUpdateDescription(list[index]);
+                                                                }
+                                                            }
+                                                            if(edit.cell === 9){
+                                                                list[index][9] = event.target.value;
                                                                 if(isAdding !== true || edit.row + 1!== list.length){
                                                                     this.handleUpdateStatus(list[index]);
                                                                 }

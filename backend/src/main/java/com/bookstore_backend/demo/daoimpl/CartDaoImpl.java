@@ -108,6 +108,7 @@ public class CartDaoImpl implements CartDao {
             int cart_id = userCart.getCart_id();
             System.out.println("user_id   "+user_id);
             System.out.println("cart_id   "+cart_id);
+            System.out.println(sid);
             for(int j = 0; j < id.length; j++) {
                 id[j] = 0;
                 for (int i = lastIndex; i < sid.length(); i++) {
@@ -122,6 +123,7 @@ public class CartDaoImpl implements CartDao {
                         break;
                     }
                 }
+                System.out.println(id[j]);
 
                 cartItemRepository.deleteCartItemByCart_idAndBook_id(cart_id, id[j]);
             }

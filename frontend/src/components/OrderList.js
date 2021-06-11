@@ -10,7 +10,7 @@ import * as manageService from "../services/manageService"
 import {showAllOrders, showOneOrder} from "../services/orderService";
 const { Search } = Input;
 
-const headers = ["order_id", "user_id", "totalmoney", "time", "check"];
+const headers = ["order_id", "user_id", "totalmoney", "time", "books", "check"];
 
 let list = []
 
@@ -44,12 +44,15 @@ class Excel extends React.Component {
                 l.push(data[i].user_id);
                 l.push(data[i].totalmoney);
                 l.push(data[i].time);
+                l.push(data[i].books);
+                console.log((data[i].books));
                 list.push(l);
             }
             this.setState({data:list});
             console.log(list);
         };
-        if(user_type === 0) {
+        console.log("user_type  ", user_type);
+        if(user_type === "0") {
             showAllOrders({"search": null}, callback);
         }
         else{

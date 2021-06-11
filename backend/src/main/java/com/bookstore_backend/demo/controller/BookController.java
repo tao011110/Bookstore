@@ -27,7 +27,7 @@ public class BookController {
     public List<Book> showAllBooks(){
         List<Book> list = bookService.showAllBooks();
         for(Book book : list){
-            System.out.println(book.getId() + ": " + book.getName());
+            System.out.println(book.getId() + ": " + book.getName() + " " + book.getISBN());
         }
         return list;
     }

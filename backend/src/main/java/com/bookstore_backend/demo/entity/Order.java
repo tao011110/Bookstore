@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -25,6 +26,9 @@ public class Order {
     @Column(name = "time")
     private String time;
 
+    @Transient
+    private List<String> books;
+
     public int getOrder_id(){
         return order_id;
     }
@@ -37,6 +41,10 @@ public class Order {
 
     public String getTime(){
         return time;
+    }
+
+    public List<String> getBooks(){
+        return books;
     }
 
     public void setOrder_id(int order_id){
@@ -53,5 +61,9 @@ public class Order {
 
     public void setTime(String time){
         this.time = time;
+    }
+
+    public void setBooks(List<String> books){
+        this.books = books;
     }
 }

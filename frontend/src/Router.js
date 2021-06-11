@@ -44,7 +44,6 @@ class BasicRoute extends React.Component{
                     <Route exact path='/UserOrderView' component={UserOrderView}/>
                     <Route exact path='/BookStatisticsView' component={BookStatisticsView}/>
                     <Route exact path='/UserStatisticsView' component={UserStatisticsView}/>
-                    <Route exact path='/UserStatisticsView' component={UserStatisticsView}/>
                     <Route exact path='/RegisterView' component={RegisterView}/>
                 </Switch>
             </Router>

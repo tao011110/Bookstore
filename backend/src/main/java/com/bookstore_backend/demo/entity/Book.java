@@ -1,6 +1,7 @@
 package com.bookstore_backend.demo.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -9,6 +10,9 @@ public class Book {
     @GeneratedValue
     @Column(name = "id")
     private int id;
+
+    @Column(name = "ISBN")
+    private int ISBN;
 
     @Column(name = "name")
     private String name;
@@ -87,5 +91,11 @@ public class Book {
     }
     public void setStatus(int status){
         this.status = status;
+    }
+    public void setISBN(int ISBN){
+        this.ISBN = ISBN;
+    }
+    public int getISBN(){
+        return ISBN;
     }
 }
