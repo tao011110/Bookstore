@@ -5,6 +5,7 @@ import "../css/manage.css"
 import PropTypes from "prop-types";
 import * as manageService from "../services/manageService"
 import {showAllUsers} from "../services/manageService";
+const { Search } = Input;
 
 const headers = ["user_id", "username", "user_type"];
 
@@ -38,6 +39,30 @@ class Excel extends React.Component {
         };
         showAllUsers({"search":null}, callback);
         console.log(list);
+    }
+
+    forbidSubmit=(e)=>{
+        let json = new Object();
+        console.log(list);
+        json.user_id = e;
+        json.user_type = -1;
+        console.log("user_type  " + e);
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateUserType(json, callback);
+    }
+
+    unforbidSubmit=(e)=>{
+        let json = new Object();
+        console.log(list);
+        json.user_id = e;
+        json.user_type = 1;
+        console.log("user_type  " + e);
+        const callback = (data) => {
+            console.log("call  " + data);
+        }
+        manageService.updateUserType(json, callback);
     }
 
     sort = (e) => {
@@ -138,62 +163,84 @@ class Excel extends React.Component {
 
     renderTable = () => {
         return (
-            <table>
-                <thead onClick={this.sort}>
-                <tr>{
-                    this.props.headers.map(function (title, idx) {
-                        if (this.state.sortby === idx) {
-                            title += this.state.descending ? ' \u2191' : ' \u2193';
-                        }
-                        return <th key={idx}>{title}</th>;
-                    }, this)
-                }</tr>
-                </thead>
-                <tbody>
-                {this.renderSearch()}
-                {this.state.data.map(function (row, rowidx) {
-                    return (
-                        <tr key={rowidx}>
-                            {
-                            row.map(function (cell, idx) {
-                                let content = cell;
-                                let edit = this.state.edit;
-                                if(idx == 2) {
-                                    if (edit && edit.row === rowidx && edit.cell === idx) {
-                                        content = (
-                                            <form onSubmit={this.save}>
-                                                <Input type="text" defaultValue={cell} onPressEnter={
-                                                    event => {
-                                                        {
-                                                            console.log("change to " + event.target.value);
-                                                            let json = new Object();
-                                                            let arr = list[edit.row];
-                                                            console.log(list);
-                                                            json.user_id = arr[0];
-                                                            json.user_type = event.target.value;
-                                                            console.log("user_type  " + event.target.value);
-                                                            const callback = (data) => {
-                                                                console.log("call  " + data);
+            <div>
+                <table>
+                    <thead onClick={this.sort}>
+                    <tr>{
+                        this.props.headers.map(function (title, idx) {
+                            if (this.state.sortby === idx) {
+                                title += this.state.descending ? ' \u2191' : ' \u2193';
+                            }
+                            return <th key={idx}>{title}</th>;
+                        }, this)
+                    }</tr>
+                    </thead>
+                    <tbody>
+                    {this.renderSearch()}
+                    {this.state.data.map(function (row, rowidx) {
+                        return (
+                            <tr key={rowidx}>
+                                {
+                                    row.map(function (cell, idx) {
+                                        let content = cell;
+                                        let edit = this.state.edit;
+                                        if(idx == 2) {
+                                            if (edit && edit.row === rowidx && edit.cell === idx) {
+                                                content = (
+                                                    <form onSubmit={this.save}>
+                                                        <Input type="text" defaultValue={cell} onPressEnter={
+                                                            event => {
+                                                                {
+                                                                    console.log("change to " + event.target.value);
+                                                                    let json = new Object();
+                                                                    let arr = list[edit.row];
+                                                                    console.log(list);
+                                                                    json.user_id = arr[0];
+                                                                    json.user_type = event.target.value;
+                                                                    console.log("user_type  " + event.target.value);
+                                                                    const callback = (data) => {
+                                                                        console.log("call  " + data);
+                                                                    }
+                                                                    manageService.updateUserType(json, callback);
+                                                                }
                                                             }
-                                                            manageService.updateUserType(json, callback);
-                                                        }
-                                                    }
-                                                }/>
-                                            </form>
-                                        );
-                                    }
-                                    return <td key={idx} data-row={rowidx}
-                                               onDoubleClick={this.showEditor}>{content}</td>;
-                                }
-                                else{
-                                    return <td key={idx} data-row={rowidx} >{content}</td>;
-                                }
-                            }, this)}
-                        </tr>
-                    );
-                }, this)}
-                </tbody>
-            </table>
+                                                        }/>
+                                                    </form>
+                                                );
+                                            }
+                                            return <td key={idx} data-row={rowidx}
+                                                       onDoubleClick={this.showEditor}>{content}</td>;
+                                        }
+                                        else{
+                                            return <td key={idx} data-row={rowidx} >{content}</td>;
+                                        }
+                                    }, this)}
+                            </tr>
+                        );
+                    }, this)}
+                    </tbody>
+                </table>
+                <div>
+                    <div className="deleteBook">
+                        <Search
+                            placeholder="输入禁用用户的ID"
+                            allowClear
+                            enterButton="禁用"
+                            size="large"
+                            onSearch={(e)=>this.forbidSubmit(e)}
+                        />
+                    </div>
+                    <div className="deleteBook">
+                        <Search
+                            placeholder="输入启用用户的ID"
+                            allowClear
+                            enterButton="启用"
+                            size="large"
+                            onSearch={(e)=>this.unforbidSubmit(e)}
+                        />
+                    </div>
+                </div>
+            </div>
         );
     }
 };

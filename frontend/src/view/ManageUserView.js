@@ -19,7 +19,7 @@ class ManageUserView extends React.Component {
                 <div>
                     <HeaderInfo/>
                 </div>
-                <div>
+                <div className="UserManageList">
                     <UserManageList/>
                 </div>
                 <div>

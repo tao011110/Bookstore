@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(value = "from User where username = :username and password = :password")
     User checkUser(@Param("username") String username, @Param("password") String password);
 
-    @Query("select u from User u")
+    @Query("select u from User u where (u.user_type = 1 or u.user_type = -1)")
     List<User> listUsers();
 
     @Query("from User where user_id = :user_id")

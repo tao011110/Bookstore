@@ -30,7 +30,7 @@ public class UserController {
             json.put("user_id", "-1");
             json.put("user_type", "-2");
 
-            return null;
+            return json;
         }
         else {
             System.out.println("用户登录成功！");

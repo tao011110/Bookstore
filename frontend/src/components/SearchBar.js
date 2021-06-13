@@ -18,11 +18,6 @@ import img12 from '../assets/img12.jpg';
 import img13 from '../assets/img13.jpg';
 import img14 from '../assets/img14.jpg';
 import img15 from '../assets/img15.jpg';
-import img16 from '../assets/img16.jpg';
-import img17 from '../assets/img17.jpg';
-import img18 from '../assets/img18.jpg';
-import img19 from '../assets/img19.jpg';
-import img20 from '../assets/img20.jpg';
 
 const headers = ["Book"];
 
@@ -180,56 +175,6 @@ const info15={
     img: img15,
     description: '美国政府不想让全世界读到这本书，欧美上市当日作者便被美国司法部起诉！“棱镜门”主角爱德华·斯诺登首次亲自披露美国政府滥用NSA系统监控世界的真相，袒露从“爱国者”到“叛国者”的心路历程。'
 }
-const info16={
-    name:'探索月球',
-    author: '安妮·詹克利奥维奇',
-    type: '儿童文学',
-    inventory: 500,
-    price:'133.20',
-    id: 16,
-    img: img16,
-    description:'嫦娥五号探测器系统副总设计师彭兢诚意推荐！纪念人类登月50周年，五大精妙立体机关直观呈现月球的运行轨迹，全方位揭秘人类探月登月的过程，普及基本的航天知识，与孩子一起解读月球的奥秘，种下探索宇宙的种子。'
-}
-const info17={
-    name:'高考英语 五年高考三年模拟',
-    author: '曲一线',
-    type: '中小学教辅',
-    inventory: 500,
-    price:'70.80',
-    id: 17,
-    img: img17,
-    description: '五年高考三年模拟，英语五三高考练习册，五三高中同步53全练全解，你值得拥有！',
-}
-const info18={
-    name:'红楼梦',
-    author: '曹雪芹',
-    type: '世界名著',
-    inventory: 500,
-    price:'18.80',
-    id: 18,
-    img: img18,
-    description: '中国古典小说佳作，影响整个华人世界的经典！轻松易学、国家教育部推荐读物！'
-}
-const info19={
-    name:'草房子',
-    author:'曹文轩',
-    type: '儿童文学',
-    inventory: 500,
-    price:'22.50',
-    id: 19,
-    img: img19,
-    description: '人民文学出版社天天出版社出品，经典作品，教师推荐，已有超过150000读者给予好评！'
-}
-const info20={
-    name:'追风筝的人',
-    author: '卡勒德·胡赛尼',
-    type: '世界名著',
-    inventory: 500,
-    price:'35.30',
-    id: 20,
-    img: img20,
-    description: '“许多年过去了，人们说陈年旧事可以被埋葬，然而我终于明白这是错的，因为往事会自行爬上来。回首前尘，我意识到在过去二十六年里，自己始终在窥视着那荒芜的小径。”'
-}
 
 const onSearch = value => console.log(value);
 
@@ -249,11 +194,6 @@ const bookInfo=[
     <Book info={info13}/>,
     <Book info={info14}/>,
     <Book info={info15}/>,
-    <Book info={info16}/>,
-    <Book info={info17}/>,
-    <Book info={info18}/>,
-    <Book info={info19}/>,
-    <Book info={info20}/>
 ];
 
 const data1 = [["Java核心技术卷II",<img src={img1} className="search-img"/>],
@@ -270,12 +210,7 @@ const data1 = [["Java核心技术卷II",<img src={img1} className="search-img"/>
     ["老人与海",<img src={img12} className="search-img"/>],
     ["魔力的胎动",<img src={img13} className="search-img"/>],
     ["我不怕这漫长黑夜",<img src={img14} className="search-img"/>],
-    ["永久记录",<img src={img15} className="search-img"/>],
-    ["探索月球",<img src={img16} className="search-img"/>],
-    ["高考英语 五年高考三年模拟",<img src={img17} className="search-img"/>],
-    ["红楼梦",<img src={img18} className="search-img"/>],
-    ["草房子",<img src={img19} className="search-img"/>],
-    ["追风筝的人",<img src={img20} className="search-img"/>]];
+    ["永久记录",<img src={img15} className="search-img"/>],];
 
 class Excel extends React.Component {
 

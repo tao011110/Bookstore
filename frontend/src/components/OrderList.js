@@ -48,7 +48,9 @@ class Excel extends React.Component {
                 console.log((data[i].books));
                 list.push(l);
             }
-            this.setState({data:list});
+            this.setState({
+                preSearchData:list,
+                data:list});
             console.log(list);
         };
         console.log("user_type  ", user_type);
@@ -119,15 +121,15 @@ class Excel extends React.Component {
         this.setState({data: searchdata});
     };
 
-    doRange = () => {
-        this.preSearchData = this.state.data;
-    };
-
     rangeDate = (min, max) => {
-        let searchdata = this.preSearchData.filter(function (row) {
+        console.log("change");
+        console.log(this.state.preSearchData);
+        console.log("(min "+ min);
+        console.log("(max "+ max);
+        let searchdata = this.state.preSearchData.filter(function (row) {
+            console.log("???");
             let str = row[3].toString().substring(0, 10);
-            console.log(str);
-            console.log(min);
+            console.log("str "+str);
             if(str >= min && str <= max){
                 return true;
             }
@@ -135,7 +137,9 @@ class Excel extends React.Component {
                 return false;
             }
         });
-        this.setState({data: searchdata});
+        this.setState({
+            data: searchdata
+        });
     };
 
     render = () => {
