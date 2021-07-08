@@ -4,6 +4,8 @@ import com.bookstore_backend.demo.dao.BookDao;
 import com.bookstore_backend.demo.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.bookstore_backend.demo.entity.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +48,10 @@ public class BookServiceImpl implements BookService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Page<Book> woc(Pageable p){
+        return bookDao.woc(p);
     }
 }

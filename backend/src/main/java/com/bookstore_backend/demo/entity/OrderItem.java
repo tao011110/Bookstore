@@ -16,8 +16,8 @@ public class OrderItem {
     @Column(name = "order_item_id")
     private int order_item_id;
 
-    @Column(name = "order_id")
-    private int order_id;
+//    @Column(name = "order_id")
+//    private int order_id;
 
     @Column(name = "book_id")
     private int book_id;
@@ -38,9 +38,9 @@ public class OrderItem {
         return order_item_id;
     }
 
-    public int getOrder_id(){
-        return order_id;
-    }
+//    public int getOrder_id(){
+//        return order_id;
+//    }
 
     public int getPrice(){
         return price;
@@ -66,9 +66,9 @@ public class OrderItem {
         this.order_item_id = order_item_id;
     }
 
-    public void setOrder_id(int order_id){
-        this.order_id = order_id;
-    }
+//    public void setOrder_id(int order_id){
+//        this.order_id = order_id;
+//    }
 
     public void setPrice(int price){
         this.price = price;
@@ -88,5 +88,17 @@ public class OrderItem {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY,optional=false)
+    @JoinColumn(name="order_id", nullable = false)
+    private Order order;
+
+    public Order getOrder(){
+        return order;
+    }
+
+    public void setOrder(Order order){
+        this.order = order;
     }
 }

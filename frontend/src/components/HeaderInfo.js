@@ -4,6 +4,7 @@ import { Row, Col, Menu, Input } from 'antd';
 import '../css/header.css'
 import './config'
 import shoppingIcon from '../assets/shopping_icon.png';
+import * as userService from '../services/userService'
 const { SubMenu } = Menu;
 const { Search } = Input;
 const onSearch = value => console.log(value);
@@ -34,6 +35,12 @@ export class HeaderInfo extends React.Component {
                 manager_menu:false
             });
         }
+    }
+    logOut(){
+        localStorage.removeItem('user');
+        localStorage.removeItem('user_type');
+        global.isAu = false;
+        userService.logout();
     }
 
     render(){
@@ -132,6 +139,13 @@ export class HeaderInfo extends React.Component {
                                             <Link to={'/UserStatisticsView'}>
                                                 <div>
                                                     统计用户界面
+                                                </div>
+                                            </Link>
+                                        </Menu.Item>
+                                        <Menu.Item key="9" onClick={this.logOut}>
+                                            <Link to={'/'}>
+                                                <div>
+                                                    退出登录
                                                 </div>
                                             </Link>
                                         </Menu.Item>

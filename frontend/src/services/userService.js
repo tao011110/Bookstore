@@ -5,7 +5,6 @@ import {history} from "../utils/history";
 export const login = (data) => {
     const url = 'http://localhost:8080/login';
     const callback = (data1) => {
-        console.log("wuhuhh ");
         console.log(data1);
         let user_id = parseInt(data1.user_id);
         let user_type = parseInt(data1.user_type);
@@ -25,6 +24,12 @@ export const login = (data) => {
     };
     postRequest(url, data, callback);
 };
+
+export const logout = (data) => {
+    const url = 'http://localhost:8080/logout';
+    const callback = ()=>{}
+    postRequest(url, {}, callback);
+}
 
 export const register = (data, callback) => {
     const url = 'http://localhost:8080/register';

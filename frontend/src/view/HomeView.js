@@ -13,6 +13,8 @@ class HomeView extends React.Component{
     }
     componentDidMount(){
         let user = localStorage.getItem("user");
+        console.log("userr rrr");
+        console.log(user);
         this.setState({user:user});
     }
 

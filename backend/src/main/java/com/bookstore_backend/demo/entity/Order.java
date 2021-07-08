@@ -66,4 +66,15 @@ public class Order {
     public void setBooks(List<String> books){
         this.books = books;
     }
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<OrderItem> order_itemlist;
+
+    public List<OrderItem> getOrder_itemlist(){
+        return order_itemlist;
+    }
+
+    public void setOrder_itemlist(List<OrderItem> list){
+        this.order_itemlist = list;
+    }
 }

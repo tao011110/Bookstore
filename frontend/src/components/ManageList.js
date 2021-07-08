@@ -60,7 +60,7 @@ class Excel extends React.Component {
     add =() =>{
         isAdding = true;
         addition[0] = (list[list.length - 1][0] + 1);
-        for(let i = 1; i < 9; i++){
+        for(let i = 1; i <= 9; i++){
             addition[i] = "";
         }
         console.log("add book");

@@ -36,6 +36,7 @@ class RegisterForm extends React.Component {
                                 cartService.createCart(json2);
                             };
                             userService.register(values, callback);
+                            window.alert("您已成功注册，请返回登录界面！");
                         }
                     };
                     let json = new Object();
@@ -47,6 +48,21 @@ class RegisterForm extends React.Component {
             }
         });
     };
+
+    handleUsername = e =>{
+        console.log("e.value");
+        console.log(e.target.value);
+        let username = e.target.value;
+        const callback = (data1) => {
+            console.log(data1, typeof data1);
+            if(data1 == true){
+                window.alert("用户名重复！");
+            }
+        };
+        let json = new Object();
+        json.username = username;
+        userService.findNameDup(json, callback);
+    }
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -66,6 +82,7 @@ class RegisterForm extends React.Component {
                                     placeholder="Please input your username"
                                     size={"large"}
                                     style={{ width: '130%' }}
+                                    onChange={this.handleUsername}
                                 />,
                             )}
                         </div>
@@ -134,9 +151,11 @@ class RegisterForm extends React.Component {
                     </Form.Item>
                 </div>
                 <Form.Item className="check">
-                    <Button type="primary" htmlType="submit" className="login-form-button">
-                        Register!
-                    </Button>
+                    <Link to={'/'}>
+                        <Button type="primary" htmlType="submit" className="login-form-button">
+                            Register!
+                        </Button>
+                    </Link>
                 </Form.Item>
             </Form>
         );

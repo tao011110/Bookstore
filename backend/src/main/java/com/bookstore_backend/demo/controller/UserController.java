@@ -45,6 +45,12 @@ public class UserController {
         return json;
     }
 
+    @RequestMapping(value="/logout")
+    public int logout(@RequestBody Map<String,String> param){
+        isSuccess = false;
+        return 0;
+    }
+
     @RequestMapping(value="/register")
     public int register(@RequestBody Map<String,String> param){
         return userService.register(param);
@@ -89,4 +95,6 @@ public class UserController {
     public boolean findNameDup(@RequestBody Map<String,String> param){
         return userService.findNameDup(param);
     }
+
+
 }

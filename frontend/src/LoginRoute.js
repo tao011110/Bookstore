@@ -13,6 +13,7 @@ export class LoginRoute extends React.Component{
     }
 
     checkAuth = (data) => {
+        console.log("routedata2    " +global.isAu);
         console.log("routedata    " +data);
         if (data == true) {
             global.isAu = true;
@@ -28,13 +29,17 @@ export class LoginRoute extends React.Component{
         userService.checkSession(this.checkAuth);
     }
 
+    componentWillMount(){
+        this.setState({
+            isAuthed: global.isAu,
+        })
+    }
+
 
     render() {
-
         const {component: Component, path="/HomeView",exact=false,strict=false} = this.props;
 
         console.log(this.state.isAuthed);
-
 
         return <Route path={path} exact={exact} strict={strict} render={props => (
             console.log("yes  " + this.state.isAuthed),

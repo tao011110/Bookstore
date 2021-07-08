@@ -91,7 +91,7 @@ public class OrderDaoImpl implements OrderDao {
 
             for (int i = 0; i < book_ids.size(); i++) {
                 OrderItem newOrderItem = new OrderItem();
-                newOrderItem.setOrder_id(order_id);
+                //newOrderItem.setOrder_id(order_id);
                 newOrderItem.setTime(ts.toString());
                 newOrderItem.setPrice(prices.get(i));
                 newOrderItem.setBook_id(book_ids.get(i));
@@ -134,7 +134,7 @@ public class OrderDaoImpl implements OrderDao {
 
             System.out.println("\nfinish into orders\n");
             OrderItem newOrderItem = new OrderItem();
-            newOrderItem.setOrder_id(order_id);
+            //newOrderItem.setOrder_id(order_id);
             newOrderItem.setTime(ts.toString());
             newOrderItem.setPrice(totalmoney);
             newOrderItem.setBook_id(book_id);
