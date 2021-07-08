@@ -70,7 +70,6 @@ export class Check extends React.Component {
                     <Col span={8}>
                         <Checkbox defaultChecked ={false} onChange={
                             summ=>{
-                                console.log("awadawd");
                                 console.log(this.checked);
                                 let i;
                                 if(this.state.isChecked === true){

@@ -95,7 +95,8 @@ export class BookDetail extends React.Component{
                                     info.num = 1;
                                     global.totalmoney = info.price;
                                     global.buy.push(info);
-                                    this.handleClick2();
+                                    global.orderFrom = "BookDetail";
+                                    //this.handleClick2();
                                 }}
                         >
                             立即购买

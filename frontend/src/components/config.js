@@ -4,3 +4,4 @@ global.totalmoney = 0;
 
 global.buy=[];
 global.isAu = false;
+global.orderFrom = ""

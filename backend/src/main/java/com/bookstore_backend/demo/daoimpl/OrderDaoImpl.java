@@ -87,11 +87,10 @@ public class OrderDaoImpl implements OrderDao {
             newOrder.setTime(ts.toString());
             Order result = orderRepository.save(newOrder);
             System.out.println("\nfinish into orders\n");
-            int order_id = result.getOrder_id();
 
             for (int i = 0; i < book_ids.size(); i++) {
                 OrderItem newOrderItem = new OrderItem();
-                //newOrderItem.setOrder_id(order_id);
+                newOrderItem.setOrder(result);
                 newOrderItem.setTime(ts.toString());
                 newOrderItem.setPrice(prices.get(i));
                 newOrderItem.setBook_id(book_ids.get(i));
@@ -115,6 +114,7 @@ public class OrderDaoImpl implements OrderDao {
             String stotalmoney =  String.valueOf(param.get("totalmoney"));
             int totalmoney = Integer.valueOf(stotalmoney);
             String sbook_id = String.valueOf((param.get("book_id")));
+            System.out.println(sbook_id);
             int book_id = Integer.valueOf(sbook_id);
             String snum = String.valueOf((param.get("num")));
             int num = Integer.valueOf(snum);
@@ -124,17 +124,15 @@ public class OrderDaoImpl implements OrderDao {
             java.sql.Timestamp ts = new java.sql.Timestamp(time);
             System.out.println("create order at:"+ts.toString());
 
-
             Order newOrder = new Order();
             newOrder.setTotalmoney(totalmoney);
             newOrder.setUser_id(user_id);
             newOrder.setTime(ts.toString());
             Order result = orderRepository.save(newOrder);
-            int order_id = result.getOrder_id();
 
             System.out.println("\nfinish into orders\n");
             OrderItem newOrderItem = new OrderItem();
-            //newOrderItem.setOrder_id(order_id);
+            newOrderItem.setOrder(newOrder);
             newOrderItem.setTime(ts.toString());
             newOrderItem.setPrice(totalmoney);
             newOrderItem.setBook_id(book_id);

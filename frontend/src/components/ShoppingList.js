@@ -154,6 +154,7 @@ export class ShoppingList extends React.Component{
                                 <Button onClick={onClick=>
                                 {
                                     global.buy = global.checked;
+                                    global.orderFrom = "cart";
                                     this.isChanged = true;
                                 }}>结算</Button>
                             </Link>
