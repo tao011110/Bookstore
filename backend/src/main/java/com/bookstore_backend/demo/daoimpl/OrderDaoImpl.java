@@ -5,6 +5,7 @@ import com.bookstore_backend.demo.dao.OrderDao;
 import com.bookstore_backend.demo.entity.Book;
 import com.bookstore_backend.demo.entity.Order;
 import com.bookstore_backend.demo.entity.OrderItem;
+import com.bookstore_backend.demo.repository.BookRepository;
 import com.bookstore_backend.demo.repository.OrderItemRepository;
 import com.bookstore_backend.demo.repository.OrderRepository;
 import org.aspectj.weaver.ast.Or;
@@ -24,6 +25,9 @@ public class OrderDaoImpl implements OrderDao {
 
     @Autowired
     BookDao bookDao;
+
+    @Autowired
+    BookRepository bookRepository;
 
     @Override
     public boolean addOrder(Map<Object, Object> param){
@@ -64,9 +68,9 @@ public class OrderDaoImpl implements OrderDao {
                         prices.add(price);
                         continue;
                     }
-                    if (ss.charAt(1) == '{') {
+                    if (ss.charAt(0) == 'b') {
                         int id = 0;
-                        for (int i = 10; i < ss.length(); i++) {
+                        for (int i = 8; i < ss.length(); i++) {
                             id = id * 10 + ss.charAt(i) - '0';
                         }
                         book_ids.add(id);
@@ -87,6 +91,7 @@ public class OrderDaoImpl implements OrderDao {
             newOrder.setTime(ts.toString());
             Order result = orderRepository.save(newOrder);
             System.out.println("\nfinish into orders\n");
+            List<OrderItem> items = new ArrayList<>();
 
             for (int i = 0; i < book_ids.size(); i++) {
                 OrderItem newOrderItem = new OrderItem();
@@ -96,7 +101,13 @@ public class OrderDaoImpl implements OrderDao {
                 newOrderItem.setBook_id(book_ids.get(i));
                 newOrderItem.setNum(nums.get(i));
                 orderItemRepository.save(newOrderItem);
+                System.out.println(bookDao.findBook(book_ids.get(i)).getInventory() - nums.get(i));
+                System.out.println(book_ids.get(i));
+                bookRepository.updateBookInventory(book_ids.get(i), bookDao.findBook(book_ids.get(i)).getInventory() - nums.get(i));
+                items.add(newOrderItem);
             }
+            result.setOrder_itemlist(items);
+
             System.out.println("\nfinish into order_item\n");
         }
         catch(Exception e){
@@ -132,13 +143,17 @@ public class OrderDaoImpl implements OrderDao {
 
             System.out.println("\nfinish into orders\n");
             OrderItem newOrderItem = new OrderItem();
-            newOrderItem.setOrder(newOrder);
+            newOrderItem.setOrder(result);
             newOrderItem.setTime(ts.toString());
             newOrderItem.setPrice(totalmoney);
             newOrderItem.setBook_id(book_id);
             newOrderItem.setNum(num);
             orderItemRepository.save(newOrderItem);
             System.out.println("\nfinish into order_item\n");
+            bookRepository.updateBookInventory(book_id, bookDao.findBook(book_id).getInventory() - 1);
+            List<OrderItem> items=new ArrayList<>();
+            items.add(newOrderItem);
+            result.setOrder_itemlist(items);
 
             return true;
         }
@@ -155,6 +170,7 @@ public class OrderDaoImpl implements OrderDao {
         for(Order i : listResult){
             int order_id = i.getOrder_id();
             List<OrderItem> items = orderItemRepository.findOrderItems(order_id);
+            i.setOrder_itemlist(items);
             List<String> names = new ArrayList<>();
             for(OrderItem o : items){
                 String bookName = bookDao.findBook(o.getBook_id()).getName();
@@ -204,10 +220,13 @@ public class OrderDaoImpl implements OrderDao {
     public List<OrderItem> findOrderItems(Integer id){
         System.out.println("id"+id);
         List<OrderItem> orderItemsResult= orderItemRepository.findOrderItems(id);
-        System.out.println(orderItemsResult);
         System.out.println("orderItemsResult.get(0)");
         System.out.println(orderItemsResult.get(0));
         System.out.println(orderItemsResult.get(0).getPrice());
+        for(OrderItem item : orderItemsResult){
+            item.setName(bookRepository.findBook(item.getBook_id()).getName());
+            System.out.println(item.getName());
+        }
 
         return orderItemsResult;
     }

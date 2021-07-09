@@ -110,35 +110,54 @@ class SubmitForm extends React.Component {
         const callback = (data) => {
             console.log("call  " + data);
         }
+        //let flag = false;
         if(global.orderFrom == "cart"){
-            orderService.addOrder(json, callback);
-            let json2 = new Object();
-            let delArray = [];
-            for(let i = 0; i < global.checked.length; i++){
-                let book_id = global.buy[i].book_id;
-                console.log("global.buy[i]  " + book_id);
-                console.log(global.buy);
-                delArray.push(book_id);
-            }
-            json2.id = delArray;
-            json2.user_id = user_id;
-            const callback2 = (data) => {
-                console.log("call  " + data);
-            }
-            cartService.deleteItem(json2, callback2);
+            // let book = "";
+            // for(let i = 0; i < global.buy.length; i++){
+            //     if(global.buy[i].inventory < global.buy[i].num){
+            //         flag = true;
+            //         book = global.buy[i].name;
+            //         break;
+            //     }
+            // }
+            // if(flag == true) {
+            //     window.alert(book + "存量不足！");
+            // }
+            // else{
+                orderService.addOrder(json, callback);
+                let json2 = new Object();
+                let delArray = [];
+                for (let i = 0; i < global.checked.length; i++) {
+                    let book_id = global.buy[i].book_id;
+                    console.log("global.buy[i]  " + book_id);
+                    console.log(global.buy);
+                    delArray.push(book_id);
+                }
+                json2.id = delArray;
+                json2.user_id = user_id;
+                const callback2 = (data) => {
+                    console.log("call  " + data);
+                }
+                cartService.deleteItem(json2, callback2);
+            //}
         }
         else{
-            let user_id = this.state.user;
-            let json = new Object();
-            json.user_id = user_id;
-            json.totalmoney = global.buy[0].price;
-            json.book_id = global.buy[0].id;
-            console.log(global.buy[0])
-            json.num = 1;
-            const callback = (data) => {
-                console.log("call  " + data);
-            }
-            orderService.addOrderOne(json, callback);
+            // if(global.buy[0].inventory < 1){
+            //     window.alert(global.buy[0].name + "存量不足！");
+            // }
+            // else{
+                let user_id = this.state.user;
+                let json = new Object();
+                json.user_id = user_id;
+                json.totalmoney = global.buy[0].price;
+                json.book_id = global.buy[0].id;
+                console.log(global.buy[0])
+                json.num = 1;
+                const callback = (data) => {
+                    console.log("call  " + data);
+                }
+                orderService.addOrderOne(json, callback);
+            //}
         }
     }
 

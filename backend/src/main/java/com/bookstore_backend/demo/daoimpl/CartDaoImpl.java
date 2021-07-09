@@ -44,6 +44,7 @@ public class CartDaoImpl implements CartDao {
             item.setImg(book.getImg());
             item.setDescription(book.getDescription());
             item.setStatus(book.getStatus());
+            item.setCart(userCart);
         }
 
         return listResult;
@@ -69,7 +70,7 @@ public class CartDaoImpl implements CartDao {
             if(cartItemRepository.checkExists(cart_id, book_id) == null) {
                 CartItem newCartItem = new CartItem();
                 newCartItem.setBook_id(book_id);
-                newCartItem.setCart_id(cart_id);
+                newCartItem.setCart(userCart);
                 cartItemRepository.save(newCartItem);
             }
             else{

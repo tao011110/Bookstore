@@ -49,8 +49,9 @@ export class ShoppingList extends React.Component{
 
     componentDidMount() {
         const callback = (data) => {
-            this.setState({items:data});
+            console.log("data33");
             console.log(data);
+            this.setState({items:data.cart_itemlist});
         }
         this.timerID = setInterval(
             () => {
@@ -108,6 +109,8 @@ export class ShoppingList extends React.Component{
                         renderItem={item => (
                             console.log("dadw  :  " + item.description),
                             global.book.push(item),
+                                console.log("info33"),
+                            console.log(item),
                                 <List.Item>
                                     <ShoppingListCard callback={this.callback} info={item}/>
                                     {/*<Row>*/}

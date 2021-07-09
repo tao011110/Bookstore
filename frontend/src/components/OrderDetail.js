@@ -34,20 +34,18 @@ class Excel extends React.Component {
         console.log("wccccc " + order_id);
         findOrderItems(parseInt(order_id), (data) => {
             list.splice(0,list.length);
-            console.log(data);
-            for(let i in data){
+            console.log("data666");
+            console.log(data.order_itemlist);
+            for(let i = 0; i < data.order_itemlist.length; i++){
                 let l = [];
-                getBook(data[i].book_id, (data) => {
-                    l[0] = data.name;
-                    list.push(l);
-                    console.log(l);
-                    this.setState({ data: list})
-                })
-                l.push("");
-                l.push(data[i].price);
-                l.push(data[i].num);
-                l.push(data[i].time);
-            }});
+                l.push(data.order_itemlist[i].name);
+                console.log(data.order_itemlist[i].name);
+                l.push(data.order_itemlist[i].price);
+                l.push(data.order_itemlist[i].num);
+                l.push(data.order_itemlist[i].time);
+                list.push(l);
+            }
+            this.setState({ data: list});});
     }
 
     sort = (e) => {

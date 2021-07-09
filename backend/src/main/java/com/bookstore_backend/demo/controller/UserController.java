@@ -39,6 +39,7 @@ public class UserController {
             int user_type = user.getUserType();
             json.put("user_id", String.valueOf(user_id));
             json.put("user_type", String.valueOf(user_type));
+            json.put("username", String.valueOf(user.getUsername()));
             System.out.println("json  " + json);
         }
 

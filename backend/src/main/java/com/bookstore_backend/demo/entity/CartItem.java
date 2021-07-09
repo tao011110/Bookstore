@@ -19,9 +19,6 @@ public class CartItem {
     @Column(name = "book_id")
     private int book_id;
 
-    @Column(name = "cart_id")
-    private int cart_id;
-
     @Transient
     private String name;
 
@@ -79,10 +76,16 @@ public class CartItem {
     public void setBook_id(int book_id){
         this.book_id = book_id;
     }
-    public int getCart_id(){
-        return cart_id;
+
+    @ManyToOne(fetch = FetchType.EAGER,optional=false)
+    @JoinColumn(name="cart_id", nullable = false)
+    private Cart cart;
+
+    public Cart getCart(){
+        return cart;
     }
-    public void setCart_id(int cart_id){
-        this.cart_id = cart_id;
+
+    public void setCart(Cart cart){
+        this.cart = cart;
     }
 }

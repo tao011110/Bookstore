@@ -28,6 +28,8 @@ export class ShoppingListCard extends React.Component{
 
     render() {
         const {info} = this.props;
+        console.log("info22");
+        console.log(info);
         return (
             <Row>
                 <Col span={16}>

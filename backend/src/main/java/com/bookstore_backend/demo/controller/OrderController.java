@@ -51,8 +51,10 @@ public class OrderController {
     }
 
     @RequestMapping("/findOrderItems")
-    public List<OrderItem> findOrderItems(@RequestParam("id") Integer id){
-        return orderService.findOrderItems(id);
+    public Order findOrderItems(@RequestParam("id") Integer id){
+        Order order = findOrder(id);
+        order.setOrder_itemlist(orderService.findOrderItems(id));
+        return order;
     }
 
     @RequestMapping("/showOneOrder")

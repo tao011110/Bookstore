@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Carts")
@@ -30,5 +31,16 @@ public class Cart {
     }
     public void setCart_id(int cart_id){
         this.cart_id = cart_id;
+    }
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<CartItem> cart_itemlist;
+
+    public List<CartItem> getCart_itemlist(){
+        return cart_itemlist;
+    }
+
+    public void setCart_itemlist(List<CartItem> list){
+        this.cart_itemlist = list;
     }
 }

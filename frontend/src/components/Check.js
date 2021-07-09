@@ -18,6 +18,8 @@ export class Check extends React.Component {
 
     render() {
         const {info} = this.props;
+        console.log("info");
+        console.log(info);
         info.num = this.state.count;
         return(
             <div>

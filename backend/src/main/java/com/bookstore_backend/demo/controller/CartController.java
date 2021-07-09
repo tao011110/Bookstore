@@ -1,6 +1,8 @@
 package com.bookstore_backend.demo.controller;
 
+import com.bookstore_backend.demo.entity.Cart;
 import com.bookstore_backend.demo.entity.CartItem;
+import com.bookstore_backend.demo.repository.CartRepository;
 import com.bookstore_backend.demo.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +16,32 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private CartRepository cartRepository;
+
+//    @RequestMapping("/listItems")
+//    public List<CartItem> listItems(@RequestBody Map<Object, Object> param){
+//        String sid = String.valueOf(param.get("user_id"));
+//        System.out.println("user_id  " + sid);
+//        int user_id = Integer.valueOf(sid);
+//        List<CartItem> list = cartService.listItems(user_id);
+//        System.out.println("list all!");
+//        for(CartItem item : list){
+//            System.out.println(item.getName() + ": " + item.getPrice());
+//            System.out.println(item.getBook_id() + "  " + item.getItem_id());
+//        }
+//        return list;
+//    }
+
     @RequestMapping("/listItems")
-    public List<CartItem> listItems(@RequestBody Map<Object, Object> param){
+    public Cart listItems(@RequestBody Map<Object, Object> param){
         String sid = String.valueOf(param.get("user_id"));
         System.out.println("user_id  " + sid);
         int user_id = Integer.valueOf(sid);
-        System.out.println("list all!");
+        Cart cart = cartRepository.getCartByUser_id(user_id);
         List<CartItem> list = cartService.listItems(user_id);
-        for(CartItem item : list){
-            System.out.println(item.getName() + ": " + item.getPrice());
-        }
-        return list;
+        cart.setCart_itemlist(list);
+        return cart;
     }
 
     @RequestMapping("/addItem")

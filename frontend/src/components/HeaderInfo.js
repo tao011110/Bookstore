@@ -21,6 +21,7 @@ export class HeaderInfo extends React.Component {
         let user = localStorage.getItem("user");
         this.setState({user:user});
         let user_type = localStorage.getItem("user_type");
+        console.log(localStorage.getItem("username"));
         this.setState({user_type:user_type});
         console.log("usertype " + user_type)
         if(user_type === "1"){
@@ -39,11 +40,14 @@ export class HeaderInfo extends React.Component {
     logOut(){
         localStorage.removeItem('user');
         localStorage.removeItem('user_type');
+        localStorage.removeItem('username');
         global.isAu = false;
         userService.logout();
     }
 
     render(){
+        let username = localStorage.getItem("username");
+        console.log(username);
         return(
             <div>
                 <div className="header">
@@ -54,7 +58,7 @@ export class HeaderInfo extends React.Component {
                         <Col span = {2}>
                             <div className="switchToLogin">
                                 <Link to={'/'}>
-                                    <div className="menu_hd">请登录</div>
+                                    <div className="menu_hd">{username}</div>
                                 </Link>
                             </div>
                         </Col>

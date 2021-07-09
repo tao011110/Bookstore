@@ -44,8 +44,14 @@ class Excel extends React.Component {
                 l.push(data[i].user_id);
                 l.push(data[i].totalmoney);
                 l.push(data[i].time);
-                l.push(data[i].books);
-                console.log((data[i].books));
+                console.log(data[i].books);
+                let books = [];
+                for(let j = 0; j < data[i].books.length; j++){
+                    books[j]= "《"+data[i].books[j]+"》";
+                }
+                l.push(books);
+                console.log("(data[i].books)");
+                console.log(l);
                 list.push(l);
             }
             this.setState({
