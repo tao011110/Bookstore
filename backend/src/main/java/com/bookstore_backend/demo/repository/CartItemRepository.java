@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface CartItemRepository extends JpaRepository<CartItem,Integer>  {
-    @Query(value = "from CartItem where cart_id = :cart_id")
+    @Query(value = "select item from CartItem item where item.cart.cart_id = :cart_id")
     List<CartItem> getCartItemByCart_id(int cart_id);
 
-    @Query(value = "from CartItem where cart_id = :cart_id and book_id = :book_id")
+    @Query(value = "select item from CartItem item where item.cart.cart_id = :cart_id and item.book_id = :book_id")
     CartItem checkExists(int cart_id, int book_id);
 
     @Modifying
     @Transactional
-    @Query(value = "delete from CartItem where cart_id = :cart_id and book_id = :book_id")
+    @Query(value = "delete from CartItem item where item.cart.cart_id = :cart_id and item.book_id = :book_id")
     void deleteCartItemByCart_idAndBook_id(int cart_id, int book_id);
 }

@@ -14,8 +14,11 @@ export class ShoppingList extends React.Component{
     delArray = [];
     isChanged = true;
 
-    callback=(total)=>{
-        this.setState({total});
+    callback=()=>{
+        console.log(global.totalmoney);
+        console.log(typeof global.totalmoney);
+
+        this.setState({total: global.totalmoney});
     }
 
     handleClick = e =>{
@@ -107,9 +110,7 @@ export class ShoppingList extends React.Component{
                             pageSize: 4,
                         }}
                         renderItem={item => (
-                            console.log("dadw  :  " + item.description),
                             global.book.push(item),
-                                console.log("info33"),
                             console.log(item),
                                 <List.Item>
                                     <ShoppingListCard callback={this.callback} info={item}/>
@@ -129,7 +130,7 @@ export class ShoppingList extends React.Component{
                     <div className="cart-menu">
                         <div>
                             <div className="total-money">
-                                总价：<span className="cal">￥{this.state.total}</span>
+                                总价：<span className="cal">￥{this.state.total.toFixed(2)}</span>
                             </div>
                         </div>
                         <div className="delete">

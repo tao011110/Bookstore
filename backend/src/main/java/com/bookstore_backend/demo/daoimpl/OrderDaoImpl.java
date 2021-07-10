@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Repository
@@ -35,12 +37,12 @@ public class OrderDaoImpl implements OrderDao {
             String suser_id = String.valueOf(param.get("user_id"));
             int user_id = Integer.valueOf(suser_id);
             String stotalmoney = String.valueOf(param.get("totalmoney"));
-            int totalmoney = Integer.valueOf(stotalmoney);
+            BigDecimal totalmoney = new BigDecimal(stotalmoney);
             String sbooks = String.valueOf((param.get("books")));
             System.out.println("sbooks");
             System.out.println(sbooks);
             List<Integer> book_ids = new ArrayList<>();
-            List<Integer> prices = new ArrayList<>();
+            List<BigDecimal> prices = new ArrayList<>();
             List<Integer> nums = new ArrayList<>();
             String str1[] = sbooks.split("},");
             System.out.println(str1[0]);
@@ -61,10 +63,13 @@ public class OrderDaoImpl implements OrderDao {
                         continue;
                     }
                     if (ss.charAt(0) == 'p') {
-                        int price = 0;
-                        for (int i = 6; i < ss.length(); i++) {
-                            price = price * 10 + ss.charAt(i) - '0';
-                        }
+                        System.out.println("sadawda  ");
+                        String sprice = ss.substring(6, ss.length());
+                        System.out.println("sadawda  "+sprice);
+//                        for (int i = 6; i < ss.length(); i++) {
+//                            price = price * 10 + ss.charAt(i) - '0';
+//                        }
+                        BigDecimal price = new BigDecimal(sprice);
                         prices.add(price);
                         continue;
                     }
@@ -81,6 +86,7 @@ public class OrderDaoImpl implements OrderDao {
             System.out.println(prices);
             System.out.println(nums);
 
+
             long time = Calendar.getInstance().getTimeInMillis();
             java.sql.Timestamp ts = new java.sql.Timestamp(time);
             System.out.println("create order at:" + ts.toString());
@@ -88,7 +94,7 @@ public class OrderDaoImpl implements OrderDao {
             Order newOrder = new Order();
             newOrder.setTotalmoney(totalmoney);
             newOrder.setUser_id(user_id);
-            newOrder.setTime(ts.toString());
+            newOrder.setTime(ts);
             Order result = orderRepository.save(newOrder);
             System.out.println("\nfinish into orders\n");
             List<OrderItem> items = new ArrayList<>();
@@ -96,7 +102,7 @@ public class OrderDaoImpl implements OrderDao {
             for (int i = 0; i < book_ids.size(); i++) {
                 OrderItem newOrderItem = new OrderItem();
                 newOrderItem.setOrder(result);
-                newOrderItem.setTime(ts.toString());
+                newOrderItem.setTime(ts);
                 newOrderItem.setPrice(prices.get(i));
                 newOrderItem.setBook_id(book_ids.get(i));
                 newOrderItem.setNum(nums.get(i));
@@ -123,7 +129,7 @@ public class OrderDaoImpl implements OrderDao {
             String suser_id=  String.valueOf(param.get("user_id"));
             int user_id = Integer.valueOf(suser_id);
             String stotalmoney =  String.valueOf(param.get("totalmoney"));
-            int totalmoney = Integer.valueOf(stotalmoney);
+            BigDecimal totalmoney = new BigDecimal(stotalmoney);
             String sbook_id = String.valueOf((param.get("book_id")));
             System.out.println(sbook_id);
             int book_id = Integer.valueOf(sbook_id);
@@ -134,17 +140,19 @@ public class OrderDaoImpl implements OrderDao {
             long time = Calendar.getInstance().getTimeInMillis();
             java.sql.Timestamp ts = new java.sql.Timestamp(time);
             System.out.println("create order at:"+ts.toString());
+            System.out.println(ts);
 
             Order newOrder = new Order();
             newOrder.setTotalmoney(totalmoney);
             newOrder.setUser_id(user_id);
-            newOrder.setTime(ts.toString());
+            newOrder.setTime(ts);
+            System.out.println("create order?:"+newOrder.getTime());
             Order result = orderRepository.save(newOrder);
 
             System.out.println("\nfinish into orders\n");
             OrderItem newOrderItem = new OrderItem();
             newOrderItem.setOrder(result);
-            newOrderItem.setTime(ts.toString());
+            newOrderItem.setTime(ts);
             newOrderItem.setPrice(totalmoney);
             newOrderItem.setBook_id(book_id);
             newOrderItem.setNum(num);
@@ -175,7 +183,7 @@ public class OrderDaoImpl implements OrderDao {
             for(OrderItem o : items){
                 String bookName = bookDao.findBook(o.getBook_id()).getName();
                 System.out.println(bookName);
-                names.add(bookName+ ", ");
+                names.add(bookName);
             }
             i.setBooks(names);
             System.out.println(names);
@@ -200,7 +208,7 @@ public class OrderDaoImpl implements OrderDao {
                 names.add(bookName);
             }
             i.setBooks(names);
-            System.out.println(i.getTotalmoney());
+            System.out.println(i.getTotalmoney() +  "   " + i.getTime());
         }
 
         return listResult;
@@ -234,21 +242,58 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<OrderItem> findOrderItemsByTime(@RequestBody Map<Object, Object> param){
         System.out.println("administrator");
-        String minDate =  String.valueOf(param.get("minDate"));
-        String maxDate =  String.valueOf(param.get("maxDate"));
+        String sminDate =  String.valueOf(param.get("minDate"));
+        System.out.println(sminDate);
+        String smaxDate =  String.valueOf(param.get("maxDate"));
+        System.out.println(smaxDate);
+        Timestamp minDate = Timestamp.valueOf(sminDate);
+        Timestamp maxDate = Timestamp.valueOf(smaxDate);
         System.out.println(maxDate + "  " + minDate);
-        List<List<Integer>> numOrder = orderItemRepository.findOrderItemsByTime(minDate, maxDate);
+        List<OrderItem> numOrder = orderItemRepository.findOrderItemsByTime(minDate, maxDate);
         List<OrderItem> result = new LinkedList<>();
+        List<Integer> book_ids = new ArrayList<>();
+        List<Integer> nums = new ArrayList<>();
 
-        for(List<Integer> l : numOrder){
-            System.out.println(l);
+        for(OrderItem l : numOrder){
+            int book_id = l.getBook_id();
+            int num = l.getNum();
+            boolean flag = false;
+            for(int i = 0; i < book_ids.size(); i++){
+                if(book_ids.get(i) == book_id){
+                    int newNum = nums.get(i)+num;
+                    nums.set(i, newNum);
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag == false){
+                nums.add(num);
+                book_ids.add(book_id);
+            }
+        }
+
+        for(int i = 0; i < book_ids.size(); i++){
             OrderItem o = new OrderItem();
-            String name = bookDao.findBook(l.get(0)).getName();
+            Book book = bookDao.findBook(book_ids.get(i));
+            String name = book.getName();
             o.setName(name);
-            o.setPrice(l.get(1));
-            o.setNum(l.get(2));
+            o.setPrice(book.getPrice());
+            o.setNum(nums.get(i));
             System.out.println(o.getName() +" "+o.getPrice() +" " +o.getNum());
             result.add(o);
+        }
+
+        for(int i=0; i < result.size() - 1; i++)
+        {
+            for(int j=0;j < result.size()- i - 1; j++)
+            {
+                if(result.get(j).getNum() < result.get(j + 1).getNum())
+                {
+                    OrderItem temp = result.get(j);
+                    result.set(j, result.get(j + 1));
+                    result.set(j + 1, temp);
+                }
+            }
         }
 
         return result;
@@ -256,23 +301,116 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<OrderItem> userFindOrderItemsByTime(@RequestBody Map<Object, Object> param){
-        String minDate =  String.valueOf(param.get("minDate"));
-        String maxDate =  String.valueOf(param.get("maxDate"));
+        String sminDate =  String.valueOf(param.get("minDate"));
+        System.out.println(sminDate);
+        String smaxDate =  String.valueOf(param.get("maxDate"));
+        System.out.println(smaxDate);
         String suser_id=  String.valueOf(param.get("user_id"));
         int user_id = Integer.valueOf(suser_id);
+        Timestamp minDate = Timestamp.valueOf(sminDate);
+        Timestamp maxDate = Timestamp.valueOf(smaxDate);
         System.out.println(maxDate + "  " + minDate +"  " + user_id);
-        List<List<Integer>> numOrder = orderItemRepository.userFindOrderItemsByTime(minDate, maxDate, user_id);
+        List<OrderItem> numOrder = orderItemRepository.userFindOrderItemsByTime(minDate, maxDate, user_id);
         List<OrderItem> result = new LinkedList<>();
+        List<Integer> book_ids = new ArrayList<>();
+        List<Integer> nums = new ArrayList<>();
 
-        for(List<Integer> l : numOrder){
-            System.out.println(l);
+        for(OrderItem l : numOrder){
+            int book_id = l.getBook_id();
+            int num = l.getNum();
+            boolean flag = false;
+            for(int i = 0; i < book_ids.size(); i++){
+                if(book_ids.get(i) == book_id){
+                    int newNum = nums.get(i)+num;
+                    nums.set(i, newNum);
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag == false){
+                nums.add(num);
+                book_ids.add(book_id);
+            }
+        }
+
+        for(int i = 0; i < book_ids.size(); i++){
             OrderItem o = new OrderItem();
-            String name = bookDao.findBook(l.get(0)).getName();
+            Book book = bookDao.findBook(book_ids.get(i));
+            String name = book.getName();
             o.setName(name);
-            o.setPrice(l.get(1));
-            o.setNum(l.get(2));
+            o.setPrice(book.getPrice());
+            o.setNum(nums.get(i));
             System.out.println(o.getName() +" "+o.getPrice() +" " +o.getNum());
             result.add(o);
+        }
+
+        for(int i=0; i < result.size() - 1; i++)
+        {
+            for(int j=0;j < result.size()- i - 1; j++)
+            {
+                if(result.get(j).getNum() < result.get(j + 1).getNum())
+                {
+                    OrderItem temp = result.get(j);
+                    result.set(j, result.get(j + 1));
+                    result.set(j + 1, temp);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Order> findOrderByTime(@RequestBody Map<Object, Object> param){
+        System.out.println("administrator");
+        String sminDate =  String.valueOf(param.get("minDate"));
+        System.out.println(sminDate);
+        String smaxDate =  String.valueOf(param.get("maxDate"));
+        System.out.println(smaxDate);
+        Timestamp minDate = Timestamp.valueOf(sminDate);
+        Timestamp maxDate = Timestamp.valueOf(smaxDate);
+        System.out.println(maxDate + "  " + minDate);
+        List<Order> result = orderRepository.getOrdersByTime(minDate, maxDate);
+        for(Order i : result){
+            int order_id = i.getOrder_id();
+            List<OrderItem> items = orderItemRepository.findOrderItems(order_id);
+            List<String> names = new ArrayList<>();
+            for(OrderItem o : items){
+                String bookName = "《"+bookDao.findBook(o.getBook_id()).getName() +"》";
+                System.out.println(bookName);
+                names.add(bookName);
+            }
+            i.setBooks(names);
+            System.out.println(i.getTotalmoney() +  "   " + i.getTime());
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Order> userFindOrderByTime(@RequestBody Map<Object, Object> param){
+        String sminDate =  String.valueOf(param.get("minDate"));
+        System.out.println(sminDate);
+        String smaxDate =  String.valueOf(param.get("maxDate"));
+        System.out.println(smaxDate);
+        String suser_id=  String.valueOf(param.get("user_id"));
+        int user_id = Integer.valueOf(suser_id);
+        Timestamp minDate = Timestamp.valueOf(sminDate);
+        Timestamp maxDate = Timestamp.valueOf(smaxDate);
+        System.out.println(maxDate + "  " + minDate +"  " + user_id);
+
+        List<Order> result = orderRepository.userGetOrdersByTime(minDate, maxDate, user_id);
+        for(Order i : result){
+            int order_id = i.getOrder_id();
+            List<OrderItem> items = orderItemRepository.findOrderItems(order_id);
+            List<String> names = new ArrayList<>();
+            for(OrderItem o : items){
+                String bookName = "《"+bookDao.findBook(o.getBook_id()).getName() +"》";
+                System.out.println(bookName);
+                names.add(bookName);
+            }
+            i.setBooks(names);
+            System.out.println(i.getTotalmoney() +  "   " + i.getTime());
         }
 
         return result;

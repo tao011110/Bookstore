@@ -17,4 +17,6 @@ public interface OrderService {
     List<OrderItem> findOrderItems(Integer id);
     List<OrderItem> findOrderItemsByTime(@RequestBody Map<Object, Object> param);
     List<OrderItem> userFindOrderItemsByTime(@RequestBody Map<Object, Object> param);
+    List<Order> findOrderByTime(@RequestBody Map<Object, Object> param);
+    List<Order> userFindOrderByTime(@RequestBody Map<Object, Object> param);
 }

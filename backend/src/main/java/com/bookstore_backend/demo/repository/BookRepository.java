@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 public interface BookRepository extends JpaRepository<Book,Integer> {
     @Query("from Book where id = :id")
@@ -37,7 +38,7 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
     @Modifying
     @Transactional
     @Query(value = "update Book set price = :price where id = :id")
-    int updateBookPrice(int id, int price);
+    int updateBookPrice(int id, BigDecimal price);
 
     @Modifying
     @Transactional

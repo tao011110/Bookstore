@@ -1,6 +1,8 @@
 package com.bookstore_backend.demo.daoimpl;
 
 import com.bookstore_backend.demo.dao.UserDao;
+import com.bookstore_backend.demo.entity.Order;
+import com.bookstore_backend.demo.entity.OrderItem;
 import com.bookstore_backend.demo.entity.User;
 import com.bookstore_backend.demo.repository.OrderRepository;
 import com.bookstore_backend.demo.repository.UserRepository;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -90,42 +94,67 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getTopUser(Map<String, String> param){
-        String minDate =  String.valueOf(param.get("minDate"));
-        String maxDate =  String.valueOf(param.get("maxDate"));
+        String sminDate =  String.valueOf(param.get("minDate"));
+        String smaxDate =  String.valueOf(param.get("maxDate"));
+        System.out.println("sminDate smaxDate");
+        System.out.println(sminDate + "  " + smaxDate);
+        Timestamp minDate = Timestamp.valueOf(sminDate);
+        Timestamp maxDate = Timestamp.valueOf(smaxDate);
         System.out.println(minDate + "  " + maxDate);
-        List<List<Integer>> l = orderRepository.getOrdersByTime(minDate, maxDate);
+        List<Order> l = orderRepository.getOrdersByTime(minDate, maxDate);
 
-        List<User> result = new LinkedList<>();
-        for(List<Integer> i : l){
-            System.out.println(i);
-            User u = new User();
-            int user_id = i.get(0);
-            u.setUser_id(user_id);
-            u.setTotalMoney(i.get(1));
-            u.setUsername(userRepository.getUserByUserId(user_id).getUsername());
-            result.add(u);
-            System.out.println(u.getUser_id() +" "+ u.getTotalMoney() + " " + u.getUsername());
-        }
-
-        List<User> allUsers = userRepository.listUsers();
-        int length = result.size();
-        for(User user : allUsers){
-            int user_id = user.getUser_id();
+        List<User> users = new LinkedList<>();
+        for(int i = 0; i < l.size(); i++){
             boolean flag = false;
-            int i = 0;
-            for(i = 0; i < length; i++){
-                if(result.get(i).getUser_id() == user_id){
+            int user_id = l.get(i).getUser_id();
+            for(int j = 0; j < users.size(); j++){
+                if(users.get(j).getUser_id() == user_id){
                     flag = true;
+                    BigDecimal money = users.get(j).getTotalMoney().add(l.get(i).getTotalmoney());
+                    users.get(j).setTotalMoney(money);
                     break;
                 }
             }
-            if(flag == false && user.getUserType() != 0){
-                user.setTotalMoney(0);
-                result.add(user);
+            if(flag == false){
+                User newUser = new User();
+                newUser.setTotalMoney(l.get(i).getTotalmoney());
+                newUser.setUser_id(user_id);
+                newUser.setUsername(userRepository.getUserByUserId(user_id).getUsername());
+                users.add(newUser);
+            }
+        }
+        for(int i=0; i < users.size() - 1; i++)
+        {
+            for(int j=0;j < users.size()- i - 1; j++)
+            {
+                if(users.get(j).getTotalMoney().compareTo(users.get(j + 1).getTotalMoney()) == -1)
+                {
+                    User temp = users.get(j);
+                    users.set(j, users.get(j + 1));
+                    users.set(j + 1, temp);
+                }
             }
         }
 
-        return result;
+//        List<User> allUsers = userRepository.listUsers();
+//        int length = result.size();
+//        for(User user : allUsers){
+//            int user_id = user.getUser_id();
+//            boolean flag = false;
+//            int i = 0;
+//            for(i = 0; i < length; i++){
+//                if(result.get(i).getUser_id() == user_id){
+//                    flag = true;
+//                    break;
+//                }
+//            }
+//            if(flag == false && user.getUserType() != 0){
+//                user.setTotalMoney(0);
+//                result.add(user);
+//            }
+//        }
+
+        return users;
     }
 
     @Override

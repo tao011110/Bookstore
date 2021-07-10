@@ -1,10 +1,15 @@
 package com.bookstore_backend.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -21,10 +26,11 @@ public class Order {
     private int user_id;
 
     @Column(name = "totalmoney")
-    private int totalmoney;
+    @JsonSerialize(using= ToStringSerializer.class)
+    private BigDecimal totalmoney;
 
-    @Column(name = "time")
-    private String time;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Timestamp time;
 
     @Transient
     private List<String> books;
@@ -35,11 +41,11 @@ public class Order {
     public int getUser_id(){
         return user_id;
     }
-    public int getTotalmoney(){
+    public BigDecimal getTotalmoney(){
         return totalmoney;
     }
 
-    public String getTime(){
+    public Timestamp getTime(){
         return time;
     }
 
@@ -55,11 +61,11 @@ public class Order {
         this.user_id = user_id;
     }
 
-    public void setTotalmoney(int totalmoney){
+    public void setTotalmoney(BigDecimal totalmoney){
         this.totalmoney = totalmoney;
     }
 
-    public void setTime(String time){
+    public void setTime(Timestamp time){
         this.time = time;
     }
 

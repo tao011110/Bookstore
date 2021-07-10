@@ -1,6 +1,10 @@
 package com.bookstore_backend.demo.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -27,7 +31,8 @@ public class Book {
     private int inventory;
 
     @Column(name = "price")
-    private int price;
+    @JsonSerialize(using= ToStringSerializer.class)
+    private BigDecimal price;
 
     @Column(name = "img")
     private String img;
@@ -62,10 +67,10 @@ public class Book {
     public int getInventory(){
         return inventory;
     }
-    public void setPrice(int price){
+    public void setPrice(BigDecimal price){
         this.price = price;
     }
-    public int getPrice(){
+    public BigDecimal getPrice(){
         return price;
     }
     public void setID(int id){

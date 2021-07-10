@@ -40,12 +40,12 @@ export class Check extends React.Component {
                                 console.log(info.num);
                                 if(this.state.isChecked === true && this.state.count > 0){
                                     if(pastCount < info.num) {
-                                        global.totalmoney += info.price;
+                                        global.totalmoney += parseFloat(info.price);
                                     }
                                     else{
-                                        global.totalmoney -= info.price;
+                                        global.totalmoney -= parseFloat(info.price);
                                     }
-                                    this.props.callback(global.totalmoney);
+                                    this.props.callback();
                                 }
                             }}size={"small"}>-</button>
                             <span>{this.state.count}</span>
@@ -55,15 +55,16 @@ export class Check extends React.Component {
                                     count:this.state.count+1
                                 });
                                 info.num = this.state.count + 1;
-                                console.log("info.number  ", info.num);
+                                console.log("info.number  ", info.num, "  ", typeof info.num);
+                                console.log(info.price + "  " + typeof info.price)
                                 if(this.state.isChecked === true){
                                     if(pastCount < info.num) {
-                                        global.totalmoney += info.price;
+                                        global.totalmoney += parseFloat(info.price);
                                     }
                                     else{
-                                        global.totalmoney -= info.price;
+                                        global.totalmoney -= parseFloat(info.price);
                                     }
-                                    this.props.callback(global.totalmoney);
+                                    this.props.callback();
                                 }
                                 //console.log(this.state.count);
                             }}size={"small"}>+</button>

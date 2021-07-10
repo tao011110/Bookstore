@@ -31,7 +31,7 @@ public class BookController {
         List<Book> b = bookService.woc(pageable).getContent();
         System.out.println("i.getName()");
         for(Book i : b){
-            System.out.println(i.getName());
+            System.out.println(i.getName() +"  " + i.getPrice());
         }
         System.out.println();
         list = b;

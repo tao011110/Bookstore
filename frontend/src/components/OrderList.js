@@ -7,7 +7,8 @@ import "../css/manage.css"
 import PropTypes, {array} from "prop-types";
 import {showAllBooks} from "../services/bookService";
 import * as manageService from "../services/manageService"
-import {showAllOrders, showOneOrder} from "../services/orderService";
+import {findOrderItemsByTime, showAllOrders, showOneOrder, userFindOrderItemsByTime} from "../services/orderService";
+import * as orderService from "../services/orderService";
 const { Search } = Input;
 
 const headers = ["order_id", "user_id", "totalmoney", "time", "books", "check"];
@@ -35,40 +36,41 @@ class Excel extends React.Component {
     }
 
     componentDidMount() {
-        const callback = (data) => {
-            console.log("woc666");
-            list.splice(0,list.length);
-            for(let i in data){
-                let l = [];
-                l.push(data[i].order_id);
-                l.push(data[i].user_id);
-                l.push(data[i].totalmoney);
-                l.push(data[i].time);
-                console.log(data[i].books);
-                let books = [];
-                for(let j = 0; j < data[i].books.length; j++){
-                    books[j]= "《"+data[i].books[j]+"》";
-                }
-                l.push(books);
-                console.log("(data[i].books)");
-                console.log(l);
-                list.push(l);
-            }
-            this.setState({
-                preSearchData:list,
-                data:list});
-            console.log(list);
-        };
-        console.log("user_type  ", user_type);
-        if(user_type === "0") {
-            showAllOrders({"search": null}, callback);
-        }
-        else{
-            console.log("just a user!");
-            let json = new Object();
-            json.user_id = user;
-            showOneOrder(json, callback);
-        }
+        // const callback = (data) => {
+        //     console.log("woc666");
+        //     list.splice(0,list.length);
+        //     for(let i in data){
+        //         let l = [];
+        //         l.push(data[i].order_id);
+        //         l.push(data[i].user_id);
+        //         l.push(data[i].totalmoney);
+        //         l.push(data[i].time);
+        //         console.log(data[i].books);
+        //         let books = [];
+        //         for(let j = 0; j < data[i].books.length; j++){
+        //             books[j]= "《"+data[i].books[j]+"》";
+        //         }
+        //         l.push(books);
+        //         console.log("(data[i].books)");
+        //         console.log(l);
+        //         list.push(l);
+        //     }
+        //     this.setState({
+        //         preSearchData:list,
+        //         data:list});
+        //     console.log(list);
+        // };
+        // console.log("user_type  ", user_type);
+        // if(user_type === "0") {
+        //     showAllOrders({"search": null}, callback);
+        // }
+        // else{
+        //     console.log("just a user!");
+        //     let json = new Object();
+        //     json.user_id = user;
+        //     showOneOrder(json, callback);
+        // }
+        this.rangeDate("1970-01-01 00:00:01.0001", "2038-01-19 03:14:07.999");
     }
 
     sort = (e) => {
@@ -128,24 +130,80 @@ class Excel extends React.Component {
     };
 
     rangeDate = (min, max) => {
-        console.log("change");
-        console.log(this.state.preSearchData);
-        console.log("(min "+ min);
-        console.log("(max "+ max);
-        let searchdata = this.state.preSearchData.filter(function (row) {
-            console.log("???");
-            let str = row[3].toString().substring(0, 10);
-            console.log("str "+str);
-            if(str >= min && str <= max){
-                return true;
+        // console.log("change");
+        // console.log(this.state.preSearchData);
+        // console.log("(min "+ min);
+        // console.log("(max "+ max);
+        //
+        // let searchdata = this.state.preSearchData.filter(function (row) {
+        //     console.log("???");
+        //     let str = row[3].toString().substring(0, 10);
+        //     console.log("str "+str);
+        //     if(str >= min && str <= max){
+        //         return true;
+        //     }
+        //     else{
+        //         return false;
+        //     }
+        // });
+        // list = [];
+        // for(let i in searchdata){
+        //     let l = [];
+        //     l.push(searchdata[i][0]);
+        //     l.push(searchdata[i][1]);
+        //     l.push(searchdata[i][2]);
+        //     l.push(searchdata[i][3]);
+        //     console.log("searchdata");
+        //     console.log(searchdata[i]);
+        //     let books = [];
+        //     for(let j = 0; j < searchdata[i][4].length; j++){
+        //         books[j]= "《"+searchdata[i][4][j]+"》";
+        //     }
+        //     l.push(books);
+        //     console.log("(data[i].books)");
+        //     console.log(l);
+        //     list.push(l);
+        // }
+        // this.setState({
+        //     data: searchdata
+        // });
+        console.log("user_type " + user_type + typeof user_type);
+        const callback = (data) => {
+            let num = 0;
+            let money = 0;
+            console.log("woc666");
+            console.log(data);
+            list.splice(0,list.length);
+            for(let i in data){
+                let l = [];
+                l.push(data[i].order_id);
+                l.push(data[i].user_id);
+                l.push(data[i].totalmoney);
+                l.push(data[i].time);
+                l.push(data[i].books);
+                list.push(l);
             }
-            else{
-                return false;
-            }
-        });
-        this.setState({
-            data: searchdata
-        });
+            this.setState({
+                data:list,
+                totalBook: num,
+                totalMoney: money,
+            });
+            console.log(list);
+        };
+        if(parseInt(user_type) === 0) {
+            let json = new Object();
+            json.minDate = min;
+            json.maxDate = max;
+            orderService.findOrderByTime(json, callback);
+        }
+        else{
+            console.log("just a user!");
+            let json = new Object();
+            json.minDate = min;
+            json.maxDate = max;
+            json.user_id = user;
+            orderService.userFindOrderByTime(json, callback);
+        }
     };
 
     render = () => {
@@ -197,20 +255,22 @@ class Excel extends React.Component {
                     {this.renderSearch()}
                     {this.state.data.map(function (row, rowidx) {
                         return (
-                            <tr key={rowidx}>{
-                                row.map(function (cell, idx) {
-                                    let content = cell;
-                                    return <td key={idx} data-row={rowidx}>{content}</td>;
-                                }, this)}
-                                <td>
-                                    <Link to={{pathname:'/OrderView', search: "?id=" + list[rowidx][0]}}
-                                          target = "_blank">
-                                        <Button type="primary" size={"large"}>
-                                            查看详情
-                                        </Button>
-                                    </Link>
-                                </td>
-                            </tr>
+                            console.log("list"),
+                                console.log(list),
+                                <tr key={rowidx}>{
+                                    row.map(function (cell, idx) {
+                                        let content = cell;
+                                        return <td key={idx} data-row={rowidx}>{content}</td>;
+                                    }, this)}
+                                    <td>
+                                        <Link to={{pathname:'/OrderView', search: "?id=" + list[rowidx][0]}}
+                                              target = "_blank">
+                                            <Button type="primary" size={"large"}>
+                                                查看详情
+                                            </Button>
+                                        </Link>
+                                    </td>
+                                </tr>
                         );
                     }, this)}
                     </tbody>
@@ -219,8 +279,8 @@ class Excel extends React.Component {
                     <Input.Group compact>
                         <DatePicker.RangePicker style={{ width: '40%' }}
                                                 onChange={(e)=>{
-                                                    let min = e[0].format("YYYY-MM-DD").toString();
-                                                    let max = e[1].format("YYYY-MM-DD").toString();
+                                                    let min = e[0].format("YYYY-MM-DD").toString() + " 00:00:00";
+                                                    let max = e[1].format("YYYY-MM-DD").toString() + " 00:00:00";
                                                     console.log(min);
                                                     console.log(max);
                                                     this.preSearchData = this.state.data;

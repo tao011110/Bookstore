@@ -3,8 +3,11 @@ package com.bookstore_backend.demo.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "cart_item")
@@ -23,7 +26,8 @@ public class CartItem {
     private String name;
 
     @Transient
-    private int price;
+    @JsonSerialize(using= ToStringSerializer.class)
+    private BigDecimal price;
 
     @Transient
     private int status;
@@ -46,10 +50,10 @@ public class CartItem {
     public void setName(String name){
         this.name = name;
     }
-    public int getPrice(){
+    public BigDecimal getPrice(){
         return price;
     }
-    public void setPrice(int price){
+    public void setPrice(BigDecimal price){
         this.price = price;
     }
     public int getStatus(){

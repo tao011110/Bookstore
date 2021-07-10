@@ -58,4 +58,13 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderItem> userFindOrderItemsByTime(@RequestBody Map<Object, Object> param){
         return orderDao.userFindOrderItemsByTime(param);
     }
+    @Override
+    public List<Order> findOrderByTime(@RequestBody Map<Object, Object> param){
+        return orderDao.findOrderByTime(param);
+    }
+
+    @Override
+    public List<Order> userFindOrderByTime(@RequestBody Map<Object, Object> param){
+        return orderDao.userFindOrderByTime(param);
+    }
 }

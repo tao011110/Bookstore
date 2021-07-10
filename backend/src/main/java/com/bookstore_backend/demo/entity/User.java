@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "users")
@@ -29,7 +30,7 @@ public class User {
     private String email;
 
     @Transient
-    private Integer totalMoney;
+    private BigDecimal totalMoney;
 
     public Integer getUser_id() {
         return user_id;
@@ -63,11 +64,11 @@ public class User {
         this.user_type = user_type;
     }
 
-    public Integer getTotalMoney(){
+    public BigDecimal getTotalMoney(){
         return totalMoney;
     }
 
-    public void setTotalMoney(Integer totalMoney){
+    public void setTotalMoney(BigDecimal totalMoney){
         this.totalMoney = totalMoney;
     }
 

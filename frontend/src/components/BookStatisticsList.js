@@ -38,7 +38,7 @@ class Excel extends React.Component {
     }
 
     componentDidMount() {
-        this.rangeDate("0", moment().format().substring(0, 10));
+        this.rangeDate("1970-01-01 00:00:01.0001", "2038-01-19 03:14:07.999");
     }
 
     sort = (e) => {
@@ -91,24 +91,6 @@ class Excel extends React.Component {
     };
 
     rangeDate = (min, max) => {
-        // let searchdata = this.preSearchData.filter(function (row) {
-        //     let str = row[3].toString().substring(0, 10);
-        //     if(str >= min && str <= max){
-        //         return true;
-        //     }
-        //     else{
-        //         return false;
-        //     }
-        // });
-        // this.setState({data: searchdata});
-        // const callback = (data) =>{
-        //     console.log(data);
-        // };
-        // let json = new Object();
-        // json.minDate = min;
-        // json.maxDate = max;
-        // json.user_id = user;
-        // userFindOrderItemsByTime(json, callback);
         console.log("user_type " + user_type + typeof user_type);
         const callback = (data) => {
             let num = 0;
@@ -121,7 +103,7 @@ class Excel extends React.Component {
                 money += data[i].num * data[i].price;
                 l.push(data[i].name);
                 l.push(data[i].num);
-                l.push(data[i].price);
+                l.push(data[i].price.toFixed(2));
                 list.push(l);
             }
             this.setState({
@@ -211,7 +193,7 @@ class Excel extends React.Component {
                         <span>购买总数：<span>{this.state.totalBook}个</span></span>
                     </Col>
                     <Col>
-                        <span>总金额：<span>￥{this.state.totalMoney}</span></span>
+                        <span>总金额：<span>￥{this.state.totalMoney.toFixed(2)}</span></span>
                     </Col>
                 </Row>
                 <div>
@@ -219,8 +201,8 @@ class Excel extends React.Component {
                         <DatePicker.RangePicker
                             style={{ width: '40%' }}
                             onChange={(e)=>{
-                                let min = e[0].format("YYYY-MM-DD").toString();
-                                let max = e[1].format("YYYY-MM-DD").toString();
+                                let min = e[0].format("YYYY-MM-DD").toString() + " 00:00:00";
+                                let max = e[1].format("YYYY-MM-DD").toString() + " 00:00:00";
                                 console.log(min);
                                 console.log(max);
                                 this.preSearchData = this.state.data;

@@ -9,6 +9,7 @@ import * as cartService from '../services/cartService'
 class RegisterForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
+        console.log("fffffffa");
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values.email);
@@ -93,7 +94,7 @@ class RegisterForm extends React.Component {
                     <Form.Item>
                         <div  className="retract">
                             {getFieldDecorator('password', {
-                                rules: [{ required: true, message: '确认密码不得为空!' },
+                                rules: [{ required: true, message: '密码不得为空!' },
                                     {
                                         whitespace: true,
                                         message: 'Password can not be empty!',
@@ -134,7 +135,7 @@ class RegisterForm extends React.Component {
                     <Form.Item>
                         <div  className="retract">
                             {getFieldDecorator('email', {
-                                rules: [{ required: true, message: '密码不得为空!' },
+                                rules: [{ required: true, message: '邮箱不得为空!' },
                                     {
                                         whitespace: true,
                                         message: 'email can not be empty!',
@@ -151,11 +152,11 @@ class RegisterForm extends React.Component {
                     </Form.Item>
                 </div>
                 <Form.Item className="check">
-                    <Link to={'/'}>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
-                            Register!
-                        </Button>
-                    </Link>
+                    {/*<Link to={'/'}>*/}
+                    {/*</Link>*/}
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Register!
+                    </Button>
                 </Form.Item>
             </Form>
         );

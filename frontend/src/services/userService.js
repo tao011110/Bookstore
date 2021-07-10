@@ -35,6 +35,7 @@ export const logout = (data) => {
 
 export const register = (data, callback) => {
     const url = 'http://localhost:8080/register';
+    history.push("/");
     postRequest(url, data, callback);
 };
 

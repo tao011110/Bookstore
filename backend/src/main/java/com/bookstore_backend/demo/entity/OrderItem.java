@@ -1,10 +1,15 @@
 package com.bookstore_backend.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "order_item")
@@ -16,20 +21,19 @@ public class OrderItem {
     @Column(name = "order_item_id")
     private int order_item_id;
 
-//    @Column(name = "order_id")
-//    private int order_id;
 
     @Column(name = "book_id")
     private int book_id;
 
     @Column(name = "price")
-    private int price;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private BigDecimal price;
 
     @Column(name = "num")
     private int num;
 
     @Column(name = "time")
-    private String time;
+    private Timestamp time;
 
     @Transient
     private String name;
@@ -42,7 +46,7 @@ public class OrderItem {
 //        return order_id;
 //    }
 
-    public int getPrice(){
+    public BigDecimal getPrice(){
         return price;
     }
 
@@ -54,7 +58,7 @@ public class OrderItem {
         return book_id;
     }
 
-    public String getTime(){
+    public Timestamp getTime(){
         return time;
     }
 
@@ -70,7 +74,7 @@ public class OrderItem {
 //        this.order_id = order_id;
 //    }
 
-    public void setPrice(int price){
+    public void setPrice(BigDecimal price){
         this.price = price;
     }
 
@@ -82,7 +86,7 @@ public class OrderItem {
         this.book_id = book_id;
     }
 
-    public void setTime(String time){
+    public void setTime(Timestamp time){
         this.time = time;
     }
 

@@ -14,6 +14,9 @@ class LoginForm extends React.Component {
                 userService.login(values);
                 console.log('now  values of form: ', values);
             }
+            else{
+                window.alert("请确保输入用户名和密码！");
+            }
         });
     };
 
@@ -22,48 +25,48 @@ class LoginForm extends React.Component {
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <div className="field-group">
-                <Form.Item>
-                    <div  className="retract">
-                    {getFieldDecorator('username', {
-                        rules: [{ required: true, message: 'Please input your username!' }],
-                    })(
-                        <Input
-                            placeholder="Username"
-                            size={"large"}
-                            style={{ width: '130%' }}
-                        />,
-                    )}
-                    </div>
-                </Form.Item>
+                    <Form.Item>
+                        <div  className="retract">
+                            {getFieldDecorator('username', {
+                                rules: [{ required: true, message: 'Please input your username!' }],
+                            })(
+                                <Input
+                                    placeholder="Username"
+                                    size={"large"}
+                                    style={{ width: '130%' }}
+                                />,
+                            )}
+                        </div>
+                    </Form.Item>
                 </div>
                 <div className="field-group">
-                <Form.Item>
-                    <div  className="retract">
-                    {getFieldDecorator('password', {
-                        rules: [{ required: true, message: 'Please input your Password!' }],
-                    })(
-                        <Input
-                            type="password"
-                            placeholder="Password"
-                            size={"large"}
-                            style={{ width: '130%' }}
-                        />,
-                    )}
-                    </div>
-                </Form.Item>
-            </div>
+                    <Form.Item>
+                        <div  className="retract">
+                            {getFieldDecorator('password', {
+                                rules: [{ required: true, message: 'Please input your Password!' }],
+                            })(
+                                <Input
+                                    type="password"
+                                    placeholder="Password"
+                                    size={"large"}
+                                    style={{ width: '130%' }}
+                                />,
+                            )}
+                        </div>
+                    </Form.Item>
+                </div>
                 <Form.Item className="check">
-                        <Button type="primary" htmlType="submit" className="login-form-button">
-                            Sign In!
-                        </Button>
-                    {getFieldDecorator('remember', {
-                        valuePropName: 'checked',
-                        initialValue: true,
-                    })(<Checkbox>Remember me</Checkbox>)}
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Sign In!
+                    </Button>
+                    {/*{getFieldDecorator('remember', {*/}
+                    {/*    valuePropName: 'checked',*/}
+                    {/*    initialValue: true,*/}
+                    {/*})(<Checkbox>Remember me</Checkbox>)}*/}
                     <a className="login-form-forgot" href="">
                         Forgot password
                     </a>
-                    <div>Or<Link to={'/RegisterView'}> register now!</Link></div>
+                    <div><Link to={'/RegisterView'}> register now!</Link></div>
 
                 </Form.Item>
             </Form>

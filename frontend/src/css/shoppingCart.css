@@ -177,7 +177,7 @@ p {
 .delete{
     width:15%;
     margin-top: 7px;
-    margin-left: 320px;
+    margin-left: 280px;
     float: left;
 }
 
@@ -190,7 +190,7 @@ p {
 }
 
 .total-money{
-    width:15%;
+    width:20%;
     font-size: 16px;
     margin-top: 5px;
     padding-top: 10px;

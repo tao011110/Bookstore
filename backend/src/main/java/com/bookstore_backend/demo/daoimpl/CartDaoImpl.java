@@ -72,6 +72,9 @@ public class CartDaoImpl implements CartDao {
                 newCartItem.setBook_id(book_id);
                 newCartItem.setCart(userCart);
                 cartItemRepository.save(newCartItem);
+                List<CartItem> list = userCart.getCart_itemlist();
+                list.add(newCartItem);
+                userCart.setCart_itemlist(list);
             }
             else{
                 System.out.println("不可重复添加！");
@@ -106,6 +109,7 @@ public class CartDaoImpl implements CartDao {
             int lastIndex = 0;
 
             Cart userCart = cartRepository.getCartByUser_id(user_id);
+            List<CartItem> itemList = userCart.getCart_itemlist();
             int cart_id = userCart.getCart_id();
             System.out.println("user_id   "+user_id);
             System.out.println("cart_id   "+cart_id);
@@ -125,9 +129,18 @@ public class CartDaoImpl implements CartDao {
                     }
                 }
                 System.out.println(id[j]);
+                for(int k = 0; k < itemList.size(); k++){
+                    if(itemList.get(k).getBook_id() == id[j]){
+                        itemList.remove(k);
+                    }
+                }
 
                 cartItemRepository.deleteCartItemByCart_idAndBook_id(cart_id, id[j]);
             }
+            for(int k = 0; k < itemList.size(); k++){
+                System.out.println(itemList.get(k).getName());
+            }
+            userCart.setCart_itemlist(itemList);
 
             return true;
         }

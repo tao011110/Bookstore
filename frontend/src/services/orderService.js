@@ -41,3 +41,13 @@ export const userFindOrderItemsByTime = (data, callback) => {
     const url = 'http://localhost:8080/userFindOrderItemsByTime';
     postRequest(url, data, callback);
 };
+
+export const findOrderByTime = (data, callback) => {
+    const url = 'http://localhost:8080/findOrderByTime';
+    postRequest(url, data, callback);
+};
+
+export const userFindOrderByTime = (data, callback) => {
+    const url = 'http://localhost:8080/userFindOrderByTime';
+    postRequest(url, data, callback);
+};

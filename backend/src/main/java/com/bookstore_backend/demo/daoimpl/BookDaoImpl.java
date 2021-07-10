@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +71,7 @@ public class BookDaoImpl implements BookDao {
 
             if (change.equals("price")) {
                 String sprice = String.valueOf(param.get("price"));
-                int price = Integer.valueOf(sprice);
+                BigDecimal price = new BigDecimal(sprice);
                 result = bookRepository.updateBookPrice(id, price);
             }
 
@@ -121,7 +122,7 @@ public class BookDaoImpl implements BookDao {
             String sinventory = String.valueOf(param.get("inventory"));
             int inventory = Integer.valueOf(sinventory);
             String sprice = String.valueOf(param.get("price"));
-            int price = Integer.valueOf(sprice);
+            BigDecimal price = new BigDecimal(sprice);
             String name = String.valueOf(param.get("name"));
             String img = String.valueOf(param.get("img"));
             String description = String.valueOf(param.get("description"));

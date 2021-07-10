@@ -28,7 +28,7 @@ function add(){
                     "description: "+global.buy[i].description+
                     "price: "+global.buy[i].price+
                     "num:"+ global.buy[i].num+
-                    "total: "+total)
+                    "total: "+total.toFixed(2))
                 break;
             }
         }
@@ -38,7 +38,7 @@ function add(){
                 description: global.buy[i].description,
                 price: global.buy[i].price,
                 num: global.buy[i].num,
-                total: total
+                total: total.toFixed(2)
             });
         }
     }
@@ -100,7 +100,6 @@ class SubmitForm extends React.Component {
     };
 
     handleClick2 = e =>{
-        //e.preventDefault();
         let user_id = this.state.user;
         console.log("suadaw  " +user_id);
         let json = new Object();
@@ -110,20 +109,20 @@ class SubmitForm extends React.Component {
         const callback = (data) => {
             console.log("call  " + data);
         }
-        //let flag = false;
+        let flag = false;
         if(global.orderFrom == "cart"){
-            // let book = "";
-            // for(let i = 0; i < global.buy.length; i++){
-            //     if(global.buy[i].inventory < global.buy[i].num){
-            //         flag = true;
-            //         book = global.buy[i].name;
-            //         break;
-            //     }
-            // }
-            // if(flag == true) {
-            //     window.alert(book + "存量不足！");
-            // }
-            // else{
+            let book = "";
+            for(let i = 0; i < global.buy.length; i++){
+                if(global.buy[i].inventory < global.buy[i].num){
+                    flag = true;
+                    book = global.buy[i].name;
+                    break;
+                }
+            }
+            if(flag == true) {
+                window.alert(book + "存量不足！");
+            }
+            else{
                 orderService.addOrder(json, callback);
                 let json2 = new Object();
                 let delArray = [];
@@ -139,13 +138,13 @@ class SubmitForm extends React.Component {
                     console.log("call  " + data);
                 }
                 cartService.deleteItem(json2, callback2);
-            //}
+            }
         }
         else{
-            // if(global.buy[0].inventory < 1){
-            //     window.alert(global.buy[0].name + "存量不足！");
-            // }
-            // else{
+            if(global.buy[0].inventory < 1){
+                window.alert(global.buy[0].name + "存量不足！");
+            }
+            else{
                 let user_id = this.state.user;
                 let json = new Object();
                 json.user_id = user_id;
@@ -157,17 +156,13 @@ class SubmitForm extends React.Component {
                     console.log("call  " + data);
                 }
                 orderService.addOrderOne(json, callback);
-            //}
+            }
         }
     }
 
-    // handleClick = e =>{
-    //     console.log("submit!");
-    //     window.alert("您已成功提交订单！");
-    // }
-
 
     render() {
+        console.log(global.totalmoney+"   " + typeof global.totalmoney);
         dataSource=[];
         console.log("buy", global.buy);
         add();
@@ -257,7 +252,7 @@ class SubmitForm extends React.Component {
                         </Col>
                         <Col span={2}>
                             <div className={"freight"}>
-                                ￥0
+                                ￥0.00
                             </div>
                         </Col>
                     </Row>
@@ -274,7 +269,7 @@ class SubmitForm extends React.Component {
                         </Col>
                         <Col span={10} offset={2}>
                             <div className="submit-total">
-                                合计（含运费）：<span className="total">￥{global.totalmoney}</span>
+                                合计（含运费）：<span className="total">￥{parseFloat(global.totalmoney).toFixed(2)}</span>
                             </div>
                             <div className="submit-button">
                                 <Row>

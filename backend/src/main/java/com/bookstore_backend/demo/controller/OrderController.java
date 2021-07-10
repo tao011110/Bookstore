@@ -71,4 +71,14 @@ public class OrderController {
     public List<OrderItem> userFindOrderItemsByTime(@RequestBody Map<Object, Object> param) {
         return orderService.userFindOrderItemsByTime(param);
     }
+
+    @RequestMapping("/findOrderByTime")
+    public List<Order> findOrderByTime(@RequestBody Map<Object, Object> param){
+        return orderService.findOrderByTime(param);
+    }
+
+    @RequestMapping("/userFindOrderByTime")
+    public List<Order> userFindOrderByTime(@RequestBody Map<Object, Object> param) {
+        return orderService.userFindOrderByTime(param);
+    }
 }

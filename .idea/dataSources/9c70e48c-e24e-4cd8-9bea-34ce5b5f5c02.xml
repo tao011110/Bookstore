@@ -954,7 +954,7 @@ SELECT|sys.sys_config
     </column>
     <column id="300" parent="288" name="price">
       <Position>6</Position>
-      <DataType>int|0s</DataType>
+      <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
     <column id="301" parent="288" name="id">
       <Position>7</Position>
@@ -1069,8 +1069,7 @@ SELECT|sys.sys_config
     </column>
     <column id="324" parent="292" name="price">
       <Position>4</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
     <column id="325" parent="292" name="num">
       <Position>5</Position>
@@ -1078,7 +1077,7 @@ SELECT|sys.sys_config
     </column>
     <column id="326" parent="292" name="time">
       <Position>6</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>datetime|0s</DataType>
     </column>
     <index id="327" parent="292" name="orderId">
       <ColNames>order_id</ColNames>
@@ -1111,80 +1110,69 @@ SELECT|sys.sys_config
       <RefTableName>books</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="334" parent="292" name="order_item_price">
-      <ColNames>price</ColNames>
-      <RefTableName>books</RefTableName>
-      <RefColNames>price</RefColNames>
-    </foreign-key>
-    <foreign-key id="335" parent="292" name="time">
-      <ColNames>time</ColNames>
-      <RefTableName>orders</RefTableName>
-      <RefColNames>time</RefColNames>
-    </foreign-key>
-    <column id="336" parent="293" name="order_id">
+    <column id="334" parent="293" name="order_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="337" parent="293" name="user_id">
+    <column id="335" parent="293" name="user_id">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="338" parent="293" name="totalmoney">
+    <column id="336" parent="293" name="totalmoney">
       <Position>3</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="339" parent="293" name="time">
+    <column id="337" parent="293" name="time">
       <Position>4</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>datetime|0s</DataType>
     </column>
-    <index id="340" parent="293" name="userId">
+    <index id="338" parent="293" name="userId">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="341" parent="293" name="order_time">
+    <index id="339" parent="293" name="order_time">
       <ColNames>time</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="342" parent="293" name="PRIMARY">
+    <key id="340" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>order_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="343" parent="293" name="userId">
+    <foreign-key id="341" parent="293" name="userId">
       <ColNames>user_id</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>user_id</RefColNames>
     </foreign-key>
-    <column id="344" parent="294" name="user_id">
+    <column id="342" parent="294" name="user_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="345" parent="294" name="user_type">
+    <column id="343" parent="294" name="user_type">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="346" parent="294" name="username">
+    <column id="344" parent="294" name="username">
       <Position>3</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="347" parent="294" name="password">
+    <column id="345" parent="294" name="password">
       <Position>4</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="348" parent="294" name="email">
+    <column id="346" parent="294" name="email">
       <Position>5</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="349" parent="294" name="PRIMARY">
+    <key id="347" parent="294" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>

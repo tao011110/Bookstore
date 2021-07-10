@@ -38,7 +38,7 @@ class Excel extends React.Component {
     }
 
     componentDidMount() {
-        this.rangeDate("0", moment().format().substring(0, 10));
+        this.rangeDate("1970-01-01 00:00:01.0001", "2038-01-19 03:14:07.999");
     }
 
     sort = (e) => {
@@ -111,8 +111,8 @@ class Excel extends React.Component {
                 let l = [];
                 l.push(data[i].user_id);
                 l.push(data[i].username);
-                l.push(data[i].totalMoney);
-                sum += parseInt(data[i].totalMoney);
+                l.push(data[i].totalMoney.toFixed(2));
+                sum += parseFloat(data[i].totalMoney);
                 list.push(l);
             }
             this.setState({
@@ -188,7 +188,7 @@ class Excel extends React.Component {
                 </table>
                 <Row>
                     <Col>
-                        <span>总金额：<span>￥{this.state.totalMoney}</span></span>
+                        <span>总金额：<span>￥{this.state.totalMoney.toFixed(2)}</span></span>
                     </Col>
                 </Row>
                 <div>
@@ -196,8 +196,8 @@ class Excel extends React.Component {
                         <DatePicker.RangePicker
                             style={{ width: '40%' }}
                             onChange={(e)=>{
-                                let min = e[0].format("YYYY-MM-DD").toString();
-                                let max = e[1].format("YYYY-MM-DD").toString();
+                                let min = e[0].format("YYYY-MM-DD").toString() + " 00:00:00";
+                                let max = e[1].format("YYYY-MM-DD").toString() + " 00:00:00";
                                 console.log(min);
                                 console.log(max);
                                 this.preSearchData = this.state.data;
