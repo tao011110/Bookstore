@@ -136,23 +136,24 @@ public class UserDaoImpl implements UserDao {
             }
         }
 
-//        List<User> allUsers = userRepository.listUsers();
-//        int length = result.size();
-//        for(User user : allUsers){
-//            int user_id = user.getUser_id();
-//            boolean flag = false;
-//            int i = 0;
-//            for(i = 0; i < length; i++){
-//                if(result.get(i).getUser_id() == user_id){
-//                    flag = true;
-//                    break;
-//                }
-//            }
-//            if(flag == false && user.getUserType() != 0){
-//                user.setTotalMoney(0);
-//                result.add(user);
-//            }
-//        }
+        List<User> allUsers = userRepository.listUsers();
+        int length = users.size();
+        for(User user : allUsers){
+            int user_id = user.getUser_id();
+            boolean flag = false;
+            int i = 0;
+            for(i = 0; i < length; i++){
+                if(users.get(i).getUser_id() == user_id){
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag == false && user.getUserType() != 0){
+                BigDecimal total = new BigDecimal(0);
+                user.setTotalMoney(total);
+                users.add(user);
+            }
+        }
 
         return users;
     }

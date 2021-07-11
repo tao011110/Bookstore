@@ -1091,7 +1091,7 @@ SELECT|sys.sys_config
       <ColNames>price</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="330" parent="292" name="time">
+    <index id="330" parent="292" name="order_time">
       <ColNames>time</ColNames>
       <Type>btree</Type>
     </index>
@@ -1110,69 +1110,74 @@ SELECT|sys.sys_config
       <RefTableName>books</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="334" parent="293" name="order_id">
+    <foreign-key id="334" parent="292" name="order_time">
+      <ColNames>time</ColNames>
+      <RefTableName>orders</RefTableName>
+      <RefColNames>time</RefColNames>
+    </foreign-key>
+    <column id="335" parent="293" name="order_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="335" parent="293" name="user_id">
+    <column id="336" parent="293" name="user_id">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="336" parent="293" name="totalmoney">
+    <column id="337" parent="293" name="totalmoney">
       <Position>3</Position>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="337" parent="293" name="time">
+    <column id="338" parent="293" name="time">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <index id="338" parent="293" name="userId">
+    <index id="339" parent="293" name="userId">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="339" parent="293" name="order_time">
+    <index id="340" parent="293" name="order_time">
       <ColNames>time</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="340" parent="293" name="PRIMARY">
+    <key id="341" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>order_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="341" parent="293" name="userId">
+    <foreign-key id="342" parent="293" name="userId">
       <ColNames>user_id</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>user_id</RefColNames>
     </foreign-key>
-    <column id="342" parent="294" name="user_id">
+    <column id="343" parent="294" name="user_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="343" parent="294" name="user_type">
+    <column id="344" parent="294" name="user_type">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="344" parent="294" name="username">
+    <column id="345" parent="294" name="username">
       <Position>3</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="345" parent="294" name="password">
+    <column id="346" parent="294" name="password">
       <Position>4</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="346" parent="294" name="email">
+    <column id="347" parent="294" name="email">
       <Position>5</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="347" parent="294" name="PRIMARY">
+    <key id="348" parent="294" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>

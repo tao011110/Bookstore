@@ -3,7 +3,7 @@ import {Link } from 'react-router-dom';
 import {List, Button} from 'antd'
 import {Book} from './Book'
 import "../css/index.css"
-import {getBooks} from "../services/bookService";
+import {getBooks, getBooksByPage} from "../services/bookService";
 
 export class BookList extends React.Component{
     constructor(props) {
@@ -18,17 +18,24 @@ export class BookList extends React.Component{
     listPageBooks=()=>{
         const callback = (data) => {
             console.log("woc666");
-            this.setState({
-                books:data.content,
-                pageable: data
-            });
             console.log(data) ;
             console.log(data.totalPages);
+            let list = data.content;
+            let result = [];
+            for(let i = 0; i < list.length; i++){
+                if(list[i].status == 1){
+                    result.push(list[i]);
+                }
+            }
+            this.setState({
+                books:result,
+                pageable: data
+            });
         };
         let json = new Object();
         json.page = this.state.page;
 
-        getBooks(json, callback);
+        getBooksByPage(json, callback);
     }
 
     componentDidMount() {

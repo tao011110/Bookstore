@@ -7,6 +7,7 @@ import com.bookstore_backend.demo.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> woc(Pageable p){
-        return bookDao.woc(p);
+    public Page<Book> listBooksByPage(@RequestBody Map<String, String> param){
+        return bookDao.listBooksByPage(param);
     }
 }

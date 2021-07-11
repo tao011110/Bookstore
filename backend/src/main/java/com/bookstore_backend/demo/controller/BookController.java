@@ -20,22 +20,17 @@ public class BookController {
     private BookService bookService;
 
     @RequestMapping("/listBooks")
-    public Page<Book> listBooks(@RequestBody Map<String, String> param){
+    public List<Book> listBooks(@RequestBody Map<String, String> param){
         List<Book> list = bookService.listBooks();
         for(Book book : list){
             System.out.println(book.getId() + ": " + book.getName());
         }
-        String snowPage =  String.valueOf(param.get("page"));
-        int nowPage = Integer.valueOf(snowPage);
-        Pageable pageable = PageRequest.of(nowPage, 16);
-        List<Book> b = bookService.woc(pageable).getContent();
-        System.out.println("i.getName()");
-        for(Book i : b){
-            System.out.println(i.getName() +"  " + i.getPrice());
-        }
-        System.out.println();
-        list = b;
-        return bookService.woc(pageable);
+        return list;
+    }
+
+    @RequestMapping("/listBooksByPage")
+    public Page<Book> listBooksByPage(@RequestBody Map<String, String> param){
+        return bookService.listBooksByPage(param);
     }
 
     @RequestMapping("/showAllBooks")

@@ -14,7 +14,7 @@ class BookView extends React.Component{
         this.state = {books:null};
     }
 
-    componentDidMount(){
+    componentWillMount(){
         let user = localStorage.getItem("user");
         console.log("user  " + user);
         this.setState({user:user});

@@ -14,7 +14,7 @@ public interface OrderDao {
     List<Order> showAllOrders();
     List<Order> showOneOrder(Map<Object, Object> param);
     Order findOrder(Integer id);
-    List<OrderItem> findOrderItems(Integer id);
+    Order findOrderItems(Integer id);
     List<OrderItem> findOrderItemsByTime(Map<Object, Object> param);
     List<OrderItem> userFindOrderItemsByTime(Map<Object, Object> param);
     List<Order> findOrderByTime(Map<Object, Object> param);

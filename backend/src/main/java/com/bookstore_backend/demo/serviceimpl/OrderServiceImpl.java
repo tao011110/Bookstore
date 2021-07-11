@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderItem> findOrderItems(Integer id){
+    public Order findOrderItems(Integer id){
         return orderDao.findOrderItems(id);
     }
 

@@ -26,13 +26,13 @@ public class OrderItem {
     private int book_id;
 
     @Column(name = "price")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private BigDecimal price;
 
     @Column(name = "num")
     private int num;
 
     @Column(name = "time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp time;
 
     @Transient

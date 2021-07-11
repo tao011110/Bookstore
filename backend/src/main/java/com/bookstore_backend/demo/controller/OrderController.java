@@ -52,9 +52,7 @@ public class OrderController {
 
     @RequestMapping("/findOrderItems")
     public Order findOrderItems(@RequestParam("id") Integer id){
-        Order order = findOrder(id);
-        order.setOrder_itemlist(orderService.findOrderItems(id));
-        return order;
+        return orderService.findOrderItems(id);
     }
 
     @RequestMapping("/showOneOrder")

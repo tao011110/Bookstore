@@ -7,6 +7,7 @@ import * as cartService from "../services/cartService";
 import {history} from "../utils/history";
 import * as orderService from "../services/orderService";
 import {getBook} from "../services/bookService";
+import {getItems} from "../services/cartService";
 
 export class BookDetail extends React.Component{
     componentDidMount(){
@@ -34,20 +35,6 @@ export class BookDetail extends React.Component{
         };
         cartService.addItem(json, callback);
     };
-
-    handleClick2 = e =>{
-        //e.preventDefault();
-        let user_id = this.state.user;
-        let json = new Object();
-        json.user_id = user_id;
-        json.totalmoney = this.props.info.price;
-        json.book_id = this.props.info.id;
-        json.num = 1;
-        const callback = (data) => {
-            console.log("call  " + data);
-        }
-        orderService.addOrderOne(json, callback);
-    }
 
     render() {
         global.totalmoney = 0;
@@ -96,7 +83,6 @@ export class BookDetail extends React.Component{
                                     global.totalmoney = info.price;
                                     global.buy.push(info);
                                     global.orderFrom = "BookDetail";
-                                    //this.handleClick2();
                                 }}
                         >
                             立即购买

@@ -225,7 +225,7 @@ public class OrderDaoImpl implements OrderDao {
 
 
     @Override
-    public List<OrderItem> findOrderItems(Integer id){
+    public Order findOrderItems(Integer id){
         System.out.println("id"+id);
         List<OrderItem> orderItemsResult= orderItemRepository.findOrderItems(id);
         System.out.println("orderItemsResult.get(0)");
@@ -235,8 +235,10 @@ public class OrderDaoImpl implements OrderDao {
             item.setName(bookRepository.findBook(item.getBook_id()).getName());
             System.out.println(item.getName());
         }
+        Order order = findOrder(id);
+        order.setOrder_itemlist(orderItemsResult);
 
-        return orderItemsResult;
+        return order;
     }
 
     @Override

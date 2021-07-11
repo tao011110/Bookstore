@@ -4,6 +4,10 @@ export const getBooks = (data, callback) => {
     const url = 'http://localhost:8080/listBooks';
     postRequest(url, data, callback);
 };
+export const getBooksByPage = (data, callback) => {
+    const url = 'http://localhost:8080/listBooksByPage';
+    postRequest(url, data, callback);
+};
 
 export const showAllBooks = (data, callback) => {
     const url = 'http://localhost:8080/showAllBooks';

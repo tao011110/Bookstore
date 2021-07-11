@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import {Form, Input, Button, Checkbox, message} from 'antd';
 import {Link, Redirect, Route} from 'react-router-dom';
 import 'antd/dist/antd.css';
 import '../css/login.css';
@@ -9,7 +9,6 @@ import * as cartService from '../services/cartService'
 class RegisterForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
-        console.log("fffffffa");
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values.email);
@@ -57,12 +56,20 @@ class RegisterForm extends React.Component {
         const callback = (data1) => {
             console.log(data1, typeof data1);
             if(data1 == true){
-                window.alert("用户名重复！");
+                message.info("用户名重复！");
             }
         };
         let json = new Object();
         json.username = username;
         userService.findNameDup(json, callback);
+    }
+
+    handleConfirmPassword = e =>{
+        console.log("e.value");
+        console.log(e.target.value);
+        if(this.props.form.getFieldValue('password') != e.target.value){
+            message.info("两次输入密码不一致！");
+        }
     }
 
     render() {
@@ -126,6 +133,7 @@ class RegisterForm extends React.Component {
                                     placeholder="Please confirm your password"
                                     size={"large"}
                                     style={{ width: '130%' }}
+                                    onChange={this.handleConfirmPassword}
                                 />,
                             )}
                         </div>

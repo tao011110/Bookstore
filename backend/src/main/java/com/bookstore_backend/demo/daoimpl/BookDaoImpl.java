@@ -7,8 +7,10 @@ import com.bookstore_backend.demo.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.bookstore_backend.demo.entity.Book;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -179,8 +181,12 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Page<Book> woc(Pageable p){
-       Page<Book> list2= bookRepository.findAll(p);
-       return list2;
+    public Page<Book> listBooksByPage(@RequestBody Map<String, String> param){
+        String snowPage =  String.valueOf(param.get("page"));
+        int nowPage = Integer.valueOf(snowPage);
+        Pageable pageable = PageRequest.of(nowPage, 16);
+
+        Page<Book> list2= bookRepository.findAll(pageable);
+        return list2;
     }
 }
