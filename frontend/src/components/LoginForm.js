@@ -59,10 +59,10 @@ class LoginForm extends React.Component {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         Sign In!
                     </Button>
-                    {/*{getFieldDecorator('remember', {*/}
-                    {/*    valuePropName: 'checked',*/}
-                    {/*    initialValue: true,*/}
-                    {/*})(<Checkbox>Remember me</Checkbox>)}*/}
+                    {getFieldDecorator('remember', {
+                        valuePropName: 'checked',
+                        initialValue: true,
+                    })(<Checkbox>Remember me</Checkbox>)}
                     <a className="login-form-forgot" href="">
                         Forgot password
                     </a>
